@@ -1,0 +1,152 @@
+<resources>
+
+    <!--安卓4.4之前的版本设置沉浸式-->
+    <style name="TranslucentTheme" parent="AppTheme">
+        <!--在Android 4.4之前的版本上运行，直接跟随系统主题-->
+    </style>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!--标题文本框风格样式-->
+    <style name="title_text_style">
+        <item name="android:textSize">@dimen/title_text_size</item>
+        <item name="android:textColor">@color/title_text_color</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!--标题按钮风格样式-->
+    <style name="title_button_style">
+        <item name="android:textSize">@dimen/title_button_size</item>
+        <item name="android:textColor">@color/title_text_color</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="home_secondhead_textview_style">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="message_title_style">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="message_imageview_style">
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="message_content_style">
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:textColor">#878787</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="message_line_style">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:background">#E2E2E3</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+    </style>
+
+    <!--这是我的样式内容-->
+    <style name="MineFunctionRl">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingLeft">15dp</item>
+    </style>
+
+    <style name="MineFunctionTvLeft">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="MineFunctionArrow">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="MineFunctionDivider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/color_E6E8E7</item>
+    </style>
+
+    <style name="MineFunctionTvRight">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
+    <!--登录头部样式-->
+    <style name="title_relayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:background">#ffffff</item>
+    </style>
+    <!--登录头文字标题样式-->
+    <style name="title_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="back_btn">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">25dp</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:background">@drawable/back</item>
+        <item name="android:layout_marginLeft">10dp</item>
+    </style>
+
+    <style name="back_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:text">@string/back</item>\
+        <item name="android:clickable">true</item>
+        <item name="android:textColor">#00AFEF</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <!--这里是上传头像里边用到的头像-->
+    <style name="main_tab_bottom">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:button">@null</item>
+        <item name="android:drawablePadding">@dimen/bottom_tab_padding_drawable</item>
+        <item name="android:paddingTop">@dimen/bottom_tab_padding_up</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
+</resources>
