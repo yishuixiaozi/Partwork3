@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hhit.edu.bean.HomePageBean;
 import com.hhit.edu.my_interface.HomePageInterface;
+import com.hhit.edu.partwork3.ExpressActivity;
 import com.hhit.edu.partwork3.R;
 import com.hhit.edu.utils.ApiManager;
 import com.hhit.edu.utils.IntentUtils;
@@ -331,6 +332,7 @@ public class HomeFragment1 extends Fragment
             break;
             case R.id.tv_xinfang: {
                 System.out.println("这里是快递查询内容");
+                startActivity(new Intent(getActivity(), ExpressActivity.class));
 
             }
             break;

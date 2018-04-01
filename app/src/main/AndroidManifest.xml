@@ -8,8 +8,15 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 快递业务内容 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+        android:name="com.hhit.me.application.ExpressApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -41,7 +48,13 @@
             -->
         </activity>
         <activity android:name=".PreviewActivity" />
-        <activity android:name=".ExpressActivity"></activity>
+        <activity android:name=".ExpressActivity" />
+        <activity android:name=".SearchActivity" />
+        <activity
+            android:name=".SearchexpressActivity"
+            android:windowSoftInputMode="adjustPan"
+            />
+        <activity android:name=".ResultexpressActivity"></activity>
     </application>
 
 </manifest>

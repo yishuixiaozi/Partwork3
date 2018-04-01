@@ -23,5 +23,8 @@
     <dimen name="nearby_location_tital">15.0sp</dimen>
     <!--个人设计list_view布局内容-->
     <dimen name="home_listview_items_height">100dp</dimen>
-
+    <!--这里是快递功能dimen-->
+    <dimen name="text_size_common">16sp</dimen>
+    <dimen name="divider_height">0.5dp</dimen>
+    <dimen name="company_logo_length">40dp</dimen>
 </resources>
