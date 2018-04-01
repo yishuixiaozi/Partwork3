@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
-import com.hhit.me.constants.Extras;
 import com.hhit.me.http.HttpCallback;
 import com.hhit.me.http.HttpClient;
 import com.hhit.me.model.SearchInfo;
@@ -78,6 +77,7 @@ public class ResultexpressActivity extends BaseActivity implements View.OnClickL
      */
     public void refreshSearchInfo(){
         String remark=DataManager.getInstance().getRemark(searchInfo.getPost_id());
+        System.out.println("remark=----------------"+remark);
         if (TextUtils.isEmpty(remark)){
             tvName.setText(searchInfo.getName());//设置公司名字
             tvPostId.setText(searchInfo.getPost_id());//设置公司ID

@@ -1,26 +1,12 @@
-/**
- * 2015-4-2
- */
 package com.hhit.me.utils;
-
-/*import com.j256.ormlite.dao.Dao;*/
-
 import com.hhit.me.application.ExpressApplication;
 import com.hhit.me.database.DBHelper;
 import com.hhit.me.database.History;
 import com.hhit.me.model.SearchInfo;
 import com.j256.ormlite.dao.Dao;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-/*import java.util.List;
-
-import me.wcy.express.application.ExpressApplication;
-import me.wcy.express.database.DBHelper;
-import me.wcy.express.database.History;
-import me.wcy.express.model.SearchInfo;*/
-
 /**
  * @author wcy
  */

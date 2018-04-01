@@ -16,8 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-
-import com.hhit.me.activity.SearchActivity;
 import com.hhit.me.database.History;
 import com.hhit.me.utils.DataManager;
 import com.hhit.me.viewholder.HistoryViewHolder;

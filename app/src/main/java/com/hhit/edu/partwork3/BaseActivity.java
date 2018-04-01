@@ -20,13 +20,10 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 public abstract class BaseActivity extends AppCompatActivity {
     protected Handler handler;
     private ProgressDialog progressDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         handler = new Handler(Looper.getMainLooper());
-
         if (shouldSetStatusBarColor() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
             tintManager.setStatusBarTintEnabled(true);
@@ -39,23 +36,19 @@ public abstract class BaseActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
-
     protected boolean shouldSetStatusBarColor() {
         return true;
     }
-
     @Override
     public void setContentView(int layoutResID) {
         View view = getLayoutInflater().inflate(layoutResID, null);
         setContentView(view);
     }
-
     @Override
     public void setContentView(View view) {
         super.setContentView(view);
         ViewBinder.bind(this);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -64,17 +57,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         PermissionReq.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
     public void showProgress() {
         showProgress(getString(R.string.loading));
     }
-
     public void showProgress(String message) {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(this);
@@ -85,7 +75,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             progressDialog.show();
         }
     }
-
     public void cancelProgress() {
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.cancel();

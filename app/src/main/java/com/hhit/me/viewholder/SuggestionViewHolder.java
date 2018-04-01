@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
-
 import com.hhit.edu.partwork3.R;
 import com.hhit.edu.partwork3.ResultActivity;
-import com.hhit.me.constants.RequestCode;
 import com.hhit.me.model.CompanyEntity;
 import com.hhit.me.model.SearchInfo;
 import com.hhit.me.widget.binding.Bind;
