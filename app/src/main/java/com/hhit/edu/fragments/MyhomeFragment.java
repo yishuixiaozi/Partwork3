@@ -101,7 +101,8 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
         refresh.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                System.out.println("----------------------------onRefreshBegin");
+                System.out.println("-----------------onRefreshLayout");
+                pagenum=0;//只要是刷新开始，pagenum就重置为0，不然的话，后面的内容太大，在此刷新的时候查询不到值的内容页面为空
                 getData();
             }
             //解决Listview与下拉刷新的冲突
@@ -110,10 +111,6 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
                 return super.checkCanDoRefresh(frame, lv, header);
             }
         });
-    }
-
-    public void restoreView(){
-
     }
 
     /**
@@ -162,7 +159,23 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         final HomePageInterface request=retrofit.create(HomePageInterface.class);
-        request.getAllJob()
+        request.getJobByPage(pagenum)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ListResponse<JobBean>>() {
+                    @Override
+                    public void accept(ListResponse<JobBean> jobBeanListResponse) throws Exception {
+                        //System.out.println("测试获得数据内容==="+jobBeanListResponse.getItems().get(0).getPayway());
+                        if (buttonmore.equals("0")) {//为什么要清空呢
+                            jobdata.clear();
+                        }
+                        jobdata.addAll(jobBeanListResponse.getItems());//为什么是添加？
+                        adapter.notifyDataSetChanged();
+                        refresh.refreshComplete();
+                        buttonmore = "0";//为什么又给了一次值,下边有个方法赋值为1了
+                    }
+                });
+       /* request.getAllJob()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ListResponse<JobBean>>() {
@@ -178,7 +191,7 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
                         refresh.refreshComplete();
                         buttonmore = "0";//为什么又给了一次值,下边有个方法赋值为1了
                     }
-                });
+                });*/
     }
     @Override
     public void onClick(View v) {
@@ -195,6 +208,8 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
         if (scrollState==0&&isAddMore){//一开始加载的时候显示内容，
             getData();
             buttonmore="1";
+            System.out.println("-----------------pagenum="+pagenum);
+            pagenum+=8;
         }
     }
     @Override

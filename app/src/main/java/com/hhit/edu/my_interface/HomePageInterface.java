@@ -44,21 +44,16 @@ public interface HomePageInterface {
      */
     @POST("JobServlet/getAllJob")
     Observable<ListResponse<JobBean>> getAllJob();
+
+    /**
+     * 每八条显示内容
+     * @param pagenum
+     * @return
+     */
+    @POST("JobServlet/getJobByPage")
+    Observable<ListResponse<JobBean>> getJobByPage(@Query("pagenum") int pagenum);
+
     /*@GET(ApiManager.HOME_BANNER)
     Call<BannerBean> getBannerBean(@Query("cityid") String cityid);
 */
-
-  /*  @GET(ApiManager.HOUSE_DETAIL)
-    Call<HouseDetailBean> getHouseDetailBean(@Query("newsid") String newsid);*/
-
-//    @GET(ApiManager.TEST)
-//    Call<String> getTest(@Query("pageflag")String pageflag,
-//                         @Query("buttonmore")String buttonmore,
-//                         @Query("cityid")String cityid);
-//
-//    @GET(ApiManager.TEST)
-//    Call<String> getTestMore(@Query("pageflag")String pageflag,
-//                         @Query("buttonmore")String buttonmore,
-//                         @Query("cityid")String cityid,
-//                             @Query("lastid")String lastid);
 }
