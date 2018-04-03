@@ -18,6 +18,7 @@ import com.hhit.edu.fragments.HomeFragment;
 import com.hhit.edu.fragments.HomeFragment1;
 import com.hhit.edu.fragments.MessageFragment;
 import com.hhit.edu.fragments.MineFragment;
+import com.hhit.edu.fragments.MyhomeFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private Class[] fragments = {
-            HomeFragment1.class, DiscoverFragment.class, MessageFragment.class, MineFragment.class
+            MyhomeFragment.class, DiscoverFragment.class, MessageFragment.class, MineFragment.class
     };
 
     //定义一个控件的

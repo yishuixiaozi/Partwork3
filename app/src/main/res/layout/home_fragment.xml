@@ -3,16 +3,12 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <!--标题栏-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:orientation="horizontal"
         android:background="#19ACCA">
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
@@ -26,7 +22,6 @@
             android:drawableRight="@drawable/icon_title_down_arrow"
             android:padding="10dp"
             android:textSize="20sp" />
-
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -38,7 +33,6 @@
             android:paddingLeft="30dp"
             android:text="岗位/薪资/地点"
             android:textColor="#FDFEFF" />
-
         <ImageButton
             android:background="@null"
             android:id="@+id/btn_scan"
@@ -48,7 +42,8 @@
             android:layout_marginRight="10dp" />
     </LinearLayout>
 
-   <in.srain.cube.views.ptr.PtrFrameLayout xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+   <in.srain.cube.views.ptr.PtrFrameLayout
+       xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -59,7 +54,6 @@
         cube_ptr:ptr_pull_to_fresh="false"
         cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
         cube_ptr:ptr_resistance="1.7">
-
         <ListView
             android:id="@+id/home_lv"
             android:layout_width="match_parent"

@@ -64,28 +64,20 @@ public abstract class AbstractBaseAdapter<T> extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
         //绑定数据
         bindData(position, holder);
-
-
         return convertView;
     }
-
     public static class ViewHolder {
         //保存的控件：是需要设置值的控件
         private View view;
-
         public ViewHolder(View view) {
             this.view = view;
         }
-
-
         //向子类提供一个方法，返回需要设置值的控件
         public View findViewById(int viewId) {
             //根据viewid，找到对应的控件
             return view.findViewById(viewId);
         }
-
     }
 }

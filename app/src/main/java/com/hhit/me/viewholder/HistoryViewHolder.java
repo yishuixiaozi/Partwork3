@@ -6,10 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-/*import com.hhit.edu.partwork3.HistoryActivity;*/
-import com.hhit.edu.partwork3.HistoryActivity;
 import com.hhit.edu.partwork3.R;
 import com.hhit.edu.partwork3.ResultActivity;
 import com.hhit.me.database.History;

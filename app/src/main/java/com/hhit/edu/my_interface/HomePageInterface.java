@@ -1,7 +1,10 @@
 package com.hhit.edu.my_interface;
 
+import com.hhit.edu.bean.JobBean;
+import com.hhit.edu.bean.ListResponse;
 import com.hhit.edu.utils.ApiManager;
 
+import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -34,6 +37,13 @@ public interface HomePageInterface {
 
     @POST("StudentServlet/getAllStudent")
     Call<String> getAllStudent();
+
+    /**
+     *  MyhomeFragment use
+     * @return 获取所有简约兼职信息
+     */
+    @POST("JobServlet/getAllJob")
+    Observable<ListResponse<JobBean>> getAllJob();
     /*@GET(ApiManager.HOME_BANNER)
     Call<BannerBean> getBannerBean(@Query("cityid") String cityid);
 */

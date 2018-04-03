@@ -43,10 +43,8 @@ public class ExpressActivity extends BaseActivity implements View.OnClickListene
     private RecyclerView rvUnCheck;
     @Bind(R.id.tv_empty)
     private TextView tvEmpty;
-
     private List<History> unCheckList = new ArrayList<>();
     private RAdapter<History> adapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,24 +58,20 @@ public class ExpressActivity extends BaseActivity implements View.OnClickListene
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
         }
 */
-
         navigationView.setNavigationItemSelectedListener(this);
         tvSearch.setOnClickListener(this);
         tvPost.setOnClickListener(this);
         tvSweep.setOnClickListener(this);
-
         adapter=new RAdapter<>(unCheckList,new RSingleDelegate<>(HistoryViewHolder.class));
         rvUnCheck.setLayoutManager(new LinearLayoutManager(this));
         rvUnCheck.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         rvUnCheck.setAdapter(adapter);
         //先到这里，后面的覆盖方法暂时还没有写
     }
-
     @Override
     protected boolean shouldSetStatusBarColor() {
         return false;
     }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -87,7 +81,6 @@ public class ExpressActivity extends BaseActivity implements View.OnClickListene
         adapter.notifyDataSetChanged();
         tvEmpty.setVisibility(this.unCheckList.isEmpty() ? View.VISIBLE : View.GONE);*/
     }
-
     /**
      * 点击事件
      * @param v

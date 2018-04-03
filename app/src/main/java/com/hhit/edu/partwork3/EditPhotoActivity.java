@@ -155,17 +155,13 @@ public class EditPhotoActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && data != null) {//这个是选取照片的
-            System.out.println("这里是选取照片的方法返回");
             startPhotoZoom(data.getData());//data.getData();是一个uri
         } else if (requestCode == 2) {//这个是拍照的
-            System.out.println("这里是拍照的返回");
             File temp = new File(SDPathUtils.getCachePath(), "temp.jpg");
             //temp =/storage/emulated/0/ZFCrash/cache/temp.jpg
             startPhotoZoom(Uri.fromFile(temp));
         } else if (requestCode == 3) {//这个是截图之后过来的
-            System.out.println("截图过来看看的");
             if (data != null) {
-                System.out.println("121212121221212-------");
                 setPicToView(data);//设置图形图像的显示
             }
         }
@@ -179,7 +175,6 @@ public class EditPhotoActivity extends AppCompatActivity {
     public void startPhotoZoom(Uri uri) {
         Intent intent = new Intent(getActivity(), PreviewActivity.class);
         intent.setDataAndType(uri, "image/*");
-       /* System.out.println("uri="+uri);*/
         startActivityForResult(intent, 3);
     }
 
@@ -219,10 +214,8 @@ public class EditPhotoActivity extends AppCompatActivity {
         final HomePageInterface request=retrofit.create(HomePageInterface.class);
         //封装description
         String descr="this is a test";
-
         //封装图形题
         File file=new File(uri);
-
         //从file获取requestbody实体内容
         RequestBody requestBody=RequestBody.create(MediaType.parse("multipart/form-data"),file);
         //执行接口方法，开始数据传输
@@ -261,7 +254,6 @@ public class EditPhotoActivity extends AppCompatActivity {
             public void onResponse(Call<String> call, Response<String> response) {
                 System.out.println("success");
             }
-
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 System.out.println("failure");
