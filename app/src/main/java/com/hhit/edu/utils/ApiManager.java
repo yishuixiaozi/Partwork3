@@ -10,6 +10,8 @@ public class ApiManager {
     public static final String PHONE_BASE_URL="";
     //我的远程主机域名
     public static final String LINUX_BASE_URL="";
+    //家中WLAN局域网域名
+    public static final String HOME_BASE_URL="192.168.0.101:8080";
     //看房网站主机地址，域名
     public static final String BASE_URL="http://ikft.house.qq.com/";
     //城市选择

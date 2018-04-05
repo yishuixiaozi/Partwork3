@@ -26,11 +26,11 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/TranslucentTheme">
-            <intent-filter>
+           <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity android:name=".WebViewActivity" />
         <activity android:name=".LoginActivity" />
@@ -52,9 +52,14 @@
         <activity android:name=".SearchActivity" />
         <activity
             android:name=".SearchexpressActivity"
-            android:windowSoftInputMode="adjustPan"
-            />
-        <activity android:name=".ResultexpressActivity"></activity>
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".ResultexpressActivity" />
+        <activity android:name=".JobdetailsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
