@@ -89,7 +89,6 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
         lv.setOnItemClickListener(this);//设置Item点击监听
         //restoreView();
     }
-
     public void setupRefreshView(View view){
         refresh= (PtrFrameLayout) view.findViewById(R.id.refresh);//获得可刷新对象
         PullToRefreshHeadView pullHead=new PullToRefreshHeadView(getContext());
@@ -154,7 +153,7 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
     public void getData(){
         System.out.println("获取数据内容测试==============");
         Retrofit retrofit=new Retrofit.Builder()
-                .baseUrl("http://192.168.137.1:8080/AndroidService/")
+                .baseUrl("http://192.168.0.101:8080/AndroidService/")//http://192.168.0.101 192.168.137.1
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
@@ -166,13 +165,17 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
                     @Override
                     public void accept(ListResponse<JobBean> jobBeanListResponse) throws Exception {
                         //System.out.println("测试获得数据内容==="+jobBeanListResponse.getItems().get(0).getPayway());
-                        if (buttonmore.equals("0")) {//为什么要清空呢
+                        System.out.println("------------------"+buttonmore);
+                        if (buttonmore.equals("0")) {//判断每次刷新的标志，每次刷新清空data列表
                             jobdata.clear();
                         }
+                       /* if (jobBeanListResponse.getItems().size()<8){
+                            pagenum=0;
+                        }*/
                         jobdata.addAll(jobBeanListResponse.getItems());//为什么是添加？
                         adapter.notifyDataSetChanged();
                         refresh.refreshComplete();
-                        buttonmore = "0";//为什么又给了一次值,下边有个方法赋值为1了
+                        buttonmore = "0";//这里就是让刷新的时候，能够让buttonmore为“0”
                     }
                 });
        /* request.getAllJob()
@@ -224,6 +227,10 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        System.out.println("positon="+position);
+        if (position>0){
+            JobBean jobBean=jobdata.get(position-1);
+            System.out.println("点击的是----》"+jobBean.getTitle()+jobBean.getId());
+        }
     }
 }
