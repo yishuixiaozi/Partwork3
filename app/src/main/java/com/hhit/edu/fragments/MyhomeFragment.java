@@ -1,5 +1,6 @@
 package com.hhit.edu.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import com.hhit.edu.bean.HomePageBean;
 import com.hhit.edu.bean.JobBean;
 import com.hhit.edu.bean.ListResponse;
 import com.hhit.edu.my_interface.HomePageInterface;
+import com.hhit.edu.partwork3.JobdetailsActivity;
 import com.hhit.edu.partwork3.R;
 import com.hhit.edu.view.HomeSecondView;
 import com.hhit.edu.view.PullToRefreshHeadView;
@@ -153,7 +155,7 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
     public void getData(){
         System.out.println("获取数据内容测试==============");
         Retrofit retrofit=new Retrofit.Builder()
-                .baseUrl("http://192.168.0.101:8080/AndroidService/")//http://192.168.0.101 192.168.137.1
+                .baseUrl("http://192.168.137.1:8080/AndroidService/")//http://192.168.0.101 192.168.137.1
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
@@ -164,37 +166,15 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
                 .subscribe(new Consumer<ListResponse<JobBean>>() {
                     @Override
                     public void accept(ListResponse<JobBean> jobBeanListResponse) throws Exception {
-                        //System.out.println("测试获得数据内容==="+jobBeanListResponse.getItems().get(0).getPayway());
-                        System.out.println("------------------"+buttonmore);
                         if (buttonmore.equals("0")) {//判断每次刷新的标志，每次刷新清空data列表
                             jobdata.clear();
                         }
-                       /* if (jobBeanListResponse.getItems().size()<8){
-                            pagenum=0;
-                        }*/
                         jobdata.addAll(jobBeanListResponse.getItems());//为什么是添加？
                         adapter.notifyDataSetChanged();
                         refresh.refreshComplete();
                         buttonmore = "0";//这里就是让刷新的时候，能够让buttonmore为“0”
                     }
                 });
-       /* request.getAllJob()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ListResponse<JobBean>>() {
-                    @Override
-                    public void accept(ListResponse<JobBean> jobBeanListResponse) throws Exception {
-                        //jobdata=jobBeanListResponse.getItems();
-                        System.out.println("测试获得数据内容==="+jobBeanListResponse.getItems().get(0).getPayway());
-                        if (buttonmore.equals("0")) {//为什么要清空呢
-                            jobdata.clear();
-                        }
-                        jobdata.addAll(jobBeanListResponse.getItems());//为什么是添加？
-                        adapter.notifyDataSetChanged();
-                        refresh.refreshComplete();
-                        buttonmore = "0";//为什么又给了一次值,下边有个方法赋值为1了
-                    }
-                });*/
     }
     @Override
     public void onClick(View v) {
@@ -217,8 +197,6 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
     }
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        //System.out.println("firstVisibleItem="+firstVisibleItem+"visibleItemCount="+visibleItemCount+"totalItemCount="+totalItemCount);
-        //firstVisibleItem=0  visibleItemCount=6  totalItemCount=7(包含了头)
         if (firstVisibleItem + visibleItemCount == totalItemCount) {//就是说下拉看到最后一条了，设置isAddMore的属性为true，改变新的参数查询内容
             isAddMore = true;
         } else {
@@ -228,9 +206,12 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         System.out.println("positon="+position);
-        if (position>0){
+        if (position>0){//将点击信息的ID传递过去显示详细内容
             JobBean jobBean=jobdata.get(position-1);
-            System.out.println("点击的是----》"+jobBean.getTitle()+jobBean.getId());
+            Intent intent=new Intent(getActivity(), JobdetailsActivity.class);
+            intent.putExtra("id",jobBean.getId());
+            intent.putExtra("userid",jobBean.getUserid());
+            startActivity(intent);
         }
     }
 }

@@ -7,11 +7,75 @@ package com.hhit.edu.bean;
 
 public class JobBean {
     private int id;
+    private int userid;
     private String title;
     private String paymoney;
     private String payway;
     private String worktime;
     private String jobimageuri;
+    //新增内容
+    private String beigintime;
+    private int viewtimes;
+    private int peoplenun;
+    private String bftime;
+    private String workplace;
+    private String workdescribe;
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
+
+    public String getBeigintime() {
+        return beigintime;
+    }
+
+    public void setBeigintime(String beigintime) {
+        this.beigintime = beigintime;
+    }
+
+    public int getViewtimes() {
+        return viewtimes;
+    }
+
+    public void setViewtimes(int viewtimes) {
+        this.viewtimes = viewtimes;
+    }
+
+    public int getPeoplenun() {
+        return peoplenun;
+    }
+
+    public void setPeoplenun(int peoplenun) {
+        this.peoplenun = peoplenun;
+    }
+
+    public String getBftime() {
+        return bftime;
+    }
+
+    public void setBftime(String bftime) {
+        this.bftime = bftime;
+    }
+
+    public String getWorkplace() {
+        return workplace;
+    }
+
+    public void setWorkplace(String workplace) {
+        this.workplace = workplace;
+    }
+
+    public String getWorkdescribe() {
+        return workdescribe;
+    }
+
+    public void setWorkdescribe(String workdescribe) {
+        this.workdescribe = workdescribe;
+    }
 
     public String getJobimageuri() {
         return jobimageuri;

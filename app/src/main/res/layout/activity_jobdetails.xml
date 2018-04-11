@@ -27,6 +27,7 @@
                     android:paddingBottom="10dp"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/jobtitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="招聘内容的标题"
@@ -37,12 +38,14 @@
                         android:orientation="horizontal"
                         android:paddingRight="20dp">
                         <TextView
+                            android:id="@+id/paymoney"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="16sp"
                             android:text="薪资水平"/>
                         <TextView
+                            android:id="@+id/payway"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
@@ -50,6 +53,7 @@
                             android:textSize="16sp"
                             android:text="结算时间"/>
                         <TextView
+                            android:id="@+id/begintime"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -57,6 +61,7 @@
                             android:textSize="16sp"
                             android:text="开始时间"/>
                         <TextView
+                            android:id="@+id/viewtimes"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -92,6 +97,7 @@
                             android:textSize="16sp"
                             android:text="招募人数"/>
                         <TextView
+                            android:id="@+id/peoplenum"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
@@ -110,6 +116,7 @@
                             android:textSize="16sp"
                             android:text="兼职日期"/>
                         <TextView
+                            android:id="@+id/bftime"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
@@ -128,6 +135,7 @@
                             android:textSize="16sp"
                             android:text="兼职时段"/>
                         <TextView
+                            android:id="@+id/worktime"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
@@ -152,6 +160,7 @@
                         android:textSize="16sp"
                         />
                     <TextView
+                        android:id="@+id/workplace"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
@@ -223,17 +232,20 @@
                         android:paddingLeft="25dp"
                         android:orientation="vertical">
                         <TextView
+                            android:id="@+id/tv_username"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="20sp"
                             android:text="周总"/>
                         <TextView
+                            android:id="@+id/tv_company"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="15sp"
                             android:paddingTop="2dp"
                             android:text="淮海信息产业公司"/>
                         <TextView
+                            android:id="@+id/tv_comnature"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="15sp"

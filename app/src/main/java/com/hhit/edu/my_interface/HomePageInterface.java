@@ -1,7 +1,9 @@
 package com.hhit.edu.my_interface;
 
+import com.hhit.edu.bean.EntityResponse;
 import com.hhit.edu.bean.JobBean;
 import com.hhit.edu.bean.ListResponse;
+import com.hhit.edu.bean.UserBean;
 import com.hhit.edu.utils.ApiManager;
 
 import io.reactivex.Observable;
@@ -53,6 +55,16 @@ public interface HomePageInterface {
     @POST("JobServlet/getJobByPage")
     Observable<ListResponse<JobBean>> getJobByPage(@Query("pagenum") int pagenum);
 
+    /**
+     * 依据Id查找兼职详细信息的
+     * @param id
+     * @return
+     */
+    @POST("JobServlet/getJobById")
+    Observable<EntityResponse<JobBean>> getJobById(@Query("id") int id);
+
+    @POST("UserServlet/getUserById")
+    Observable<EntityResponse<UserBean>> getUserById(@Query("userid") int userid);
     /*@GET(ApiManager.HOME_BANNER)
     Call<BannerBean> getBannerBean(@Query("cityid") String cityid);
 */
