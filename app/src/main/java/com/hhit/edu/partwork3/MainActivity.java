@@ -14,8 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhit.edu.fragments.DiscoverFragment;
-import com.hhit.edu.fragments.HomeFragment;
-import com.hhit.edu.fragments.HomeFragment1;
 import com.hhit.edu.fragments.MessageFragment;
 import com.hhit.edu.fragments.MineFragment;
 import com.hhit.edu.fragments.MyhomeFragment;
