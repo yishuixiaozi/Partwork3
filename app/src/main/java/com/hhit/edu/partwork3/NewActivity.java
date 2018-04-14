@@ -1,5 +1,4 @@
 package com.hhit.edu.partwork3;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -16,7 +15,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -45,7 +43,6 @@ import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.hhit.edu.demo.RouteLineAdapter;
-
 import java.util.List;
 
 public class NewActivity extends Activity implements OnGetRoutePlanResultListener{
@@ -53,37 +50,34 @@ public class NewActivity extends Activity implements OnGetRoutePlanResultListene
     private BaiduMap myBaiduMap;//百度地图对象
     private LocationClient mylocationClient;//定位服务客户对象
     private MylocationListener mylistener;//重写的监听类
-
     private double myLatitude;//纬度，用于存储自己所在位置的纬度
     private double myLongitude;//经度，用于存储自己所在位置的经度
     private float myCurrentX;
     int nodeIndex = -1; // 节点索引,供浏览节点时使用
     RoutePlanSearch mSearch = null;
     private BitmapDescriptor myIconLocation1;//图标1，当前位置的箭头图标
-
     private MyOrientationListener myOrientationListener;//方向感应器类对象
-
     private MyLocationConfiguration.LocationMode locationMode;//定位图层显示方式
 //    private MyLocationConfiguration.LocationMode locationMode2;//定位图层显示方式
-
     private LinearLayout myLinearLayout2; //地址搜索区域2
-
-    WalkingRouteResult nowResultwalk;
+    WalkingRouteResult nowResultwalk;//步行的查询结果
     boolean useDefaultIcon = false;
     boolean hasShownDialogue=false;
     OverlayManager routeOverlay;
     RouteLine route;
+
+    String endworkplace="";//这个值到后期需要自己去获取处理，准备上一个Intent里边获取该内容
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new);
+        endworkplace=getIntent().getStringExtra("workplace");//进行值的获取赋值
+        System.out.println("endworkplace-----="+endworkplace);
         mSearch = RoutePlanSearch.newInstance();
-        mSearch.setOnGetRoutePlanResultListener(this);
+        mSearch.setOnGetRoutePlanResultListener(this);//查询之后，形成结果返回给他
         initView();//初始化组件的内容
         initLocation();//初始化自我的位置
-        drawRoute();//形成线路
     }
-
     /**
      * 初始化图形布局
      */
@@ -91,47 +85,15 @@ public class NewActivity extends Activity implements OnGetRoutePlanResultListene
         myMapView = (MapView) findViewById(R.id.baiduMapView);
         myBaiduMap = myMapView.getMap();
         //根据给定增量缩放地图级别
-        MapStatusUpdate msu= MapStatusUpdateFactory.zoomTo(18.0f);
+        MapStatusUpdate msu= MapStatusUpdateFactory.zoomTo(14.0f);
         myBaiduMap.setMapStatus(msu);
     }
-    //绘制路线开始
-    private void drawRoute(){
-        myLinearLayout2 = (LinearLayout) findViewById(R.id.linearLayout2);
-        //显示地址搜索区域2
-        myLinearLayout2.setVisibility(View.VISIBLE);
-        final EditText myEditText_site = (EditText) findViewById(R.id.editText_site);
-        Button button_site = (Button) findViewById(R.id.button_sitesearch);
-        button_site.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String site_str = myEditText_site.getText().toString();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        AddressToLatitudeLongitude at = new AddressToLatitudeLongitude(site_str);
-                        at.getLatAndLngByAddress();
-                        System.out.println("测试经纬度的获取-----"+at.getLatitude()+"long"+at.getLongitude());
-                        //getLocationByLL(at.getLatitude(), at.getLongitude());
-                        PlanNode st1=PlanNode.withLocation(new LatLng(myLatitude,myLongitude));
-                        PlanNode ed1=PlanNode.withLocation(new LatLng(at.getLatitude(),at.getLongitude()));
-                        mSearch.walkingSearch((new WalkingRoutePlanOption())
-                                .from(st1).to(ed1));
-                    }
-                }).start();
-                //隐藏前面地址输入区域
-                myLinearLayout2.setVisibility(View.GONE);
-                //隐藏输入法键盘
-                InputMethodManager imm = (InputMethodManager) getSystemService(
-                        Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-            }
-        });
-    }
+
     /**
      * 初始化自我中心位置内容
      */
     public void initLocation(){
-        locationMode = MyLocationConfiguration.LocationMode.NORMAL;
+        locationMode = MyLocationConfiguration.LocationMode.NORMAL;//常规图层显示
         //定位服务的客户端。宿主程序在客户端声明此类，并调用，目前只支持在主线程中启动
         mylocationClient = new LocationClient(this);
         mylistener = new MylocationListener();
@@ -150,14 +112,11 @@ public class NewActivity extends Activity implements OnGetRoutePlanResultListene
         mOption.setScanSpan(span);
         //设置 LocationClientOption
         mylocationClient.setLocOption(mOption);
-
         //初始化图标,BitmapDescriptorFactory是bitmap 描述信息工厂类.
         myIconLocation1 = BitmapDescriptorFactory.fromResource(R.drawable.location_marker);
 //        myIconLocation2 = BitmapDescriptorFactory.fromResource(R.drawable.icon_target);
-
         //配置定位图层显示方式,三个参数的构造器
-        MyLocationConfiguration configuration
-                = new MyLocationConfiguration(locationMode, true, myIconLocation1);
+        MyLocationConfiguration configuration = new MyLocationConfiguration(locationMode, true, myIconLocation1);
         //设置定位图层配置信息，只有先允许定位图层后设置定位图层配置信息才会生效，参见 setMyLocationEnabled(boolean)
         myBaiduMap.setMyLocationConfigeration(configuration);
         myOrientationListener = new MyOrientationListener(this);
@@ -197,16 +156,41 @@ public class NewActivity extends Activity implements OnGetRoutePlanResultListene
                 //提示当前所在地址信息
 //                Toast.makeText(context, bdLocation.getAddrStr(), Toast.LENGTH_SHORT).show();
             }
-
         }
     }
-    //通过为止获取经纬度
+
+    /**
+     * 获取定位信息，这里边自身定位最终结果才形成
+     * @param la
+     * @param lg
+     */
     public void getLocationByLL(double la, double lg) {
         //地理坐标的数据结构
         LatLng latLng = new LatLng(la, lg);
         //描述地图状态将要发生的变化,通过当前经纬度来使地图显示到该位置
         MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
         myBaiduMap.setMapStatus(msu);
+        drawRoute();//形成线路
+    }
+
+    /**
+     * 这里是形成最终路线
+     * 采用线程方式，耗时操作都采用线程处理
+     */
+    private void drawRoute(){
+        new Thread(new Runnable() {//这个操作要放在子线程里面进行
+            @Override
+            public void run() {
+                AddressToLatitudeLongitude at=new AddressToLatitudeLongitude(endworkplace);
+                at.getLatAndLngByAddress();
+                System.out.println("at.getLatitude-----"+at.getLatitude());
+                PlanNode st1=PlanNode.withLocation(new LatLng(myLatitude,myLongitude));
+                System.out.println("myLatitude-----"+myLatitude);
+                PlanNode ed1=PlanNode.withLocation(new LatLng(at.getLatitude(),at.getLongitude()));
+                mSearch.walkingSearch((new WalkingRoutePlanOption())//搜索步行路线
+                        .from(st1).to(ed1));
+            }
+        }).start();
     }
 
     @Override
@@ -253,7 +237,7 @@ public class NewActivity extends Activity implements OnGetRoutePlanResultListene
             // result.getSuggestAddrInfo()
             AlertDialog.Builder builder = new AlertDialog.Builder(NewActivity.this);
             builder.setTitle("提示");
-            builder.setMessage("检索地址有歧义，请重新设置。\n可通过getSuggestAddrInfo()接口获得建议查询信息");
+            builder.setMessage("检索地址有歧义，请重新设置！");
             builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

@@ -34,19 +34,17 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="d8DrlRK9shrfR8Mvk41YX2zhTs1tgCL1" />
-
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
-
         <activity
             android:name=".MainActivity"
             android:theme="@style/TranslucentTheme">
-           <!-- <intent-filter>
+           <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+           </intent-filter>
         </activity>
         <activity android:name=".WebViewActivity" />
         <activity android:name=".LoginActivity" />
@@ -79,10 +77,10 @@
             -->
         </activity>
         <activity android:name=".NewActivity">
-            <intent-filter>
+           <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
     </application>
 

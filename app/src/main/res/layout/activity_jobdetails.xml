@@ -146,6 +146,7 @@
                 </LinearLayout>
                 <!--这里是兼职地点-->
                 <LinearLayout
+                    android:id="@+id/ll_map"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:gravity="center"
@@ -173,7 +174,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="公交路线>"
+                        android:text="路线规划>"
                         android:textSize="16sp"
                         />
                 </LinearLayout>

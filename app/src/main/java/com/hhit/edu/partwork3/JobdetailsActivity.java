@@ -1,7 +1,10 @@
 package com.hhit.edu.partwork3;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -20,8 +23,7 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class JobdetailsActivity extends AppCompatActivity {
-
+public class JobdetailsActivity extends AppCompatActivity implements View.OnClickListener{
     @InjectView(R.id.jobtitle)
     TextView jobtitle;//兼职标题
     @InjectView(R.id.paymoney)
@@ -42,7 +44,6 @@ public class JobdetailsActivity extends AppCompatActivity {
     TextView workplace;
     @InjectView(R.id.tv_content)
     TextView tv_content;
-
     //用户相关信息组件
     @InjectView(R.id.tv_username)
     TextView tv_username;
@@ -54,6 +55,8 @@ public class JobdetailsActivity extends AppCompatActivity {
     ImageView circle_image;
     JobBean job;
     UserBean user;
+    @InjectView(R.id.ll_map)
+    LinearLayout ll_map;
     int id;
     int userid;
     @Override
@@ -61,6 +64,7 @@ public class JobdetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jobdetails);
         ButterKnife.inject(this);//使用注解
+        ll_map.setOnClickListener(this);
         id=getIntent().getIntExtra("id",0);//依据Id查询兼职的详细信息
         userid=getIntent().getIntExtra("userid",1);//依据userId查询用户的相关信息
         System.out.println("获取的id的值是-----"+id);
@@ -129,4 +133,14 @@ public class JobdetailsActivity extends AppCompatActivity {
         Glide.with(JobdetailsActivity.this).load(user.getPhotouri()).into(circle_image);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ll_map://点击的是路线选择
+                Intent intent=new Intent(this,NewActivity.class);
+                intent.putExtra("workplace",job.getWorkplace());
+                startActivity(intent);
+                break;
+        }
+    }
 }

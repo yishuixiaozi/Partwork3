@@ -72,9 +72,9 @@ public class AddressToLatitudeLongitude {
     public Double getLongitude() {
     		return this.Longitude;
     }
-    
+
     public static void main(String[] args) {
-    		AddressToLatitudeLongitude at = new AddressToLatitudeLongitude("安徽省亳州市亳州一中");
+    		AddressToLatitudeLongitude at = new AddressToLatitudeLongitude("江苏省连云港市淮海工学院");
     		at.getLatAndLngByAddress();
     		System.out.println(at.getLatitude() + " " + at.getLongitude());
     }
