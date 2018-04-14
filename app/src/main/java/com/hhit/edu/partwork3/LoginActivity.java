@@ -24,10 +24,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();//隐藏标题栏的作用
-
         intiView();
     }
-
     /**
      * 获得登录界面的所有组件
      */
