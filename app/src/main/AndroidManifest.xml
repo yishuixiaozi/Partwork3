@@ -4,6 +4,7 @@
 
     <!-- 这里是kangfang里边所使用的权限的内容 -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -43,6 +44,7 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/TranslucentTheme">
+
             <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,8 +58,7 @@
         <activity android:name=".changepasswordActivity" />
         <activity android:name=".registerActivity" />
         <activity android:name=".EditPhotoActivity" />
-        <activity android:name=".NomainActivity">
-        </activity>
+        <activity android:name=".NomainActivity"></activity>
         <activity android:name=".PreviewActivity" />
         <activity android:name=".ExpressActivity" />
         <activity android:name=".SearchActivity" />
@@ -65,18 +66,37 @@
             android:name=".SearchexpressActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ResultexpressActivity" />
-        <activity android:name=".JobdetailsActivity">
-        </activity>
-        <activity android:name=".NewActivity">
-        </activity>
+        <activity android:name=".JobdetailsActivity"></activity>
+        <activity android:name=".NewActivity"></activity>
         <activity android:name=".WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TestActivity"></activity>
-        <activity android:name=".GuideActivity"></activity>
+        <activity android:name=".TestActivity" />
+        <activity android:name=".GuideActivity" />
+
+        <!-- 下边这两个活动是tencentjar包中自己带的 -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent1106841364" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+        </activity>
+        <activity android:name=".Login2Activity">
+        </activity>
     </application>
 
 </manifest>

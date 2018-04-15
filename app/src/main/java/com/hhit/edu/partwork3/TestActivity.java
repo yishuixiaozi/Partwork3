@@ -13,11 +13,11 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
         SharedPreferences preferences=getSharedPreferences("mydatabase",MODE_PRIVATE);
         String username=preferences.getString("username","");
-        if ("".equals(username)){
+        /*if ("".equals(username)){
             System.out.println("第一次用户信息是为空的");
             startActivity(new Intent(this,LoginActivity.class));
             finish();
-        }
+        }*/
         System.out.println("清空数据之前---------------TestActivity"+username);
        /* SharedPreferences.Editor editor=preferences.edit();
         editor.clear();

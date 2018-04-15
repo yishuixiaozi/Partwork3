@@ -31,6 +31,7 @@ dependencies {
     })
     compile files('libs/universal-image-loader-1.9.5.jar')
     compile files('libs/BaiduLBS_Android.jar')
+    compile files('libs/open_sdk_r5990_lite.jar')
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
