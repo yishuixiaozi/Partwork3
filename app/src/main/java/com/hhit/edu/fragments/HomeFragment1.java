@@ -178,7 +178,7 @@ public class HomeFragment1 extends Fragment
         tv_cityName = (TextView) view.findViewById(R.id.tv_cityname);
         lv = (ListView) view.findViewById(R.id.home_lv);
         btn_scan = (ImageButton) view.findViewById(R.id.btn_scan);
-        TextView btn1 = (TextView) buttonView.findViewById(R.id.tv_xinfang);
+        TextView btn1 = (TextView) buttonView.findViewById(R.id.tv_express);
         TextView btn2 = (TextView) buttonView.findViewById(R.id.tv_ershoufang);
         TextView btn3 = (TextView) buttonView.findViewById(R.id.tv_zufang);
         TextView btn4 = (TextView) buttonView.findViewById(R.id.tv_zixun);
@@ -258,7 +258,7 @@ public class HomeFragment1 extends Fragment
                 System.out.println("点击的是城市的名字，准备进入城市选择界面");
             }
             break;
-            case R.id.tv_xinfang: {//快递查询功能
+            case R.id.tv_express: {//快递查询功能
                 startActivity(new Intent(getActivity(), ExpressActivity.class));
             }
             break;

@@ -25,7 +25,6 @@ public class GuideActivity extends Activity {
         initViews();
         initdots();
     }
-
     private void initViews(){
         layout_guide = (RelativeLayout) findViewById(R.id.layout_guide);//获取该页面布局对象
         views = new ArrayList<View>();//存放组件的数组
@@ -76,13 +75,12 @@ public class GuideActivity extends Activity {
             public void onPageScrollStateChanged(int arg0) {
             }
         });
-        // 点击按钮跳转到主界面
+        // 结束导航页面进入扥路界面
         views.get(views.size() - 1).findViewById(R.id.btn_start)//最后一个获取按钮组件并且设置点击事件
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(GuideActivity.this,
-                                TestActivity.class));//
+                        startActivity(new Intent(GuideActivity.this, LoginActivity.class));//
                         finish();//无法通过返回键回到上面的内容
                     }
                 });

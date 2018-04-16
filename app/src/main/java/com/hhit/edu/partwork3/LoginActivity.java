@@ -1,6 +1,6 @@
 package com.hhit.edu.partwork3;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,10 +9,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.hhit.edu.bean.EntityResponse;
 import com.hhit.edu.bean.UserBean;
 import com.hhit.edu.my_interface.HomePageInterface;
+import com.hhit.edu.utils.ApiManager;
+import com.hhit.edu.utils.RetrofitUtils;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.auth.QQToken;
@@ -33,9 +37,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
-
     //登录界面的必要参数
     private EditText loginId;
     private EditText loginPassword;
@@ -44,22 +46,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button loginNewUser;
     private Button loginChangePw;
     //这个用于测试内容
-    private Button loginqq;
-
+    private ImageView im_loginqq;
+    private ImageView im_loginweixin;
+    //免登录使用
+    private Button nologin;
     private Tencent mTencent;
-
     private String openidString;
     private UserInfo info;
     private UserBean userBean=new UserBean();
     private BaseUiListener baseUiListene=new BaseUiListener();//是这个地方我写错了，没有实例化
     Map<String, String> map = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        getSupportActionBar().hide();//隐藏标题栏的作用
-        mTencent=Tencent.createInstance("1106841364",this.getApplicationContext());
-        intiView();
+        SharedPreferences preferences=getSharedPreferences("mydata",MODE_PRIVATE);
+        String username=preferences.getString("nickname","default");
+        if(username.equals("default")){
+            System.out.println("没有存值-------username=--------------"+username);
+            setContentView(R.layout.activity_login);
+            getSupportActionBar().hide();//隐藏标题栏的作用
+            mTencent=Tencent.createInstance("1106841364",this.getApplicationContext());
+            intiView();
+        }else {
+            System.out.println("已经存值--------username----------------"+username);
+           startActivity(new Intent(this,MainActivity.class));
+            finish();
+        }
+
     }
     /**
      * 获得登录界面的所有组件
@@ -75,21 +89,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginNewUser.setOnClickListener(this);
         loginChangePw = (Button) findViewById(R.id.loginChangePw);
         loginChangePw.setOnClickListener(this);
-        //qq登录的测试使用
-        loginqq= (Button) findViewById(R.id.loginqq);
-        loginqq.setOnClickListener(this);
+        //微信QQ的地三方登录
+        im_loginqq= (ImageView) findViewById(R.id.im_loginqq);
+        im_loginqq.setOnClickListener(this);
+        im_loginweixin= (ImageView) findViewById(R.id.im_loginweixin);
+        im_loginweixin.setOnClickListener(this);
+        //免登录控件后期需要删掉
+        nologin= (Button) findViewById(R.id.nologin);
+        nologin.setOnClickListener(this);
     }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.loginBtn:
-                //进行一个数据库的操作
-                /*
-                * 1.获取页面输入的值
-                * 2.与服务器端数据库比较
-                * 3.看看结果，然后是否跳转*/
-                Toast.makeText(LoginActivity.this, "暂时没写方法呢",
-                        Toast.LENGTH_SHORT).show();
+                login();//获取结果进行操作
                 break;
             case R.id.loginMissps:
                 System.out.println("忘记密码");
@@ -108,10 +121,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         changepasswordActivity.class);
                 startActivity(l);
                 break;
-            case R.id.loginqq:
+            case R.id.im_loginqq:
                 System.out.println("---------------------------------第三方qq登录");
                 mTencent.login(LoginActivity.this,"all",baseUiListene);
                 System.out.println("mtencent-----="+mTencent.getOpenId());
+                break;
+            case R.id.im_loginweixin:
+                System.out.println("-----------------微信登录");
+                break;
+            case R.id.nologin:
+                startActivity(new Intent(this,MainActivity.class));
+                finish();
             default:
                 break;
         }
@@ -152,7 +172,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                        /* map.put("nickname",((JSONObject) o).getString("nickname"));
                         map.put("year",((JSONObject) o).getString("year"));*/
                         saveInfo(userBean);
-                        Intent intent=new Intent(LoginActivity.this, TestActivity.class);
+                        SharedPreferences preferences=getSharedPreferences("mydata",MODE_PRIVATE);
+                        SharedPreferences.Editor editor=preferences.edit();
+                        editor.putString("nickname",((JSONObject) o).getString("nickname"));
+                        editor.commit();
+                        Intent intent=new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                     }catch (JSONException e){
@@ -191,9 +215,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      * @param
      */
     private void saveInfo(UserBean userBean){
-        System.out.println("------------saveInfo---"+map.get("nickname"));
+        System.out.println("------------saveInfo---"+userBean.getNickname());
         Retrofit retrofit=new Retrofit.Builder()
-                .baseUrl("http://192.168.137.1:8080/AndroidService/")//http://192.168.0.101 192.168.137.1
+                .baseUrl(ApiManager.COMPUTER_BASE_URL)//http://192.168.0.101  192.168.137.1
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
@@ -207,5 +231,36 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         System.out.println("success----------------------");
                     }
                 });
+    }
+    /**
+     * 自己登录的方法
+     */
+    public void login(){
+        System.out.println("登录操作--------");
+        final String username=loginId.getText().toString();
+        String password=loginPassword.getText().toString();
+        final HomePageInterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(HomePageInterface.class);
+        request.getUserLoginInfo(username,password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<EntityResponse<UserBean>>() {
+                    @Override
+                    public void accept(EntityResponse<UserBean> userBeanEntityResponse) throws Exception {
+                        System.out.println("返回信息值处理"+userBeanEntityResponse.getMsg());
+                        if ("success".equals(userBeanEntityResponse.getMsg())){
+                            SharedPreferences preferences=getSharedPreferences("mydata",MODE_PRIVATE);
+                            SharedPreferences.Editor editor=preferences.edit();
+                            editor.putString("nickname",username);
+                            editor.commit();
+                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                            finish();
+                        }
+                        else {
+                            Toast.makeText(LoginActivity.this,"用户名或密码错误！请重新登陆",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
     }
 }

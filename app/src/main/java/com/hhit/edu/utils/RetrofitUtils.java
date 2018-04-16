@@ -1,5 +1,7 @@
 package com.hhit.edu.utils;
 
+import android.net.Uri;
+
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -20,13 +22,8 @@ public class RetrofitUtils {
     }
     public static Retrofit newInstence(String url){
         mRetrofit=null;
-      /*  OkHttpClient client=new OkHttpClient();
-        client.setReadTimeout*/
-      /*  OkHttpClient client=new OkHttpClient();
-        client.setReadTimeout(READ_TIMEOUT, TimeUnit.MINUTES);
-        client.setConnectTimeout(CONN_TIMEOUT,TimeUnit.MINUTES);*/
         mRetrofit=new Retrofit.Builder()
-                .baseUrl(url)
+                .baseUrl(url)//使用电脑配置
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();

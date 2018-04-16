@@ -40,18 +40,14 @@ public interface HomePageInterface {
     @POST("UploadServlet/uploadimage")
     Call<String> uploadimage(@Part("fileName") String description,
                              @Part("file\";filename=\"image.png\"")RequestBody imgs);
-
-
     @POST("StudentServlet/getAllStudent")
     Call<String> getAllStudent();
-
     /**
      *  MyhomeFragment use
      * @return 获取所有简约兼职信息
      */
     @POST("JobServlet/getAllJob")
     Observable<ListResponse<JobBean>> getAllJob();
-
     /**
      * 每八条显示内容
      * @param pagenum
@@ -59,7 +55,6 @@ public interface HomePageInterface {
      */
     @POST("JobServlet/getJobByPage")
     Observable<ListResponse<JobBean>> getJobByPage(@Query("pagenum") int pagenum);
-
     /**
      * 依据Id查找兼职详细信息的
      * @param id
@@ -67,13 +62,14 @@ public interface HomePageInterface {
      */
     @POST("JobServlet/getJobById")
     Observable<EntityResponse<JobBean>> getJobById(@Query("id") int id);
-
+    //查询用户单独信息使用
     @POST("UserServlet/getUserById")
     Observable<EntityResponse<UserBean>> getUserById(@Query("userid") int userid);
-
+    //QQ三方登录使用
     @POST("UserServlet/UUserByUserid")
     Observable<String> UUserByUserid(@Body UserBean user);
-    /*@GET(ApiManager.HOME_BANNER)
-    Call<BannerBean> getBannerBean(@Query("cityid") String cityid);
-*/
+    //这个是用户登录使用
+    @POST("UserServlet/getUser")
+    Observable<EntityResponse<UserBean>> getUserLoginInfo(@Query("username") String username,
+                                                          @Query("password") String password);
 }

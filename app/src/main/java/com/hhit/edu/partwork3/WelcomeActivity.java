@@ -50,7 +50,7 @@ public class WelcomeActivity extends Activity {
         }else {
             handler.sendEmptyMessageDelayed(GO_GUIDE,DELAY);//启动引导页
             SharedPreferences.Editor editor=preferences.edit();
-            editor.putBoolean(START_KEY,false);
+            editor.putBoolean(START_KEY,false);//SharesPreference中存了第一个值
             //editor.clear();
             editor.commit();
         }

@@ -13,6 +13,8 @@ import com.hhit.edu.bean.JobBean;
 import com.hhit.edu.bean.ListResponse;
 import com.hhit.edu.bean.UserBean;
 import com.hhit.edu.my_interface.HomePageInterface;
+import com.hhit.edu.utils.ApiManager;
+import com.hhit.edu.utils.RetrofitUtils;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import butterknife.ButterKnife;
@@ -77,12 +79,7 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
      */
     public void getData(){
         System.out.println("获取兼职详细信息");
-        Retrofit retrofit=new Retrofit.Builder()
-                .baseUrl("http://192.168.137.1:8080/AndroidService/")//http://192.168.0.101 192.168.137.1
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-        final HomePageInterface request=retrofit.create(HomePageInterface.class);
+        final HomePageInterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(HomePageInterface.class);
         request.getJobById(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -19,8 +19,11 @@ import com.hhit.edu.bean.HomePageBean;
 import com.hhit.edu.bean.JobBean;
 import com.hhit.edu.bean.ListResponse;
 import com.hhit.edu.my_interface.HomePageInterface;
+import com.hhit.edu.partwork3.ExpressActivity;
 import com.hhit.edu.partwork3.JobdetailsActivity;
 import com.hhit.edu.partwork3.R;
+import com.hhit.edu.utils.ApiManager;
+import com.hhit.edu.utils.RetrofitUtils;
 import com.hhit.edu.view.HomeSecondView;
 import com.hhit.edu.view.PullToRefreshHeadView;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -55,6 +58,8 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
     AbstractBaseAdapter<JobBean> adapter;//<>这个是限制存储的数据的类型方式
     boolean isAddMore;//是否加载更多数据
     private int pagenum=0;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +85,7 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
      */
     public void setupview(View view){
         lv=(ListView) view.findViewById(R.id.home_lv);//列表组件需要先创建对象
-        TextView btn1 = (TextView) SecondView.findViewById(R.id.tv_xinfang);
+        TextView btn1 = (TextView) SecondView.findViewById(R.id.tv_express);
         TextView btn2 = (TextView) SecondView.findViewById(R.id.tv_ershoufang);
         setupRefreshView(view);
         btn1.setOnClickListener(this);
@@ -154,12 +159,7 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
      */
     public void getData(){
         System.out.println("获取数据内容测试==============");
-        Retrofit retrofit=new Retrofit.Builder()
-                .baseUrl("http://192.168.137.1:8080/AndroidService/")//http://192.168.0.101 192.168.137.1
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-        final HomePageInterface request=retrofit.create(HomePageInterface.class);
+        final HomePageInterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(HomePageInterface.class);
         request.getJobByPage(pagenum)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -179,8 +179,9 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.tv_xinfang:{
-                System.out.println("你点击了快递查询这个功能");
+            case R.id.tv_express:{
+                System.out.println("快递查询");
+                startActivity(new Intent(getActivity(), ExpressActivity.class));
             }
             break;
         }
