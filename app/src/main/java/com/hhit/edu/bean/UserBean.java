@@ -13,6 +13,53 @@ public class UserBean {
     private int fansnum;
     private String company;
     private String comnature;
+    //new here 2018.4.15
+    private String userid;
+    private String nickname;
+    private String year;
+    private String city;
+    private String gender;
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
     public int getId() {
         return id;

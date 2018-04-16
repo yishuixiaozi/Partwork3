@@ -6,14 +6,19 @@ import com.hhit.edu.bean.ListResponse;
 import com.hhit.edu.bean.UserBean;
 import com.hhit.edu.utils.ApiManager;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.FieldMap;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 /**
  * Created by Administrator on 2016/11/23 0023.
@@ -65,6 +70,9 @@ public interface HomePageInterface {
 
     @POST("UserServlet/getUserById")
     Observable<EntityResponse<UserBean>> getUserById(@Query("userid") int userid);
+
+    @POST("UserServlet/UUserByUserid")
+    Observable<String> UUserByUserid(@Body UserBean user);
     /*@GET(ApiManager.HOME_BANNER)
     Call<BannerBean> getBannerBean(@Query("cityid") String cityid);
 */

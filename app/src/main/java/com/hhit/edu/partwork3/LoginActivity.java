@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.hhit.edu.bean.UserBean;
+import com.hhit.edu.my_interface.HomePageInterface;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.auth.QQToken;
 import com.tencent.tauth.IUiListener;
@@ -21,6 +24,15 @@ import junit.framework.Test;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -38,8 +50,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private String openidString;
     private UserInfo info;
-
+    private UserBean userBean=new UserBean();
     private BaseUiListener baseUiListene=new BaseUiListener();//是这个地方我写错了，没有实例化
+    Map<String, String> map = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +126,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 System.out.println("-------0.tostring--------"+o.toString());
                 openidString=((JSONObject)o).getString("openid");//openid是腾讯返回的固定内容
                 //给mTencent对象设置内容
+                userBean.setUserid(((JSONObject)o).getString("openid"));
                 mTencent.setOpenId(openidString);
                 mTencent.setAccessToken(((JSONObject) o).getString("access_token"),((JSONObject) o).getString("expires_in"));
             }catch (JSONException e){
@@ -129,7 +143,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         System.out.println("-----------------------"+((JSONObject) o).getString("nickname")+((JSONObject) o).getString("gender"));
                         //Toast.makeText(getApplicationContext(), ((JSONObject) o).getString("nickname")+((JSONObject) o).getString("gender"), Toast.LENGTH_SHORT).show();
                         //Log.v("UserInfo",o.toString());
-
+                        //userBean.setUserid(((JSONObject) o).getString("nickname"));
+                        userBean.setNickname(((JSONObject) o).getString("nickname"));
+                        userBean.setYear(((JSONObject) o).getString("year"));
+                        userBean.setCity(((JSONObject) o).getString("city"));
+                        userBean.setGender(((JSONObject) o).getString("gender"));
+                        userBean.setPhotouri(((JSONObject) o).getString("figureurl_qq_2"));
+                       /* map.put("nickname",((JSONObject) o).getString("nickname"));
+                        map.put("year",((JSONObject) o).getString("year"));*/
+                        saveInfo(userBean);
                         Intent intent=new Intent(LoginActivity.this, TestActivity.class);
                         startActivity(intent);
                         finish();
@@ -162,5 +184,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Tencent.onActivityResultData(requestCode, resultCode, data, baseUiListene);
+    }
+
+    /**
+     * 这个是进行自己服务器数据库的存储的内容
+     * @param
+     */
+    private void saveInfo(UserBean userBean){
+        System.out.println("------------saveInfo---"+map.get("nickname"));
+        Retrofit retrofit=new Retrofit.Builder()
+                .baseUrl("http://192.168.137.1:8080/AndroidService/")//http://192.168.0.101 192.168.137.1
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+        final HomePageInterface request=retrofit.create(HomePageInterface.class);
+        request.UUserByUserid(userBean)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        System.out.println("success----------------------");
+                    }
+                });
     }
 }
