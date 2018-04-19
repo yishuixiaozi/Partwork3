@@ -24,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.hhit.edu.my_interface.HomePageInterface;
+import com.hhit.edu.utils.ApiManager;
+import com.hhit.edu.utils.RetrofitUtils;
 import com.hhit.edu.utils.SDPathUtils;
 import com.hhit.edu.view.CircleImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -208,7 +210,7 @@ public class EditPhotoActivity extends AppCompatActivity {
      */
     public void upload(String uri){
         Retrofit retrofit=new Retrofit.Builder()
-                .baseUrl("http://192.168.137.1:8080/AndroidService/")
+                .baseUrl(ApiManager.COMPUTER_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         final HomePageInterface request=retrofit.create(HomePageInterface.class);

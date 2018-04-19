@@ -32,7 +32,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
@@ -243,9 +246,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         request.getUserLoginInfo(username,password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<EntityResponse<UserBean>>() {
+                .subscribe(new Observer<EntityResponse<UserBean>>() {
                     @Override
-                    public void accept(EntityResponse<UserBean> userBeanEntityResponse) throws Exception {
+                    public void onSubscribe(@NonNull Disposable d) {
+                        //这个里边可以写加载过程，然后下边的onComplete写加载成功之后隐藏加载图标
+                        System.out.println("----onSubscribe-----");
+                    }
+                    @Override
+                    public void onNext(@NonNull EntityResponse<UserBean> userBeanEntityResponse) {
                         System.out.println("返回信息值处理"+userBeanEntityResponse.getMsg());
                         if ("success".equals(userBeanEntityResponse.getMsg())){
                             SharedPreferences preferences=getSharedPreferences("mydata",MODE_PRIVATE);
@@ -259,8 +267,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Toast.makeText(LoginActivity.this,"用户名或密码错误！请重新登陆",Toast.LENGTH_SHORT).show();
                         }
                     }
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Toast.makeText(LoginActivity.this,"服务器连接异常！请检查网络问题！",Toast.LENGTH_LONG).show();
+                    }
+                    @Override
+                    public void onComplete() {
+                        //这个里边可以写加载图标影藏问题
+                        System.out.println("-------onComplete--------");
+                    }
                 });
-
-
     }
 }

@@ -127,6 +127,7 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
         tv_username.setText(user.getUsername());
         tv_company.setText(user.getCompany());
         tv_comnature.setText(user.getComnature());
+        System.out.println("------uri获取----"+user.getPhotouri());
         Glide.with(JobdetailsActivity.this).load(user.getPhotouri()).into(circle_image);
     }
 

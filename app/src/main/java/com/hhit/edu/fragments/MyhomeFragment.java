@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.hhit.edu.bean.HomePageBean;
@@ -34,7 +35,10 @@ import java.util.List;
 import adapter.AbstractBaseAdapter;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
@@ -163,7 +167,31 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
         request.getJobByPage(pagenum)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ListResponse<JobBean>>() {
+                .subscribe(new Observer<ListResponse<JobBean>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        //Toast.makeText(getActivity(),"数据加载中请稍后......",Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onNext(@NonNull ListResponse<JobBean> jobBeanListResponse) {
+                        if (buttonmore.equals("0")) {//判断每次刷新的标志，每次刷新清空data列表
+                            jobdata.clear();
+                        }
+                        jobdata.addAll(jobBeanListResponse.getItems());//为什么是添加？
+                        adapter.notifyDataSetChanged();
+                        refresh.refreshComplete();
+                        buttonmore = "0";//这里就是让刷新的时候，能够让buttonmore为“0”
+                    }
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Toast.makeText(getActivity(),"服务器连接异常，请检查！",Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onComplete() {
+                        //Toast.makeText(getActivity(),"数据加载成功",Toast.LENGTH_SHORT).show();
+                    }
+                });
+               /* .subscribe(new Consumer<ListResponse<JobBean>>() {
                     @Override
                     public void accept(ListResponse<JobBean> jobBeanListResponse) throws Exception {
                         if (buttonmore.equals("0")) {//判断每次刷新的标志，每次刷新清空data列表
@@ -174,7 +202,8 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
                         refresh.refreshComplete();
                         buttonmore = "0";//这里就是让刷新的时候，能够让buttonmore为“0”
                     }
-                });
+
+                });*/
     }
     @Override
     public void onClick(View v) {

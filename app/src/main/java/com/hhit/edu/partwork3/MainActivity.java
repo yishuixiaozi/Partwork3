@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT){
             //透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            //透明导航栏
-            //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
         initView();//初始化控件的自定义方法
     }

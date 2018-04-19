@@ -140,6 +140,7 @@ public class NewActivity extends Activity implements OnGetRoutePlanResultListene
         public void onReceiveLocation(BDLocation bdLocation) {
             myLatitude = bdLocation.getLatitude();
             myLongitude = bdLocation.getLongitude();
+            System.out.println("定位信息测试+"+myLatitude);
             MyLocationData data = new MyLocationData.Builder()
                     .direction(myCurrentX)//设定图标方向
                     .accuracy(bdLocation.getRadius())//getRadius 获取定位精度,默认值0.0f
@@ -150,6 +151,7 @@ public class NewActivity extends Activity implements OnGetRoutePlanResultListene
             myBaiduMap.setMyLocationData(data);
             //判断是否为第一次定位,是的话需要定位到用户当前位置
             if (isFirstIn) {
+                System.out.println("第一次进入定位+"+myLatitude);
                 //根据当前所在位置经纬度前往
                 getLocationByLL(myLatitude, myLongitude);
                 isFirstIn = false;
