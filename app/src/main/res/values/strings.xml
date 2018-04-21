@@ -75,4 +75,9 @@
     <string name="about_github">https://github.com/wangchenyan</string>
     <!--引导界面-->
     <string name="main_button">立即使用</string>
+    <!--新的登录界面切换使用-->
+    <string name="popular">招聘用户</string>
+    <string name="home">求职用户</string>
+    <string name="account">Account</string>
+    <string name="page">Page %1$d</string>
 </resources>
