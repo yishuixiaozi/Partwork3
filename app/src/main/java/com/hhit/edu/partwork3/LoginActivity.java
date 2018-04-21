@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             intiView();
         }else {
             System.out.println("已经存值--------username----------------"+username);
-           startActivity(new Intent(this,MainActivity.class));
+            startActivity(new Intent(this,MainActivity.class));
             finish();
         }
 
@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.loginBtn:
-                login();//获取结果进行操作
+                login();//自我用户判断
                 break;
             case R.id.loginMissps:
                 System.out.println("忘记密码");
@@ -243,6 +243,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         final String username=loginId.getText().toString();
         String password=loginPassword.getText().toString();
         final HomePageInterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(HomePageInterface.class);
+        //这个地方调用的方法要进行判断
         request.getUserLoginInfo(username,password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

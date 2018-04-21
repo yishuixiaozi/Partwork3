@@ -19,6 +19,43 @@ public class UserBean {
     private String year;
     private String city;
     private String gender;
+    //
+    private String phonenum;
+    private String sumary;
+    private String level;
+    private int integration;
+
+    public String getPhonenum() {
+        return phonenum;
+    }
+
+    public void setPhonenum(String phonenum) {
+        this.phonenum = phonenum;
+    }
+
+    public String getSumary() {
+        return sumary;
+    }
+
+    public void setSumary(String sumary) {
+        this.sumary = sumary;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public int getIntegration() {
+        return integration;
+    }
+
+    public void setIntegration(int integration) {
+        this.integration = integration;
+    }
 
     public String getYear() {
         return year;

@@ -68,8 +68,12 @@ public interface HomePageInterface {
     //QQ三方登录使用
     @POST("UserServlet/UUserByUserid")
     Observable<String> UUserByUserid(@Body UserBean user);
-    //这个是用户登录使用
+    //这个是求职者用户登录使用
     @POST("UserServlet/getUser")
     Observable<EntityResponse<UserBean>> getUserLoginInfo(@Query("username") String username,
                                                           @Query("password") String password);
+    //这里是招聘者用户登录使用
+    @POST("UserServlet/getUser2")
+    Observable<EntityResponse<UserBean>> getUserLoginInfo2(@Query("username") String username,
+                                                           @Query("password") String password);
 }

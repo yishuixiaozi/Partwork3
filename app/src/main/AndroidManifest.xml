@@ -58,7 +58,7 @@
         <activity android:name=".changepasswordActivity" />
         <activity android:name=".registerActivity" />
         <activity android:name=".EditPhotoActivity" />
-        <activity android:name=".NomainActivity"></activity>
+        <activity android:name=".NomainActivity" />
         <activity android:name=".PreviewActivity" />
         <activity android:name=".ExpressActivity" />
         <activity android:name=".SearchActivity" />
@@ -66,8 +66,8 @@
             android:name=".SearchexpressActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ResultexpressActivity" />
-        <activity android:name=".JobdetailsActivity"></activity>
-        <activity android:name=".NewActivity"></activity>
+        <activity android:name=".JobdetailsActivity" />
+        <activity android:name=".NewActivity" />
         <activity android:name=".WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -85,18 +85,19 @@
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="tencent1106841364" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
-        </activity>
-        <activity android:name=".Login2Activity">
-        </activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+        <activity android:name=".Login2Activity"></activity>
+        <activity android:name=".LoginnewActivity"></activity>
     </application>
 
 </manifest>
