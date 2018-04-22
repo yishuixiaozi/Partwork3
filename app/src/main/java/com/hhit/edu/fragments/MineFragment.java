@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.hhit.edu.partwork3.EditPhotoActivity;
 import com.hhit.edu.partwork3.LoginActivity;
+import com.hhit.edu.partwork3.LoginnewActivity;
 import com.hhit.edu.partwork3.R;
 import com.hhit.edu.view.CircleImageView;
 
@@ -88,7 +89,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 SharedPreferences.Editor editor=preferences.edit();
                 editor.remove("nickname");
                 editor.commit();
-                startActivity(new Intent(getActivity(),LoginActivity.class));
+                startActivity(new Intent(getActivity(),LoginnewActivity.class));
                 break;
             default:
                 break;

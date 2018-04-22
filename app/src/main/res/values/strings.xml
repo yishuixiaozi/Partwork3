@@ -80,4 +80,7 @@
     <string name="home">求职用户</string>
     <string name="account">Account</string>
     <string name="page">Page %1$d</string>
+    <!---->
+    <string name="employee">Employee</string>
+    <string name="employer">Employer</string>
 </resources>

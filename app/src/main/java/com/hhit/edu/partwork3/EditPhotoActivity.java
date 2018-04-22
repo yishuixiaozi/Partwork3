@@ -55,7 +55,7 @@ public class EditPhotoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_photo);
-        getSupportActionBar().hide();//隐藏标题栏
+        //getSupportActionBar().hide();//隐藏标题栏
         imageLoader.init(ImageLoaderConfiguration.createDefault(EditPhotoActivity.this));
         //获取组布局对象
         ivHeadLogo= (CircleImageView) findViewById(R.id.iv_head);

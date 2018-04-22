@@ -26,6 +26,7 @@ import retrofit2.http.QueryMap;
 public interface HomePageInterface {
     /**
      * 这里是获取QQ看房网接口的数据内容并且进行填充
+     *
      * @param pageflag
      * @param buttonmore
      * @param cityid
@@ -39,41 +40,58 @@ public interface HomePageInterface {
     @Multipart
     @POST("UploadServlet/uploadimage")
     Call<String> uploadimage(@Part("fileName") String description,
-                             @Part("file\";filename=\"image.png\"")RequestBody imgs);
+                             @Part("file\";filename=\"image.png\"") RequestBody imgs);
+
     @POST("StudentServlet/getAllStudent")
     Call<String> getAllStudent();
+
     /**
-     *  MyhomeFragment use
+     * MyhomeFragment use
+     *
      * @return 获取所有简约兼职信息
      */
     @POST("JobServlet/getAllJob")
     Observable<ListResponse<JobBean>> getAllJob();
+
     /**
      * 每八条显示内容
+     *
      * @param pagenum
      * @return
      */
     @POST("JobServlet/getJobByPage")
     Observable<ListResponse<JobBean>> getJobByPage(@Query("pagenum") int pagenum);
+
     /**
      * 依据Id查找兼职详细信息的
+     *
      * @param id
      * @return
      */
     @POST("JobServlet/getJobById")
     Observable<EntityResponse<JobBean>> getJobById(@Query("id") int id);
+
     //查询用户单独信息使用
     @POST("UserServlet/getUserById")
     Observable<EntityResponse<UserBean>> getUserById(@Query("userid") int userid);
+
     //QQ三方登录使用
     @POST("UserServlet/UUserByUserid")
     Observable<String> UUserByUserid(@Body UserBean user);
+
     //这个是求职者用户登录使用
     @POST("UserServlet/getUser")
     Observable<EntityResponse<UserBean>> getUserLoginInfo(@Query("username") String username,
                                                           @Query("password") String password);
+
     //这里是招聘者用户登录使用
     @POST("UserServlet/getUser2")
     Observable<EntityResponse<UserBean>> getUserLoginInfo2(@Query("username") String username,
                                                            @Query("password") String password);
+
+    //两个公用一个登录接口，到服务器再去判断
+    @POST("UserServlet/getUser")
+    Observable<EntityResponse<UserBean>> UserLogin(@Query("username") String username,
+                                                   @Query("password") String password,
+                                                   @Query("usertype") String usertype);
 }

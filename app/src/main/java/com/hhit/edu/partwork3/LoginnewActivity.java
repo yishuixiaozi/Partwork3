@@ -1,5 +1,7 @@
 package com.hhit.edu.partwork3;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -17,31 +19,28 @@ import com.hhit.edu.fragments.LoginFragment;
 import com.hhit.edu.utils.LivingTabsLayout;
 import java.util.Locale;
 public class LoginnewActivity extends AppCompatActivity implements View.OnClickListener{
-    //登录界面的必要参数
-    private EditText loginId;
-    private EditText loginPassword;
-    private Button loginBtn;
-    private Button loginMissps;
-    private Button loginNewUser;
-    private Button loginChangePw;
-    //这个用于测试内容
-    private ImageView im_loginqq;
-    private ImageView im_loginweixin;
-    //免登录使用
-    private Button nologin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loginnew);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().hide();
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(sectionsPagerAdapter);
-        viewPager.setCurrentItem(1);
-        LivingTabsLayout tabs = (LivingTabsLayout) findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
+        SharedPreferences preferences=getSharedPreferences("mydata",MODE_PRIVATE);
+        String username=preferences.getString("nickname","default");
+        if(username.equals("default")){
+            setContentView(R.layout.activity_loginnew);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().hide();
+            SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+            ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+            viewPager.setAdapter(sectionsPagerAdapter);
+            viewPager.setCurrentItem(1);
+            LivingTabsLayout tabs = (LivingTabsLayout) findViewById(R.id.tabs);
+            tabs.setupWithViewPager(viewPager);
+        }else {
+            System.out.println("已经存值--------username----------------"+username);
+            startActivity(new Intent(this,MainActivity.class));
+            finish();
+        }
+
     }
 
     @Override
@@ -68,7 +67,7 @@ public class LoginnewActivity extends AppCompatActivity implements View.OnClickL
         @Override
         public CharSequence getPageTitle(int position) {
             Locale l = Locale.getDefault();
-            switch (position) {//字迹获取
+            switch (position) {
                 case 0:
                     return getString(R.string.popular).toUpperCase(l);
                 case 1:

@@ -18,7 +18,7 @@ public class WelcomeActivity extends Activity {
     }
     //去app登录界面
     private void gohome(){
-        startActivity(new Intent(this,LoginActivity.class));
+        startActivity(new Intent(this,LoginnewActivity.class));
         finish();
     }
     private void goguide(){

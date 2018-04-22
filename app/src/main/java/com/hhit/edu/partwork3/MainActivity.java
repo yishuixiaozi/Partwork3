@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();//隐藏标题栏的作用
+        //getSupportActionBar().hide();//隐藏标题栏的作用
         setContentView(R.layout.activity_main);
         /*SharedUtils.saveFirstRun(this);用来保存第一次启动数据*/
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT){
