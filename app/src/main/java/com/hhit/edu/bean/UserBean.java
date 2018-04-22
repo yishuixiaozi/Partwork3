@@ -24,6 +24,16 @@ public class UserBean {
     private String sumary;
     private String level;
     private int integration;
+    //
+    private String usertype;
+
+    public String getUsertype() {
+        return usertype;
+    }
+
+    public void setUsertype(String usertype) {
+        this.usertype = usertype;
+    }
 
     public String getPhonenum() {
         return phonenum;

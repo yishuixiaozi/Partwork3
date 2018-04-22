@@ -3,6 +3,7 @@ package com.hhit.edu.partwork3;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,11 +18,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import com.hhit.edu.fragments.LoginFragment;
 import com.hhit.edu.utils.LivingTabsLayout;
+import com.hhit.edu.utils.MyBaseUIlistener;
+import com.tencent.connect.common.Constants;
+import com.tencent.tauth.Tencent;
+
 import java.util.Locale;
 public class LoginnewActivity extends AppCompatActivity implements View.OnClickListener{
+/*    SectionsPagerAdapter sectionsPagerAdapter=new SectionsPagerAdapter(FragmentManager );*/
+    SectionsPagerAdapter sectionsPagerAdapter;
+    private ImageView login_qq;
+    private MyBaseUIlistener myBaseUIlistener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         SharedPreferences preferences=getSharedPreferences("mydata",MODE_PRIVATE);
         String username=preferences.getString("nickname","default");
         if(username.equals("default")){
@@ -29,12 +39,13 @@ public class LoginnewActivity extends AppCompatActivity implements View.OnClickL
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             getSupportActionBar().hide();
-            SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
             ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
             viewPager.setAdapter(sectionsPagerAdapter);
             viewPager.setCurrentItem(1);
             LivingTabsLayout tabs = (LivingTabsLayout) findViewById(R.id.tabs);
             tabs.setupWithViewPager(viewPager);
+
+            myBaseUIlistener=new MyBaseUIlistener(this);
         }else {
             System.out.println("已经存值--------username----------------"+username);
             startActivity(new Intent(this,MainActivity.class));
@@ -43,9 +54,29 @@ public class LoginnewActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+    /**
+     * 测试内容
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode== Constants.REQUEST_LOGIN){
+            Tencent.onActivityResultData(requestCode,resultCode,data,myBaseUIlistener);
+        }
+       // System.out.println("activity-------里边的内容="+data.getData().toString());
+
+    }
+
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.im_loginqq:
+                System.out.println("activity中活动的点击qq");
+                break;
+        }
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter implements LivingTabsLayout.DrawableResIconAdapter {
@@ -53,7 +84,6 @@ public class LoginnewActivity extends AppCompatActivity implements View.OnClickL
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
-
         @Override
         public Fragment getItem(int position) {
             return LoginFragment.newInstance(position + 1);

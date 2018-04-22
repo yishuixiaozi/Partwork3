@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(username.equals("default")){
             System.out.println("没有存值-------username=--------------"+username);
             setContentView(R.layout.activity_login);
-            getSupportActionBar().hide();//隐藏标题栏的作用
+            //getSupportActionBar().hide();//隐藏标题栏的作用
             mTencent=Tencent.createInstance("1106841364",this.getApplicationContext());
             intiView();
         }else {

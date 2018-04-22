@@ -35,7 +35,7 @@ public class findpasswordActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_findpassword);
         //这个应该是允许这个类进行发短信的内容
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS} , 1);
-        getSupportActionBar().hide();//隐藏标题栏的作用
+        //getSupportActionBar().hide();//隐藏标题栏的作用
 
         initView();
     }
