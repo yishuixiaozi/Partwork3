@@ -79,6 +79,9 @@ public interface HomePageInterface {
     @POST("UserServlet/UUserByUserid")
     Observable<String> UUserByUserid(@Body UserBean user);
 
+    //自己用户：求职者用户注册
+    @POST("UserServlet/UserRegister")
+    Observable<String> UserRegister(@Body UserBean user);
     //这个是求职者用户登录使用
     @POST("UserServlet/getUser")
     Observable<EntityResponse<UserBean>> getUserLoginInfo(@Query("username") String username,

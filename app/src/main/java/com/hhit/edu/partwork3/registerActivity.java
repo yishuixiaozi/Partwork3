@@ -1,5 +1,6 @@
 package com.hhit.edu.partwork3;
 
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,9 +12,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hhit.edu.bean.UserBean;
+import com.hhit.edu.my_interface.HomePageInterface;
+import com.hhit.edu.utils.ApiManager;
 import com.hhit.edu.utils.Autjcode;
+import com.hhit.edu.utils.RetrofitUtils;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 public class registerActivity extends AppCompatActivity implements View.OnClickListener,View.OnFocusChangeListener{
 
     private Button registerBack;
@@ -31,6 +44,8 @@ public class registerActivity extends AppCompatActivity implements View.OnClickL
     private ImageView registerAuthimg;
     private String isPhone, isPassword, isTruePassword, Autecode, Autecodeimg;
     private int flagPhone, flagPassword, flagTruePassword, flagAutecode;
+
+    private UserBean userBean=new UserBean();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,12 +109,50 @@ public class registerActivity extends AppCompatActivity implements View.OnClickL
                         .createBitmap());
                 break;
             case R.id.registerBtn:
-                Toast.makeText(registerActivity.this, "注册内容暂时没写",
+                Toast.makeText(registerActivity.this, "正在注册，请稍后...",
                         Toast.LENGTH_SHORT).show();
+                register();
                 break;
         }
     }
 
+    /**
+     * 用户注册
+     */
+    public void register(){
+        String usertype=getIntent().getStringExtra("usertype");
+        System.out.println("----usertype---="+usertype);
+        userBean.setUsertype(usertype);
+        userBean.setUserid(registerId.getText().toString());
+        userBean.setUsername(registerId.getText().toString());
+        userBean.setPhonenum(registerId.getText().toString());
+        userBean.setPassword(registerPassword.getText().toString());
+        final HomePageInterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(HomePageInterface.class);
+        request.UserRegister(userBean)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        System.out.println("正在处理");
+                    }
+                    @Override
+                    public void onNext(@NonNull String s) {
+                        System.out.println("success----");
+                        finish();//关闭当前注册界面进入进来的时候的界面
+                    }
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        System.out.println("注册失败");
+                    }
+                    @Override
+                    public void onComplete() {
+                        Toast.makeText(registerActivity.this,"注册成功，请登陆",Toast.LENGTH_SHORT);
+                    }
+                });
+
+
+    }
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         isPhone = registerId.getText().toString();

@@ -140,6 +140,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             case R.id.loginNewUser:
                 System.out.println("注册");
                 Intent i = new Intent(getActivity(), registerActivity.class);
+                i.putExtra("usertype",loginTitle.getText().toString());
                 startActivity(i);
                 break;
             case R.id.loginChangePw:
@@ -203,72 +204,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 });
 
     }
-    //自定义一个内部类用来处理接口回调信息
-/*    private class BaseUiListener implements IUiListener {
-        @Override
-        public void onComplete(Object o) {
-            System.out.println("登录成功了-------------------------");
-            try {
-                System.out.println("-------0.tostring--------"+o.toString());
-                openidString=((JSONObject)o).getString("openid");//openid是腾讯返回的固定内容
-                //给mTencent对象设置内容
-                userBean.setUserid(((JSONObject)o).getString("openid"));
-                mTencent.setOpenId(openidString);
-                mTencent.setAccessToken(((JSONObject) o).getString("access_token"),((JSONObject) o).getString("expires_in"));
-            }catch (JSONException e){
-                e.printStackTrace();
-            }
-            //进一步获取详细信息
-            QQToken qqToken=mTencent.getQQToken();
-            info=new UserInfo(getActivity().getApplicationContext(),qqToken);
-            info.getUserInfo(new IUiListener() {
-                @Override
-                public void onComplete(Object o) {
-                    System.out.println("用户信息已获取");
-                    try{
-                        System.out.println("-----------------------"+((JSONObject) o).getString("nickname")+((JSONObject) o).getString("gender"));
-                        SharedPreferences preferences=getActivity().getSharedPreferences("mydata",MODE_PRIVATE);
-                        SharedPreferences.Editor editor=preferences.edit();
-                        editor.putString("nickname",((JSONObject) o).getString("nickname"));
-                        editor.putString("usertype",loginTitle.getText().toString());
-                        editor.commit();
-                        Intent intent=new Intent(getActivity(), MainActivity.class);
-                        startActivity(intent);
-                        getActivity().finish();
-                        initsave(o);
-                    }catch (JSONException e){
-                        e.printStackTrace();
-                    }
-                }
-                @Override
-                public void onError(UiError uiError) {
-                    System.out.println("---------------用户信息获取失败");
-                }
-                @Override
-                public void onCancel() {
-                    System.out.println("----------------用户信息获取取消");
-                }
-            });
-        }
-
-        @Override
-        public void onError(UiError uiError) {
-            System.out.println("---------用户登录失败-------");
-        }
-        @Override
-        public void onCancel() {
-            System.out.println("---------用户登录取消--------");
-        }
-    }
-    */
-
     /**
      * 三方登录保存信息使用
      * @param userBean
      */
-    public void saveInfo(UserBean userBean){
+    public void saveInfo(final UserBean userBean){
         System.out.println("------------saveInfo- usertype--"+userBean.getNickname()+userBean.getUsertype());
-        //System.out.println("-----logint----11212121"+loginTitle.getText().toString());
         final HomePageInterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(HomePageInterface.class);
         request.UUserByUserid(userBean)
                 .subscribeOn(Schedulers.io())
@@ -279,8 +220,15 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                         System.out.println("----onSubscribe");
                     }
                     @Override
-                    public void onNext(@NonNull String s) {
+                    public void onNext(@NonNull String s) {//执行成功后就跳转到主页面
                         System.out.println("success--------------------------");
+                        SharedPreferences preferences=getActivity().getSharedPreferences("mydata",MODE_PRIVATE);
+                        SharedPreferences.Editor editor=preferences.edit();
+                        editor.putString("nickname",userBean.getNickname());
+                        editor.putString("usertype",userBean.getUsertype());
+                        editor.commit();
+                        startActivity(new Intent(getActivity(),MainActivity.class));
+                        getActivity().finish();
                     }
                     @Override
                     public void onError(@NonNull Throwable e) {
