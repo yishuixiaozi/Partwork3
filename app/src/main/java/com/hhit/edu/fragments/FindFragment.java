@@ -1,5 +1,6 @@
 package com.hhit.edu.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ import com.hhit.edu.bean.JobBean;
 import com.hhit.edu.bean.ListResponse;
 import com.hhit.edu.my_interface.HomePageInterface;
 import com.hhit.edu.partwork3.DropDownActivity;
+import com.hhit.edu.partwork3.JobdetailsActivity;
 import com.hhit.edu.partwork3.R;
 import com.hhit.edu.uikit.DropDownMenu;
 import com.hhit.edu.utils.ApiManager;
@@ -328,9 +330,20 @@ public class FindFragment extends Fragment implements View.OnClickListener,AbsLi
             isAddMore=false;
         }
     }
-
+    /**
+     * 列表单个元素的点击的事件
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         System.out.println("positon="+position);
+        JobBean jobBean=jobdata.get(position);
+        Intent intent=new Intent(getActivity(), JobdetailsActivity.class);
+        intent.putExtra("id",jobBean.getId());
+        intent.putExtra("userid",jobBean.getUserid());
+        startActivity(intent);
     }
 }

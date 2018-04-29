@@ -1,5 +1,6 @@
 package com.hhit.edu.my_interface;
 
+import com.hhit.edu.bean.CollectionBean;
 import com.hhit.edu.bean.EntityResponse;
 import com.hhit.edu.bean.JobBean;
 import com.hhit.edu.bean.ListResponse;
@@ -104,4 +105,6 @@ public interface HomePageInterface {
     Observable<EntityResponse<UserBean>> UserLogin(@Query("username") String username,
                                                    @Query("password") String password,
                                                    @Query("usertype") String usertype);
+    @POST("CollectionServlet/addCollection")
+    Observable<String> addCollection(@Body CollectionBean collection);
 }

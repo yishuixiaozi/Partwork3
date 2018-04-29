@@ -58,4 +58,7 @@
     <color name="blue_app">#22abea</color>
     <color name="drop_down_unselected">#ffffff</color>
     <color name="base_title_color">#464a4d</color>
+    <!--自我定义颜色-->
+    <color name="my_toorbar">#30303A</color>
+
 </resources>
