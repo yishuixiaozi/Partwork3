@@ -52,7 +52,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MyhomeFragment extends Fragment implements View.OnClickListener,AbsListView.OnScrollListener, AdapterView.OnItemClickListener{
     TextView tv_cityName;//城市名
     ListView lv;//listview对象存放值的
-    PtrFrameLayout refresh;//刷新控件
+    PtrFrameLayout refresh;//布局内容
     String cityName;
     String cityId;
     String buttonmore="0";
@@ -219,10 +219,10 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         System.out.println("一开始加载的时候显示内容");
         if (scrollState==0&&isAddMore){//一开始加载的时候显示内容，
+            pagenum+=8;
             getData();
             buttonmore="1";
             System.out.println("-----------------pagenum="+pagenum);
-            pagenum+=8;
         }
     }
     @Override

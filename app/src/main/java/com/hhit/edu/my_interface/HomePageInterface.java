@@ -61,7 +61,14 @@ public interface HomePageInterface {
      */
     @POST("JobServlet/getJobByPage")
     Observable<ListResponse<JobBean>> getJobByPage(@Query("pagenum") int pagenum);
-
+    /**
+     * 这个地方是组合查询和关键字查询的地方所需要的内容
+     * @param job
+     * @return
+     */
+    @POST("JobServlet/getJobByType")
+    Observable<ListResponse<JobBean>> getJobByType(@Body JobBean job,
+                                                   @Query("pagenum") int pagenum);
     /**
      * 依据Id查找兼职详细信息的
      *

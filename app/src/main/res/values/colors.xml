@@ -51,4 +51,11 @@
     <color name="viewfinder_frame">@color/colorPrimary</color>
     <color name="viewfinder_laser">#FF03A9F4</color>
     <color name="viewfinder_laser_transparent">#0003A9F4</color>
+    <!--下拉-->
+    <color name="material_text_color_47">#333333</color>
+    <color name="divider_color_c7">#d3d3d3</color>
+    <color name="mask_color">#88888888</color>
+    <color name="blue_app">#22abea</color>
+    <color name="drop_down_unselected">#ffffff</color>
+    <color name="base_title_color">#464a4d</color>
 </resources>

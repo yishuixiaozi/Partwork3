@@ -35,22 +35,17 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="d8DrlRK9shrfR8Mvk41YX2zhTs1tgCL1" />
-
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
-
         <activity
             android:name=".MainActivity"
             android:theme="@style/TranslucentTheme">
-
-            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            -->
         </activity>
         <activity android:name=".WebViewActivity" />
         <activity android:name=".LoginActivity" />
@@ -69,10 +64,10 @@
         <activity android:name=".JobdetailsActivity" />
         <activity android:name=".NewActivity" />
         <activity android:name=".WelcomeActivity">
-           <intent-filter>
+           <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity android:name=".TestActivity" />
         <activity android:name=".GuideActivity" />
@@ -84,10 +79,8 @@
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:scheme="tencent1106841364" />
             </intent-filter>
         </activity>
@@ -95,12 +88,20 @@
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
-
         </activity>
         <activity android:name=".Login2Activity">
+
         </activity>
         <activity android:name=".LoginnewActivity">
-           <!-- <intent-filter>
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
+        <activity android:name=".DropDownActivity">
+          <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->

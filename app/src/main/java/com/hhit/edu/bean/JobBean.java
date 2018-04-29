@@ -20,6 +20,44 @@ public class JobBean {
     private String bftime;
     private String workplace;
     private String workdescribe;
+    //4/26新增内容处理
+    private String jobtype;
+    private String gender;
+
+    private String querytype;
+    private String queryfield;
+
+    public String getJobtype() {
+        return jobtype;
+    }
+
+    public void setJobtype(String jobtype) {
+        this.jobtype = jobtype;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getQuerytype() {
+        return querytype;
+    }
+
+    public void setQuerytype(String querytype) {
+        this.querytype = querytype;
+    }
+
+    public String getQueryfield() {
+        return queryfield;
+    }
+
+    public void setQueryfield(String queryfield) {
+        this.queryfield = queryfield;
+    }
 
     public int getUserid() {
         return userid;

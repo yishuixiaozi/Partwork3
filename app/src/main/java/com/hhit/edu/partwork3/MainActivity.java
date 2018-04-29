@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhit.edu.fragments.DiscoverFragment;
+import com.hhit.edu.fragments.FindFragment;
 import com.hhit.edu.fragments.MessageFragment;
 import com.hhit.edu.fragments.MineFragment;
 import com.hhit.edu.fragments.MyhomeFragment;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private Class[] fragments = {
-            MyhomeFragment.class, DiscoverFragment.class, MessageFragment.class, MineFragment.class
+            MyhomeFragment.class, FindFragment.class, MessageFragment.class, MineFragment.class
     };
 
     //定义一个控件的
