@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.hhit.edu.partwork3.CollectionActivity;
 import com.hhit.edu.partwork3.EditPhotoActivity;
 import com.hhit.edu.partwork3.LoginActivity;
 import com.hhit.edu.partwork3.LoginnewActivity;
@@ -31,6 +33,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private ImageView editphotoimg;
     private TextView tv_name;
     private RelativeLayout extilogin;
+    private RelativeLayout mycollection;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,6 +59,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         editphotoimg.setOnClickListener(this);
         tv_name= (TextView) view.findViewById(R.id.tv_name);
         tv_name.setOnClickListener(this);
+        mycollection= (RelativeLayout) view.findViewById(R.id.mycollection);
+        mycollection.setOnClickListener(this);
         SharedPreferences preferences= getActivity().getSharedPreferences("mydata",MODE_PRIVATE);
         String username=preferences.getString("nickname","未登录用户");//获取这个里边的值的内容
         tv_name.setText(username);
@@ -91,6 +96,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 editor.commit();
                 startActivity(new Intent(getActivity(),LoginnewActivity.class));
                 break;
+            case R.id.mycollection:
+                startActivity(new Intent(getActivity(), CollectionActivity.class));
             default:
                 break;
         }

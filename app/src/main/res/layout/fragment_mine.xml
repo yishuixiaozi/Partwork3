@@ -262,10 +262,12 @@
                     style="@style/MineFunctionDivider"
                     android:layout_marginLeft="15dp" />
                 <!--用户反馈-->
-                <RelativeLayout style="@style/MineFunctionRl">
+                <RelativeLayout
+                    android:id="@+id/mycollection"
+                    style="@style/MineFunctionRl">
                     <TextView
                         style="@style/MineFunctionTvLeft"
-                        android:text="@string/feed_back"
+                        android:text="我的收藏"
                         android:textColor="@color/color_222222" />
                     <ImageView
                         style="@style/MineFunctionArrow"

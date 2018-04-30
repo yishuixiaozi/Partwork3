@@ -187,6 +187,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                             SharedPreferences.Editor editor=preferences.edit();
                             editor.putString("nickname",username);
                             editor.putString("usertype",usertype);
+                            editor.putString("userid",userBeanEntityResponse.getCode());
                             editor.commit();
                             startActivity(new Intent(getActivity(),MainActivity.class));
                             getActivity().finish();//关闭当前活动
@@ -226,6 +227,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                         SharedPreferences.Editor editor=preferences.edit();
                         editor.putString("nickname",userBean.getNickname());
                         editor.putString("usertype",userBean.getUsertype());
+                        editor.putString("userid",userBean.getUserid());
                         editor.commit();
                         startActivity(new Intent(getActivity(),MainActivity.class));
                         getActivity().finish();

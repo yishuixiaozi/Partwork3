@@ -107,4 +107,7 @@ public interface HomePageInterface {
                                                    @Query("usertype") String usertype);
     @POST("CollectionServlet/addCollection")
     Observable<String> addCollection(@Body CollectionBean collection);
+
+    @POST("CollectionServlet/getAllCollection")
+    Observable<ListResponse<CollectionBean>> getAllCollection(@Query("userid") String userid);
 }

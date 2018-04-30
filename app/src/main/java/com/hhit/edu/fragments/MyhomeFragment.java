@@ -84,7 +84,7 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
         setupview(view);
     }
 
-    /**
+       /**
      * 初始化组件内容并且设置监听
      */
     public void setupview(View view){
