@@ -81,8 +81,17 @@ public interface HomePageInterface {
 
     //查询用户单独信息使用
     @POST("UserServlet/getUserById")
-    Observable<EntityResponse<UserBean>> getUserById(@Query("userid") int userid);
+    Observable<EntityResponse<UserBean>> getUserById(@Query("userid") String userid);
 
+    @POST("UserServlet/getUserByUserid")
+    Observable<EntityResponse<UserBean>> getUserByUserid(@Query("userid") String userid);
+
+    @POST("CollectionServlet/getCollectionTag")
+    Observable<EntityResponse<CollectionBean>> getCollectionTag(@Query("userid") String userid,
+                                                                @Query("jobid") int jobid);
+    @POST("CollectionServlet/deleteCollection")
+    Observable<EntityResponse<CollectionBean>> deleteCollection(@Query("userid") String userid,
+                                                                @Query("jobid") int jobid);
     //QQ三方登录使用
     @POST("UserServlet/UUserByUserid")
     Observable<String> UUserByUserid(@Body UserBean user);

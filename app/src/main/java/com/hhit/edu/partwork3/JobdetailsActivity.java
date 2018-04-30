@@ -74,7 +74,8 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
     @InjectView(R.id.im_collection)
     ImageView im_collection;
     int id;
-    int userid;
+    String userid;//这个地方需要注意，我的表已经改为String类型了
+    String tag="no";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,8 +85,8 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
         im_back.setOnClickListener(this);
         im_collection.setOnClickListener(this);
         id=getIntent().getIntExtra("id",0);//依据Id查询兼职的详细信息
-        userid=getIntent().getIntExtra("userid",1);//依据userId查询用户的相关信息
-        System.out.println("获取的id的值是-----"+id);
+        userid=getIntent().getStringExtra("userid");//依据userId查询用户的相关信息
+        System.out.println("获取的兼职id的值是-----"+id);
         System.out.println("获取的userid的值是----"+userid);
         getData();
     }
@@ -117,6 +118,39 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
                         inituserData(user);
                     }
                 });
+        request.getCollectionTag(userid,id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<EntityResponse<CollectionBean>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull EntityResponse<CollectionBean> collectionBeanEntityResponse) {
+                        tag=collectionBeanEntityResponse.getMsg();
+                        System.out.println("tag----------------------->="+tag);
+                        //设置图片格式内容
+                        if (tag.equals("yes")){
+                            im_collection.setImageResource(R.drawable.collected_icon);//设置为收藏状态
+                        }
+                        else {
+                            im_collection.setImageResource(R.drawable.collect_icon);//设置为选中
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        System.out.println("获取收藏信息失败");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
     }
 
     /**
@@ -160,7 +194,7 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
                 startActivity(intent);
                 break;
             case R.id.im_collection:
-                jobcollection();
+                collection();
                 break;
             case R.id.im_back:
                 finish();//关闭当前页，回到上一个页面
@@ -168,6 +202,55 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+    /**
+     * 判断操作
+     */
+    public void collection(){
+        if (tag.equals("yes")){
+            //执行删除，取消收藏
+            tag="no";
+            System.out.println("取消收藏");
+            deletecollection();
+
+        }
+        else {
+            System.out.println("执行收藏");
+            tag="yes";
+            jobcollection();
+            //执行收藏，添加内容
+        }
+    }
+
+    public void deletecollection(){
+        //执行删除
+        //重新设置图标内容
+        final HomePageInterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(HomePageInterface.class);
+        request.deleteCollection(userid,id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<EntityResponse<CollectionBean>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+                    @Override
+                    public void onNext(@NonNull EntityResponse<CollectionBean> collectionBeanEntityResponse) {
+                        if(collectionBeanEntityResponse.getMsg().equals("success")){
+                            Toast.makeText(JobdetailsActivity.this,"取消收藏成功",Toast.LENGTH_SHORT).show();
+                            im_collection.setImageResource(R.drawable.collect_icon);
+                        }
+                    }
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        System.out.println("取消收藏失败了");
+                    }
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+    }
     /**
      * 职位收藏,
      */
@@ -202,6 +285,7 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
                     @Override
                     public void onNext(@NonNull String s) {
                         System.out.println("success,nothing to do");
+                        im_collection.setImageResource(R.drawable.collected_icon);
                     }
 
                     @Override

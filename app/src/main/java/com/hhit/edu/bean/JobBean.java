@@ -7,7 +7,7 @@ package com.hhit.edu.bean;
 
 public class JobBean {
     private int id;
-    private int userid;
+    private String userid;
     private String title;
     private String paymoney;
     private String payway;
@@ -59,11 +59,11 @@ public class JobBean {
         this.queryfield = queryfield;
     }
 
-    public int getUserid() {
+    public String getUserid() {
         return userid;
     }
 
-    public void setUserid(int userid) {
+    public void setUserid(String userid) {
         this.userid = userid;
     }
 
