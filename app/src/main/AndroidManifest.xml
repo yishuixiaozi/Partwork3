@@ -95,8 +95,8 @@
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
-        <activity android:name=".Login2Activity"></activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".Login2Activity" />
         <activity android:name=".LoginnewActivity">
 
             <!--
@@ -115,7 +115,8 @@
             </intent-filter>
             -->
         </activity>
-        <activity android:name=".CollectionActivity"></activity>
+        <activity android:name=".CollectionActivity" />
+        <activity android:name=".SignupActivity"></activity>
     </application>
 
 </manifest>

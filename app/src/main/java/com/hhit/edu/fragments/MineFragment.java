@@ -20,6 +20,7 @@ import com.hhit.edu.partwork3.EditPhotoActivity;
 import com.hhit.edu.partwork3.LoginActivity;
 import com.hhit.edu.partwork3.LoginnewActivity;
 import com.hhit.edu.partwork3.R;
+import com.hhit.edu.partwork3.SignupActivity;
 import com.hhit.edu.view.CircleImageView;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -34,6 +35,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private TextView tv_name;
     private RelativeLayout extilogin;
     private RelativeLayout mycollection;
+    private RelativeLayout mysignup;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,6 +63,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         tv_name.setOnClickListener(this);
         mycollection= (RelativeLayout) view.findViewById(R.id.mycollection);
         mycollection.setOnClickListener(this);
+        mysignup= (RelativeLayout) view.findViewById(R.id.mysignup);
+        mysignup.setOnClickListener(this);
         SharedPreferences preferences= getActivity().getSharedPreferences("mydata",MODE_PRIVATE);
         String username=preferences.getString("nickname","未登录用户");//获取这个里边的值的内容
         tv_name.setText(username);
@@ -96,8 +100,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 editor.commit();
                 startActivity(new Intent(getActivity(),LoginnewActivity.class));
                 break;
-            case R.id.mycollection:
+            case R.id.mycollection://收藏
                 startActivity(new Intent(getActivity(), CollectionActivity.class));
+                break;
+            case R.id.mysignup://报名
+                startActivity(new Intent(getActivity(), SignupActivity.class));
+                break;
             default:
                 break;
         }

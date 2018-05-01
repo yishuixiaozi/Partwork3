@@ -156,6 +156,11 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
                     }
                 });
         final SignupPageinterface request1=RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(SignupPageinterface.class);
+        //判断是否已经报名，设置报名的字体样式
+        /*
+        *
+        * 是否要加入报名人数的设置，不然就没有意义了。看时间吧
+        * */
         request1.searchSignup(userid,id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
