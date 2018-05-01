@@ -14,8 +14,10 @@ import com.hhit.edu.bean.CollectionBean;
 import com.hhit.edu.bean.EntityResponse;
 import com.hhit.edu.bean.JobBean;
 import com.hhit.edu.bean.ListResponse;
+import com.hhit.edu.bean.SignupBean;
 import com.hhit.edu.bean.UserBean;
 import com.hhit.edu.my_interface.HomePageInterface;
+import com.hhit.edu.my_interface.SignupPageinterface;
 import com.hhit.edu.utils.ApiManager;
 import com.hhit.edu.utils.RetrofitUtils;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -73,6 +75,8 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
     ImageView im_back;
     @InjectView(R.id.im_collection)
     ImageView im_collection;
+    @InjectView(R.id.tv_signup)
+    TextView tv_singup;
     int id;
     String userid;//这个地方需要注意，我的表已经改为String类型了
     String tag="no";
@@ -81,6 +85,7 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jobdetails);
         ButterKnife.inject(this);//使用注解
+        tv_singup.setOnClickListener(this);
         ll_map.setOnClickListener(this);
         im_back.setOnClickListener(this);
         im_collection.setOnClickListener(this);
@@ -150,6 +155,30 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
 
                     }
                 });
+        final SignupPageinterface request1=RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(SignupPageinterface.class);
+        request1.searchSignup(userid,id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<EntityResponse<SignupBean>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        System.out.println("报名信息搜索中");
+                    }
+                    @Override
+                    public void onNext(@NonNull EntityResponse<SignupBean> signupBeanEntityResponse) {
+                        if (signupBeanEntityResponse.getMsg().equals("yes")){
+                            tv_singup.setText("已报名");
+                        }
+                    }
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        System.out.println("获取报名信息错误");
+                    }
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
 
     }
 
@@ -199,9 +228,60 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
             case R.id.im_back:
                 finish();//关闭当前页，回到上一个页面
                 break;
+            case R.id.tv_signup:
+                //这里弹出diaog进行一个选择后然后处理相关的内容
+                jobsignup();
+            default:
+                break;
         }
     }
 
+    public void jobsignup(){
+        if (tv_singup.getText().toString().equals("已报名")){
+            Toast.makeText(this,"您已经报名，无法再次报名！",Toast.LENGTH_SHORT).show();
+        }else {
+            //执行数据库添加，并且将tv_singup命名为已报名，
+            Date date=new Date(System.currentTimeMillis());
+            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String currentDate=simpleDateFormat.format(date);
+            SignupBean signupBean=new SignupBean();
+            signupBean.setJobid(job.getId());
+            signupBean.setUserid(user.getUserid());
+            signupBean.setTime(currentDate);
+            signupBean.setTitle(job.getTitle());
+            signupBean.setPaymoney(job.getPaymoney());
+            signupBean.setPayway(job.getPayway());
+            signupBean.setWorktime(job.getWorktime());
+            signupBean.setJobimageuri(job.getJobimageuri());
+            final SignupPageinterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(SignupPageinterface.class);
+            request.addSignup(signupBean)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<String>() {
+                        @Override
+                        public void onSubscribe(@NonNull Disposable d) {
+                            System.out.println("处理中");
+                        }
+
+                        @Override
+                        public void onNext(@NonNull String s) {
+                            tv_singup.setText("已报名");
+                            Toast.makeText(JobdetailsActivity.this,"报名成功",Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onError(@NonNull Throwable e) {
+                            System.out.println("添加报名失败");
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+
+        }
+    }
     /**
      * 判断操作
      */
