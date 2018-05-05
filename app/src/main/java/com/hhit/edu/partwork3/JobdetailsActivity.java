@@ -1,5 +1,6 @@
 package com.hhit.edu.partwork3;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -78,6 +79,7 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
     @InjectView(R.id.tv_signup)
     TextView tv_singup;
     int id;
+    String myuserid;//这里代表登录用户的id
     String userid;//这个地方需要注意，我的表已经改为String类型了
     String tag="no";
     @Override
@@ -91,8 +93,11 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
         im_collection.setOnClickListener(this);
         id=getIntent().getIntExtra("id",0);//依据Id查询兼职的详细信息
         userid=getIntent().getStringExtra("userid");//依据userId查询用户的相关信息
-        System.out.println("获取的兼职id的值是-----"+id);
-        System.out.println("获取的userid的值是----"+userid);
+        SharedPreferences preferences=getSharedPreferences("mydata",MODE_PRIVATE);
+        myuserid=preferences.getString("userid","default");
+        System.out.println("报名userid---------测试"+myuserid);
+        //System.out.println("获取的兼职id的值是-----"+id);
+        //System.out.println("获取的userid的值是----"+userid);
         getData();
     }
 
@@ -251,7 +256,7 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
             String currentDate=simpleDateFormat.format(date);
             SignupBean signupBean=new SignupBean();
             signupBean.setJobid(job.getId());
-            signupBean.setUserid(user.getUserid());
+            signupBean.setUserid(myuserid);//这个地方错了，不能是user.getUserid,这里的user是发布者
             signupBean.setTime(currentDate);
             signupBean.setTitle(job.getTitle());
             signupBean.setPaymoney(job.getPaymoney());
@@ -348,7 +353,7 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
         System.out.println("系统时间获取="+currentDate);
         CollectionBean collection=new CollectionBean();
         collection.setJobid(job.getId());
-        collection.setUserid(user.getUserid());
+        collection.setUserid(myuserid);
         collection.setTime(currentDate);
         collection.setTitle(job.getTitle());
         collection.setPaymoney(job.getPaymoney());

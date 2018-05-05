@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.hhit.edu.partwork3.SignupActivity" >
+    <item
+        android:id="@+id/delete"
+        android:orderInCategory="100"
+        android:title="删除"/>
+    <item
+        android:id="@+id/none"
+        android:orderInCategory="100"
+        android:title="取消"/>
+</menu>

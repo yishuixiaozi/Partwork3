@@ -25,4 +25,8 @@ public interface SignupPageinterface {
     //查询某个用户的报名信息
     @POST("SignupServlet/getAllSignup")
     Observable<ListResponse<SignupBean>> getAllSignup(@Query("userid") String userid);
+
+    //取消报名的操作
+    @POST("SignupServlet/deleteSignup")
+    Observable<String> deleteSignup(@Query("signupid") int signupid);
 }

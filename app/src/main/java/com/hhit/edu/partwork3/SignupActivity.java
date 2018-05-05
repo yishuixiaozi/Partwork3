@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -39,16 +42,16 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     List<SignupBean> signupdata;
     AbstractBaseAdapter<SignupBean> adapter;
     ImageView im_back;
-    String userid;
+    String myuserid;
     boolean isAddMore;//是否加载更多数据
     private int pagenum=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences preferences=getSharedPreferences("mydata",MODE_PRIVATE);
-        userid=preferences.getString("userid","default");
-        System.out.println("报名userid---------测试"+userid);
-        if (userid.equals("default")){
+        myuserid=preferences.getString("userid","default");
+        System.out.println("报名userid---------测试"+myuserid);
+        if (myuserid.equals("default")){
             Toast.makeText(this,"您的userid为空，请登陆",Toast.LENGTH_SHORT).show();
         }else {
             setContentView(R.layout.activity_signup);
@@ -63,10 +66,20 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         im_back= (ImageView) findViewById(R.id.im_back);
         im_back.setOnClickListener(this);
         lv= (ListView) findViewById(R.id.signup_lv);
+        registerForContextMenu(lv);
+
         setupRefreshView();
         lv.setAdapter(adapter);
         lv.setOnScrollListener(this);//设置监听方式
-        lv.setOnItemClickListener(this);//设置Item点击监听
+        lv.setOnItemClickListener(this);//设置短按点击监听
+        /*lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {//长按监听
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("==显示控件选项");
+                //view.showContextMenu();
+                return true;
+            }
+        });*/
     }
 
     /**
@@ -96,7 +109,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     public void getData(){
         final SignupPageinterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(SignupPageinterface.class);
-        request.getAllSignup(userid)
+        request.getAllSignup(myuserid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ListResponse<SignupBean>>() {
@@ -184,5 +197,66 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         intent.putExtra("id",signupBean.getJobid());
         intent.putExtra("userid",signupBean.getUserid());
         startActivity(intent);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater menuInflater=getMenuInflater();
+        menuInflater.inflate(R.menu.mymenu,menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info= (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int id=(int)info.id;
+        switch (item.getItemId()) {
+            case R.id.delete:
+                System.out.println("您点击的是---删除---位置是"+id);
+                deletesignup(id);
+                break;
+            case R.id.none:
+                System.out.println("您点击的是---取消---位置是"+id);
+                break;
+           default:
+               break;
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    /**
+     * 取消报名
+     * @param id
+     */
+    public void deletesignup(int id){
+        SignupBean signupBean=signupdata.get(id);
+        int signupid=signupBean.getSignupid();
+        //数据库连接进行删除，删除成功后getdata()进行数据刷新
+        final SignupPageinterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(SignupPageinterface.class);
+        request.deleteSignup(signupid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull String s) {
+                        //这里重新获取数据
+                        getData();
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        System.out.println("取消报名失败");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }
