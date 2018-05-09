@@ -6,7 +6,7 @@
     <!--这是message——layout里边的颜色-->
     <color name="title_text_color">#FFF</color>
     <!--我的样式内容颜色-->
-    <color name="color_E6E8E7">#E6E8E7</color>
+    <color name="color_E6E8E7">#FFF1F8F5</color>
     <color name="color_D33D3C">#D33D3C</color>
     <color name="color_BDBDBD">#BDBDBD</color>
     <color name="color_F3F5F4">#F3F5F4</color>

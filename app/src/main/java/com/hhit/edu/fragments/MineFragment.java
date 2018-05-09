@@ -96,7 +96,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.exitlogin:
                 SharedPreferences preferences=getActivity().getSharedPreferences("mydata",MODE_PRIVATE);
                 SharedPreferences.Editor editor=preferences.edit();
-                editor.remove("nickname");
+                editor.remove("nickname");//这里是去除昵称：判断用户身份
+                editor.remove("usertype");//这里是去除用户类型：判断进入的主界面
                 editor.commit();
                 startActivity(new Intent(getActivity(),LoginnewActivity.class));
                 break;

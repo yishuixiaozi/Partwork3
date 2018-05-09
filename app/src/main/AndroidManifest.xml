@@ -116,7 +116,9 @@
             -->
         </activity>
         <activity android:name=".CollectionActivity" />
-        <activity android:name=".SignupActivity"></activity>
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".FMainActivity" />
+        <activity android:name=".PostActivity"></activity>
     </application>
 
 </manifest>

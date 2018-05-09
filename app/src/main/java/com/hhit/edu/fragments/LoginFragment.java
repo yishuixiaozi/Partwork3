@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.hhit.edu.bean.EntityResponse;
 import com.hhit.edu.bean.UserBean;
 import com.hhit.edu.my_interface.HomePageInterface;
+import com.hhit.edu.partwork3.FMainActivity;
 import com.hhit.edu.partwork3.LoginActivity;
 import com.hhit.edu.partwork3.LoginnewActivity;
 import com.hhit.edu.partwork3.MainActivity;
@@ -189,7 +190,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                             editor.putString("usertype",usertype);
                             editor.putString("userid",userBeanEntityResponse.getCode());
                             editor.commit();
-                            startActivity(new Intent(getActivity(),MainActivity.class));
+                            //这里要进行一个判断，求职者到常规页面，招聘者到招聘界面
+                            if (usertype.equals("Employee")){
+                                startActivity(new Intent(getActivity(),MainActivity.class));
+                            }else {
+                                startActivity(new Intent(getActivity(), FMainActivity.class));
+                            }
                             getActivity().finish();//关闭当前活动
                         }
                         else {

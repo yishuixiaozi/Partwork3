@@ -83,4 +83,24 @@
     <!---->
     <string name="employee">Employee</string>
     <string name="employer">Employer</string>
+
+    <string-array name="paytype">
+        <item>元/天</item>
+        <item>元/时</item>
+        <item>元/月</item>
+        <item>元/次</item>
+    </string-array>
+
+    <string-array name="payway">
+        <item>完工结算</item>
+        <item>当天结算</item>
+        <item>周末结算</item>
+        <item>月末结算</item>
+    </string-array>
+
+    <string-array name="gender">
+        <item>不限</item>
+        <item>男</item>
+        <item>女</item>
+    </string-array>
 </resources>

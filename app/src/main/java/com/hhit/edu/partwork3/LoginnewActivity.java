@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import com.hhit.edu.fragments.LoginFragment;
 import com.hhit.edu.utils.LivingTabsLayout;
 import com.hhit.edu.utils.MyBaseUIlistener;
@@ -34,6 +36,7 @@ public class LoginnewActivity extends AppCompatActivity implements View.OnClickL
         sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         SharedPreferences preferences=getSharedPreferences("mydata",MODE_PRIVATE);
         String username=preferences.getString("nickname","default");
+        String usertype=preferences.getString("usertype","default");
         if(username.equals("default")){
             setContentView(R.layout.activity_loginnew);
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -44,11 +47,17 @@ public class LoginnewActivity extends AppCompatActivity implements View.OnClickL
             viewPager.setCurrentItem(1);
             LivingTabsLayout tabs = (LivingTabsLayout) findViewById(R.id.tabs);
             tabs.setupWithViewPager(viewPager);
-
             myBaseUIlistener=new MyBaseUIlistener(this);
         }else {
-            System.out.println("已经存值--------username----------------"+username);
-            startActivity(new Intent(this,MainActivity.class));
+            System.out.println("已经存值--------username----------------"+username+usertype);
+            if (usertype.equals("Employee")){
+                startActivity(new Intent(this,MainActivity.class));
+            }else if (usertype.equals("Employer")){
+                startActivity(new Intent(this,FMainActivity.class));
+            }
+            else {
+                Toast.makeText(this,"用户名或者用户类型错误",Toast.LENGTH_SHORT);
+            }
             finish();
         }
 
