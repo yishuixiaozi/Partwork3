@@ -117,6 +117,9 @@ public interface HomePageInterface {
     @POST("CollectionServlet/addCollection")
     Observable<String> addCollection(@Body CollectionBean collection);
 
+    @POST("JobServlet/addJobBean")
+    Observable<String> addJobBean(@Body JobBean jobBean);
+
     @POST("CollectionServlet/getAllCollection")
     Observable<ListResponse<CollectionBean>> getAllCollection(@Query("userid") String userid);
 }

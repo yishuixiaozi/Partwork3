@@ -103,4 +103,15 @@
         <item>男</item>
         <item>女</item>
     </string-array>
+
+    <string-array name="jobtype">
+        <item>家教老师</item>
+        <item>餐饮服务</item>
+        <item>快递服务</item>
+        <item>校园代理</item>
+        <item>宣传传单</item>
+        <item>校园兼职</item>
+        <item>企业实习</item>
+        <item>其他兼职</item>
+    </string-array>
 </resources>

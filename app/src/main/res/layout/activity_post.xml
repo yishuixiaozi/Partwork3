@@ -37,21 +37,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/icon_ctg_label"/>
-                    <TextView
-                        android:id="@+id/txt_jobtype"
-                        android:layout_width="0dp"
-                        android:layout_weight="7"
-                        android:gravity="center_vertical"
-                        android:text="请选择职位类型"
-                        android:layout_marginRight="40dp"
-                        android:textSize="20sp"
-                        android:layout_height="30dp" />
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:layout_height="20dp"
-                        android:src="@drawable/into_more"/>
+                    <Spinner
+                        android:id="@+id/sp_jobtype"
+                        android:layout_width="140dp"
+                        android:layout_height="40dp"
+                        android:entries="@array/jobtype"
+                        android:spinnerMode="dialog">
+                    </Spinner>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -63,6 +55,7 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/icon_date_label"/>
                     <TextView
+                        android:id="@+id/txt_begintime"
                         android:layout_width="120dp"
                         android:gravity="center_vertical"
                         android:text="开始日期"
@@ -74,6 +67,7 @@
                         android:layout_height="20dp"
                         android:src="@drawable/incon_down_more"/>
                     <TextView
+                        android:id="@+id/txt_endtime"
                         android:layout_width="120dp"
                         android:gravity="center_vertical"
                         android:text="结束日期"
@@ -95,6 +89,7 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/icon_closetime_label"/>
                     <TextView
+                        android:id="@+id/txt_closetime"
                         android:layout_width="0dp"
                         android:layout_weight="7"
                         android:gravity="center_vertical"
@@ -206,6 +201,31 @@
                         android:entries="@array/gender"
                         android:spinnerMode="dialog">
                     </Spinner>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_tatalnum_lab"/>
+                    <EditText
+                        android:id="@+id/edt_workplace"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="7"
+                        android:textColor="@color/color_999999"
+                        android:hint="工作地点（请详细描述）"
+                        android:theme="@style/MyEditText"
+                        />
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:layout_height="20dp"
+                        />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"

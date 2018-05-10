@@ -235,7 +235,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                         editor.putString("usertype",userBean.getUsertype());
                         editor.putString("userid",userBean.getUserid());
                         editor.commit();
-                        startActivity(new Intent(getActivity(),MainActivity.class));
+                        if (userBean.getUsertype().equals("Employee")){//判断是什么类型的用户进入什么界面
+                            startActivity(new Intent(getActivity(),MainActivity.class));
+                        }else {
+                            startActivity(new Intent(getActivity(), FMainActivity.class));
+                        }
                         getActivity().finish();
                     }
                     @Override

@@ -26,6 +26,25 @@ public class JobBean {
 
     private String querytype;
     private String queryfield;
+    //5、10新增
+    private String username;
+    private String phonenum;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPhonenum() {
+        return phonenum;
+    }
+
+    public void setPhonenum(String phonenum) {
+        this.phonenum = phonenum;
+    }
 
     public String getJobtype() {
         return jobtype;
