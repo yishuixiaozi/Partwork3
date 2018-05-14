@@ -53,7 +53,7 @@ public class LoginnewActivity extends AppCompatActivity implements View.OnClickL
             if (usertype.equals("Employee")){
                 startActivity(new Intent(this,MainActivity.class));
             }else if (usertype.equals("Employer")){
-                startActivity(new Intent(this,FMainActivity.class));
+                startActivity(new Intent(this,Main2Activity.class));
             }
             else {
                 Toast.makeText(this,"用户名或者用户类型错误",Toast.LENGTH_SHORT);

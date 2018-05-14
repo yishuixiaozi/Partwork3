@@ -118,7 +118,8 @@
         <activity android:name=".CollectionActivity" />
         <activity android:name=".SignupActivity" />
         <activity android:name=".FMainActivity" />
-        <activity android:name=".PostActivity"></activity>
+        <activity android:name=".PostActivity" />
+        <activity android:name=".Main2Activity"></activity>
     </application>
 
 </manifest>

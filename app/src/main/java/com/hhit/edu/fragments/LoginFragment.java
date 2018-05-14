@@ -19,6 +19,7 @@ import com.hhit.edu.my_interface.HomePageInterface;
 import com.hhit.edu.partwork3.FMainActivity;
 import com.hhit.edu.partwork3.LoginActivity;
 import com.hhit.edu.partwork3.LoginnewActivity;
+import com.hhit.edu.partwork3.Main2Activity;
 import com.hhit.edu.partwork3.MainActivity;
 import com.hhit.edu.partwork3.R;
 import com.hhit.edu.partwork3.changepasswordActivity;
@@ -194,7 +195,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                             if (usertype.equals("Employee")){
                                 startActivity(new Intent(getActivity(),MainActivity.class));
                             }else {
-                                startActivity(new Intent(getActivity(), FMainActivity.class));
+                                startActivity(new Intent(getActivity(), Main2Activity.class));
                             }
                             getActivity().finish();//关闭当前活动
                         }
@@ -238,7 +239,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                         if (userBean.getUsertype().equals("Employee")){//判断是什么类型的用户进入什么界面
                             startActivity(new Intent(getActivity(),MainActivity.class));
                         }else {
-                            startActivity(new Intent(getActivity(), FMainActivity.class));
+                            startActivity(new Intent(getActivity(), Main2Activity.class));
                         }
                         getActivity().finish();
                     }
