@@ -243,7 +243,7 @@ public class MypostActivity extends AppCompatActivity implements View.OnClickLis
         menuInflater.inflate(R.menu.mymenu,menu);
     }
     /**
-     * 提示框选项的选择
+     * 长按提示框选项的选择
      * @param item
      * @return
      */
@@ -275,26 +275,30 @@ public class MypostActivity extends AppCompatActivity implements View.OnClickLis
         int jobid=signupBean.getId();
         //数据库连接进行删除，删除成功后getdata()进行数据刷新
         final SignupPageinterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(SignupPageinterface.class);
-        System.out.println("删除我的发布信息-----兼职信息的id是"+jobid);
-       /* request.deleteSignup(signupid)
+        request.deleteByid(jobid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<String>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
+                        //Toast.makeText(MypostActivity.this,"获取数据中",Toast.LENGTH_SHORT).show();
                     }
+
                     @Override
                     public void onNext(@NonNull String s) {
-                        //这里重新获取数据
                         getData();
                     }
+
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        System.out.println("取消报名失败");
+                        System.out.println("信息获取错误");
                     }
+
                     @Override
                     public void onComplete() {
+
                     }
-                });*/
+                });
+
     }
 }

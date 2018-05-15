@@ -31,4 +31,7 @@ public interface SignupPageinterface {
 
     @POST("JobServlet/queryMypost")
     Observable<ListResponse<JobBean>> queryMypost(@Query("userid") String userid);
+    //删除某个用户某条兼职发布信息，通过兼职id
+    @POST("JobServlet/deleteByid")
+    Observable<String> deleteByid(@Query("jobid") int jobid);
 }
