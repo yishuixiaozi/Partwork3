@@ -191,8 +191,10 @@
                     android:layout_height="10dp"
                     android:background="@color/color_F3F5F4" />
                 <View style="@style/MineFunctionDivider" />
-                <!--我的发布-->
-                <RelativeLayout style="@style/MineFunctionRl">
+                <!--消息通知-->
+                <RelativeLayout
+                    style="@style/MineFunctionRl"
+                    android:id="@+id/rl_mypost">
                     <TextView
                         style="@style/MineFunctionTvLeft"
                         android:id="@+id/txt_mypost"
