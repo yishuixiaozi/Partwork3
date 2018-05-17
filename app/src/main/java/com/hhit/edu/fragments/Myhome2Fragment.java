@@ -10,6 +10,8 @@ import android.widget.Button;
 
 import com.hhit.edu.partwork3.PostActivity;
 import com.hhit.edu.partwork3.R;
+import com.hhit.edu.partwork3.ReviewActivity;
+import com.j256.ormlite.stmt.query.In;
 
 /**
  * Created by 93681 on 2018/5/15.
@@ -18,7 +20,7 @@ import com.hhit.edu.partwork3.R;
 public class Myhome2Fragment extends Fragment implements View.OnClickListener{
 
     Button btn_post;
-    Button btn_wait;
+    Button btn_throughresult;
     Button btn_finsh;
     @Nullable
     @Override
@@ -39,6 +41,8 @@ public class Myhome2Fragment extends Fragment implements View.OnClickListener{
     public void initview(View view){
         btn_post= (Button) view.findViewById(R.id.btn_post);
         btn_post.setOnClickListener(this);
+        btn_throughresult= (Button) view.findViewById(R.id.btn_throughresult);
+        btn_throughresult.setOnClickListener(this);
     }
 
     @Override
@@ -48,6 +52,9 @@ public class Myhome2Fragment extends Fragment implements View.OnClickListener{
                 Intent intent_post=new Intent(getActivity(), PostActivity.class);
                 startActivity(intent_post);
                 break;
+            case R.id.btn_throughresult:
+                Intent intent_through=new Intent(getActivity(), ReviewActivity.class);
+                startActivity(intent_through);
             default:
                 break;
         }

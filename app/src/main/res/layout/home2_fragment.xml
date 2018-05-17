@@ -13,10 +13,10 @@
             android:layout_height="wrap_content"
             android:text="发布招聘"/>
         <Button
-            android:id="@+id/btn_wait"
+            android:id="@+id/btn_throughresult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="待审核"/>
+            android:text="审核结果"/>
         <Button
             android:id="@+id/btn_finish"
             android:layout_width="match_parent"

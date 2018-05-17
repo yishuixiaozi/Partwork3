@@ -120,7 +120,8 @@
         <activity android:name=".FMainActivity" />
         <activity android:name=".PostActivity" />
         <activity android:name=".Main2Activity" />
-        <activity android:name=".MypostActivity"></activity>
+        <activity android:name=".MypostActivity" />
+        <activity android:name=".ReviewActivity"></activity>
     </application>
 
 </manifest>
