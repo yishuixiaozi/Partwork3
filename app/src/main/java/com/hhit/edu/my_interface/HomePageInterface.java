@@ -122,4 +122,13 @@ public interface HomePageInterface {
 
     @POST("CollectionServlet/getAllCollection")
     Observable<ListResponse<CollectionBean>> getAllCollection(@Query("userid") String userid);
+
+    @POST("JobServlet/getJobthrough")
+    Observable<ListResponse<JobBean>> getJobthrough(@Query("userid") String userid);
+
+    @POST("JobServlet/getJobnothrough")
+    Observable<ListResponse<JobBean>> getJobnothrough(@Query("userid") String userid);
+
+    @POST("JobServlet/getJobnoreview")
+    Observable<ListResponse<JobBean>> getJobnoreview(@Query("userid") String userid);
 }

@@ -30,6 +30,25 @@ public class JobBean {
     private String username;
     private String phonenum;
 
+    private String jobstate;
+    private String jobremark;
+
+    public String getJobstate() {
+        return jobstate;
+    }
+
+    public void setJobstate(String jobstate) {
+        this.jobstate = jobstate;
+    }
+
+    public String getJobremark() {
+        return jobremark;
+    }
+
+    public void setJobremark(String jobremark) {
+        this.jobremark = jobremark;
+    }
+
     public String getUsername() {
         return username;
     }

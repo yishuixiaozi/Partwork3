@@ -191,19 +191,7 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
                         //Toast.makeText(getActivity(),"数据加载成功",Toast.LENGTH_SHORT).show();
                     }
                 });
-               /* .subscribe(new Consumer<ListResponse<JobBean>>() {
-                    @Override
-                    public void accept(ListResponse<JobBean> jobBeanListResponse) throws Exception {
-                        if (buttonmore.equals("0")) {//判断每次刷新的标志，每次刷新清空data列表
-                            jobdata.clear();
-                        }
-                        jobdata.addAll(jobBeanListResponse.getItems());//为什么是添加？
-                        adapter.notifyDataSetChanged();
-                        refresh.refreshComplete();
-                        buttonmore = "0";//这里就是让刷新的时候，能够让buttonmore为“0”
-                    }
 
-                });*/
     }
     @Override
     public void onClick(View v) {
