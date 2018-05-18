@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhit.edu.fragments.FindFragment;
+import com.hhit.edu.fragments.FindemployeFragment;
 import com.hhit.edu.fragments.MessageFragment;
 import com.hhit.edu.fragments.Mine2Fragment;
 import com.hhit.edu.fragments.MineFragment;
@@ -32,7 +33,7 @@ public class Main2Activity extends AppCompatActivity {
     };
 
     private Class[] fragments = {
-            Myhome2Fragment.class, MineFragment.class, MineFragment.class, Mine2Fragment.class
+            Myhome2Fragment.class, FindemployeFragment.class, MineFragment.class, Mine2Fragment.class
     };
     //定义一个控件的
     private FragmentTabHost tabHost;

@@ -3,6 +3,7 @@ package com.hhit.edu.my_interface;
 import com.hhit.edu.bean.CollectionBean;
 import com.hhit.edu.bean.EntityResponse;
 import com.hhit.edu.bean.JobBean;
+import com.hhit.edu.bean.JobneedBean;
 import com.hhit.edu.bean.ListResponse;
 import com.hhit.edu.bean.UserBean;
 import com.hhit.edu.utils.ApiManager;
@@ -131,4 +132,7 @@ public interface HomePageInterface {
 
     @POST("JobServlet/getJobnoreview")
     Observable<ListResponse<JobBean>> getJobnoreview(@Query("userid") String userid);
+    //获得人才库信息
+    @POST("JobneedServlet/getJobneedByPage")
+    Observable<ListResponse<JobneedBean>> getJobneedBypage(@Query("pagenum") int pagenum);
 }
