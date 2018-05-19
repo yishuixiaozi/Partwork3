@@ -11,6 +11,7 @@ import android.widget.Button;
 import com.hhit.edu.partwork3.PostActivity;
 import com.hhit.edu.partwork3.R;
 import com.hhit.edu.partwork3.ReviewActivity;
+import com.hhit.edu.partwork3.TestSearchActivity;
 import com.j256.ormlite.stmt.query.In;
 
 /**
@@ -21,6 +22,7 @@ public class Myhome2Fragment extends Fragment implements View.OnClickListener{
 
     Button btn_post;
     Button btn_throughresult;
+    Button btn_testsearch;
     Button btn_finsh;
     @Nullable
     @Override
@@ -43,6 +45,8 @@ public class Myhome2Fragment extends Fragment implements View.OnClickListener{
         btn_post.setOnClickListener(this);
         btn_throughresult= (Button) view.findViewById(R.id.btn_throughresult);
         btn_throughresult.setOnClickListener(this);
+        btn_testsearch= (Button) view.findViewById(R.id.test_search);
+        btn_testsearch.setOnClickListener(this);
     }
 
     @Override
@@ -55,6 +59,11 @@ public class Myhome2Fragment extends Fragment implements View.OnClickListener{
             case R.id.btn_throughresult:
                 Intent intent_through=new Intent(getActivity(), ReviewActivity.class);
                 startActivity(intent_through);
+                break;
+            case R.id.test_search:
+                Intent intent=new Intent(getActivity(), TestSearchActivity.class);
+                startActivity(intent);
+                break;
             default:
                 break;
         }

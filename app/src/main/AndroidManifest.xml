@@ -121,7 +121,8 @@
         <activity android:name=".PostActivity" />
         <activity android:name=".Main2Activity" />
         <activity android:name=".MypostActivity" />
-        <activity android:name=".ReviewActivity"></activity>
+        <activity android:name=".ReviewActivity" />
+        <activity android:name=".TestSearchActivity"></activity>
     </application>
 
 </manifest>

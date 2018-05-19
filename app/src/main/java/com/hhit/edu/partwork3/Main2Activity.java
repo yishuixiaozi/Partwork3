@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.hhit.edu.fragments.FindFragment;
 import com.hhit.edu.fragments.FindemployeFragment;
+import com.hhit.edu.fragments.FindemployeFragment2;
 import com.hhit.edu.fragments.MessageFragment;
 import com.hhit.edu.fragments.Mine2Fragment;
 import com.hhit.edu.fragments.MineFragment;
