@@ -67,6 +67,7 @@ public class TestSearchActivity extends AppCompatActivity {
             @Override
             public void onScrollChanged() {
                 //改变toolbar的透明度
+                System.out.println("---this is"+mScrollView.getScrollY());
                 changeToolbarAlpha();
                 //滚动距离>=大图高度-toolbar高度 即toolbar完全盖住大图的时候 且不是伸展状态 进行伸展操作
                 if (mScrollView.getScrollY() >=ivImg.getHeight() - toolbar.getHeight()  && !isExpand) {

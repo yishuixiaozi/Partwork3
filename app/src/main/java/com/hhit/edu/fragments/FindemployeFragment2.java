@@ -1,6 +1,7 @@
 package com.hhit.edu.fragments;
 
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.transition.AutoTransition;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -59,16 +61,16 @@ public class FindemployeFragment2 extends Fragment implements View.OnClickListen
     List<JobneedBean> jobneeddata;
     AbstractBaseAdapter<JobneedBean> needadapter;
     boolean isAddMore;//是否加载更多数据
+    boolean iskeyData=false;
     private int pagenum=0;
     String myuserid;
     boolean isExpand = false;
-    LinearLayout view_head;
     EditText tvSearch;
     LinearLayout mSearchLayout;
     Toolbar toolbar;
     private TransitionSet mSet;
-    ImageView iv_img;
     ToorbarView toorbarView;
+    String queryfield;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,6 +131,43 @@ public class FindemployeFragment2 extends Fragment implements View.OnClickListen
                 });
     }
 
+    public void keygetData(String queryfield){
+        final HomePageInterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(HomePageInterface.class);
+        request.getJoblike(queryfield,pagenum)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ListResponse<JobneedBean>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull ListResponse<JobneedBean> jobneedBeanListResponse) {
+                        if (buttonmore.equals("0")){
+                            jobneeddata.clear();
+                        }
+                        System.out.println("--------------buttom"+buttonmore);
+                        jobneeddata.addAll(jobneedBeanListResponse.getItems());
+                        needadapter.notifyDataSetChanged();
+                        refresh.refreshComplete();
+                        iskeyData=true;
+                        buttonmore="0";
+                        //uttonmore = "0";//这里就是让刷新的时候，能够让buttonmore为“0”
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        System.out.println("人才关键字查询出错");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
     public void initdata(){
         jobneeddata=new ArrayList<>();
         needadapter=new AbstractBaseAdapter<JobneedBean>(getActivity(),jobneeddata,R.layout.home_listview_jobneed) {
@@ -150,28 +189,22 @@ public class FindemployeFragment2 extends Fragment implements View.OnClickListen
     }
 
     public void setupview(View view){
-        iv_img= (ImageView) view.findViewById(R.id.iv_img);
-        view_head= (LinearLayout) view.findViewById(R.id.view_head);
         tvSearch= (EditText) view.findViewById(R.id.tv_search);
         mSearchLayout= (LinearLayout) view.findViewById(R.id.ll_search);
         toolbar= (Toolbar) view.findViewById(R.id.toolbar);
-        //新增---设置为无色
         toolbar.getBackground().mutate().setAlpha(0);
-        //scrollview滚动状态监听------去掉了
         tvSearch.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == event.KEYCODE_ENTER&&event.getAction()==event.ACTION_UP) {
-                    System.out.println("你点击了搜索执行，输入值是"+tvSearch.getText().toString());
-                    //pagenum=0;//重新设置为0，搜索的时候
-                    //jobneeddata.clear();暂时不去清空数据
-                    //参数内容的重新复制
-                    //getData();这个地方在写一个getData2()专门用来处理关键字查询
+                    //System.out.println("你点击了搜索执行，输入值是"+tvSearch.getText().toString());
+                    queryfield=tvSearch.getText().toString();
+                    pagenum=0;
+                    keygetData(queryfield);
                 }
                 return false;
             }
         });
-
         lv=(ListView) view.findViewById(R.id.home_lv);
         setupRefreshView(view);
         //lv.addHeaderView(R.drawable.night1);
@@ -184,41 +217,6 @@ public class FindemployeFragment2 extends Fragment implements View.OnClickListen
         refresh.setOnTouchListener(this);
         lv.setOnTouchListener(this);
         lv.setOnItemClickListener(this);//设置Item点击监听
-        lv.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-            @Override
-            public void onScrollChanged() {
-                int scrollY=lv.getScrollY();
-                System.out.println("-new   here ---"+scrollY);
-            }
-        });
-        /*lv.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                int scrollY1=v.getScrollY();
-                System.out.println("--------test----"+scrollY1);
-                if(scrollY<0){
-                    toolbar.getBackground().mutate().setAlpha(0);
-                    return;
-                }
-                //计算当前透明度比率
-                System.out.println("----toor"+toolbar.getHeight()*1f);
-                System.out.println("0---1212-"+toorbarView.getHeight());
-                float radio= Math.min(1,scrollY/(toorbarView.getHeight()-toolbar.getHeight()*1f));
-                System.out.println("-----------radio"+radio);
-                //设置透明度
-                toolbar.getBackground().mutate().setAlpha( (int)(radio * 0xFF));
-                //设置toorbar
-                if (scrollY >=toorbarView.getHeight() - toolbar.getHeight()  && !isExpand) {
-                    expand();
-                    isExpand = true;
-                }
-                //滚动距离<=0时 即滚动到顶部时  且当前伸展状态 进行收缩操作
-                else if (scrollY<=0&& isExpand) {
-                    reduce();
-                    isExpand = false;
-                }
-            }
-        });*/
     }
 
     public void setupRefreshView(View view){
@@ -232,9 +230,10 @@ public class FindemployeFragment2 extends Fragment implements View.OnClickListen
         refresh.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                System.out.println("-----------------onRefreshLayout");
+                System.out.println("-----------------onRefreshLayout---"+buttonmore);
                 pagenum=0;
-                getData();
+                iskeyData=false;//在设置为false，刷新后下滑获取原始数据
+                getData();//只要刷新就让他执行原始数据获取
             }
             //解决Listview与下拉刷新的冲突
             @Override
@@ -257,17 +256,27 @@ public class FindemployeFragment2 extends Fragment implements View.OnClickListen
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-        System.out.println("一开始加载的时候显示内容");
+        System.out.println("--");
         if (scrollState==0&&isAddMore){//一开始加载的时候显示内容，
-            pagenum+=8;
-            getData();
-            buttonmore="1";
-            System.out.println("-----------------pagenum="+pagenum);
+            if (iskeyData){
+                System.out.println("是关键字查询");
+                pagenum+=8;
+                keygetData(queryfield);
+                buttonmore="1";
+            }
+            else {
+                pagenum+=8;
+                getData();
+                buttonmore="1";
+            }
         }
     }
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        int toplong=Math.abs(toorbarView.getTop());
+        changeToolbarAlpha(toplong);
+        changeViewhead(toplong);
         if (firstVisibleItem + visibleItemCount == totalItemCount) {//就是说下拉看到最后一条了，设置isAddMore的属性为true，改变新的参数查询内容
             isAddMore = true;
         } else {
@@ -275,26 +284,25 @@ public class FindemployeFragment2 extends Fragment implements View.OnClickListen
         }
     }
 
-    private void changeViewhead(AbsListView view){
-        if (view.getScrollY() >=view_head.getHeight() - toolbar.getHeight()  && !isExpand) {
+    private void changeViewhead(int ScrollY){
+        if (ScrollY >=toorbarView.getHeight() - toolbar.getHeight()  && !isExpand) {
             expand();
             isExpand = true;
         }
         //滚动距离<=0时 即滚动到顶部时  且当前伸展状态 进行收缩操作
-        else if (view.getScrollY()<=0&& isExpand) {
+        else if (ScrollY<=10&& isExpand) {
             reduce();
             isExpand = false;
         }
     }
-    private void changeToolbarAlpha(View view) {
-        int scrollY = view.getScrollY();
+    private void changeToolbarAlpha(int scrollY) {
         //快速下拉会引起瞬间scrollY<0
         if(scrollY<0){
             toolbar.getBackground().mutate().setAlpha(0);
             return;
         }
         //计算当前透明度比率
-        float radio= Math.min(1,scrollY/(view_head.getHeight()-toolbar.getHeight()*1f));
+        float radio= Math.min(1,scrollY/(toorbarView.getHeight()-toolbar.getHeight()*1f));
         //设置透明度
         toolbar.getBackground().mutate().setAlpha( (int)(radio * 0xFF));
     }
@@ -305,8 +313,6 @@ public class FindemployeFragment2 extends Fragment implements View.OnClickListen
 
 
     private void expand() {
-        //设置伸展状态时的布局
-        //tvSearch.setText("搜索");
         RelativeLayout.LayoutParams LayoutParams = (RelativeLayout.LayoutParams) mSearchLayout.getLayoutParams();
         LayoutParams.width = LayoutParams.MATCH_PARENT;
         LayoutParams.setMargins(dip2px(10), dip2px(10), dip2px(10), dip2px(10));
@@ -317,7 +323,6 @@ public class FindemployeFragment2 extends Fragment implements View.OnClickListen
 
     private void reduce() {
         //设置收缩状态时的布局
-        System.out.println("sethint");
         tvSearch.setHint("搜索");
         RelativeLayout.LayoutParams LayoutParams = (RelativeLayout.LayoutParams) mSearchLayout.getLayoutParams();
         LayoutParams.width = dip2px(80);

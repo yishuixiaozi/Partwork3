@@ -34,7 +34,7 @@ public class Main2Activity extends AppCompatActivity {
     };
 
     private Class[] fragments = {
-            Myhome2Fragment.class, FindemployeFragment.class, MineFragment.class, Mine2Fragment.class
+            Myhome2Fragment.class, FindemployeFragment2.class, MineFragment.class, Mine2Fragment.class
     };
     //定义一个控件的
     private FragmentTabHost tabHost;

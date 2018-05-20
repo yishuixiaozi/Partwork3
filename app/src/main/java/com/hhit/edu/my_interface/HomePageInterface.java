@@ -135,4 +135,8 @@ public interface HomePageInterface {
     //获得人才库信息
     @POST("JobneedServlet/getJobneedByPage")
     Observable<ListResponse<JobneedBean>> getJobneedBypage(@Query("pagenum") int pagenum);
+
+    @POST("JobneedServlet/getJoblike")
+    Observable<ListResponse<JobneedBean>> getJoblike(@Query("queryfield") String queryfield,
+                                                     @Query("pagenum") int pagenum);
 }
