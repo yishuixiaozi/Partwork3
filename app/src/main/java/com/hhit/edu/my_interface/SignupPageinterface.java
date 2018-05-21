@@ -23,15 +23,16 @@ public interface SignupPageinterface {
     //查询某个用户的报名信息
     @POST("SignupServlet/getAllSignup")
     Observable<ListResponse<SignupBean>> getAllSignup(@Query("userid") String userid);
-
     //取消报名的操作
     @POST("SignupServlet/deleteSignup")
     Observable<String> deleteSignup(@Query("signupid") int signupid);
     //查询某个招聘用户的发布的兼职信息
-
     @POST("JobServlet/queryMypost")
     Observable<ListResponse<JobBean>> queryMypost(@Query("userid") String userid);
     //删除某个用户某条兼职发布信息，通过兼职id
     @POST("JobServlet/deleteByid")
     Observable<String> deleteByid(@Query("jobid") int jobid);
+    //获取报名表中某某条兼职的报名信息
+    @POST("SignupServlet/getMypostsign")
+    Observable<ListResponse<SignupBean>> getMypostsign(@Query("jobid") int jobid);
 }

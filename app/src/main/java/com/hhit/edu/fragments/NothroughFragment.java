@@ -111,7 +111,7 @@ public class NothroughFragment extends Fragment implements View.OnClickListener,
     public void initdata(){
         System.out.println("------------------initdata()方法内容测试");
         jobdata=new ArrayList<>();
-        adapter=new AbstractBaseAdapter<JobBean>(getActivity(),jobdata, R.layout.home_listview_mycontent) {
+        adapter=new AbstractBaseAdapter<JobBean>(getActivity(),jobdata, R.layout.home_listview_mycontent2) {
             @Override
             public void bindData(int position, ViewHolder holder) {
                 JobBean jobBean=jobdata.get(position);//一个一个的赋值的我认为
@@ -125,7 +125,7 @@ public class NothroughFragment extends Fragment implements View.OnClickListener,
                 TextView tv_payway= (TextView) holder.findViewById(R.id.home_listview_payway);
                 tv_payway.setText(jobBean.getPayway());
                 TextView tv_worktime= (TextView) holder.findViewById(R.id.home_listview_worktime);
-                tv_worktime.setText(jobBean.getWorktime());
+                tv_worktime.setText("提示："+jobBean.getJobremark());
                 //设置完毕
             }
         };

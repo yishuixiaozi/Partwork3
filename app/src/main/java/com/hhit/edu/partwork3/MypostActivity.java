@@ -40,7 +40,6 @@ public class MypostActivity extends AppCompatActivity implements View.OnClickLis
     ListView lv;//listview对象存放值的
     PtrFrameLayout refresh;//布局内容
     String buttonmore="0";
-
     List<JobBean> signupdata;
     AbstractBaseAdapter<JobBean> adapter;
     ImageView im_back;
@@ -131,35 +130,6 @@ public class MypostActivity extends AppCompatActivity implements View.OnClickLis
 
                     }
                 });
-        /*final SignupPageinterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(SignupPageinterface.class);
-        request.queryMypost(myuserid)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ListResponse<SignupBean>>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        Toast.makeText(MypostActivity.this,"正在获取数据...",Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onNext(@NonNull ListResponse<SignupBean> signupBeanListResponse) {
-                        signupdata.clear();//清空数据
-                        signupdata.addAll(signupBeanListResponse.getItems());//为什么是添加？
-                        adapter.notifyDataSetChanged();
-                        refresh.refreshComplete();
-                        buttonmore = "0";//这里就是让刷新的时候，能够让buttonmore为“0”
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        Toast.makeText(MypostActivity.this,"获取数据错误",Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });*/
     }
 
     public void initdata(){
@@ -221,13 +191,11 @@ public class MypostActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         System.out.println("positon="+position);
+        JobBean jobBean=signupdata.get(position);
+        Intent intent=new Intent(this,MypostsignActivity.class);
+        intent.putExtra("jobid",jobBean.getId());
+        startActivity(intent);
         //将点击信息的ID传递过去显示详细内容
-        //这个地方改为点击修改内容的显示，进行部分内容的修改
-       /* SignupBean signupBean=signupdata.get(position);
-        Intent intent=new Intent(this, JobdetailsActivity.class);
-        intent.putExtra("id",signupBean.getJobid());
-        intent.putExtra("userid",signupBean.getUserid());
-        startActivity(intent);*/
     }
 
     /**
