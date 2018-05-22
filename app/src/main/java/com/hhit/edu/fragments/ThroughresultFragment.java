@@ -1,29 +1,28 @@
-package com.hhit.edu.partwork3;
+package com.hhit.edu.fragments;
 
 import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.hhit.edu.fragments.FindFragment;
-import com.hhit.edu.fragments.MyhomeFragment;
-import com.hhit.edu.fragments.NoreviewFragment;
-import com.hhit.edu.fragments.NothroughFragment;
-import com.hhit.edu.fragments.ThroughFragment;
+import com.hhit.edu.partwork3.R;
 
 import java.util.ArrayList;
 
 import adapter.MyFragmentPagerAdapter;
 
 /**
- * 这里是审核结果活动,包含已通过，未通过，未审核
+ * Created by 93681 on 2018/5/22.
  */
-public class ReviewActivity extends AppCompatActivity implements View.OnClickListener,ViewPager.OnPageChangeListener{
+
+public class ThroughresultFragment extends Fragment implements View.OnClickListener,ViewPager.OnPageChangeListener{
     private ViewPager myviewpager;
     private ArrayList<Fragment> fragments;
     private Button btn_through;
@@ -33,22 +32,35 @@ public class ReviewActivity extends AppCompatActivity implements View.OnClickLis
     float cursorX=0;
     private int[] widthAegs;//宽度数组
     private Button[] btnArgs;//按钮数组
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_review);
-        initview();
-    }
-    //初始化布局
-    public void initview(){
-        myviewpager= (ViewPager) findViewById(R.id.myviewpager);
-        btn_through= (Button) findViewById(R.id.btn_through);
-        btn_nothrough= (Button) findViewById(R.id.btn_nothrough);
-        btn_noreview= (Button) findViewById(R.id.btn_noreview);
-        btnArgs=new Button[]{btn_through,btn_nothrough,btn_noreview};
-        cursor= (ImageView) findViewById(R.id.cursor_btn);
-        cursor.setBackgroundColor(Color.RED);//下划线设置为红色
 
+  /*  @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        System.out.println("------onCrate");
+    }*/
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        System.out.println("---onCreateView");
+        return inflater.inflate(R.layout.activity_review, container,false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        System.out.println("----onViewCreated");
+        super.onViewCreated(view, savedInstanceState);
+        initview(view);
+    }
+
+    public void initview(View view){
+        myviewpager= (ViewPager) view.findViewById(R.id.myviewpager);
+        btn_through= (Button) view.findViewById(R.id.btn_through);
+        btn_nothrough= (Button) view.findViewById(R.id.btn_nothrough);
+        btn_noreview= (Button) view.findViewById(R.id.btn_noreview);
+        btnArgs=new Button[]{btn_through,btn_nothrough,btn_noreview};
+        cursor= (ImageView) view.findViewById(R.id.cursor_btn);
+        cursor.setBackgroundColor(Color.RED);//下划线设置为红色
         myviewpager.setOnPageChangeListener(this);//说明这个方法已经过时了
         btn_through.setOnClickListener(this);
         btn_nothrough.setOnClickListener(this);
@@ -58,8 +70,8 @@ public class ReviewActivity extends AppCompatActivity implements View.OnClickLis
         fragments.add(new ThroughFragment());//这里是测试的内容
         fragments.add(new NothroughFragment());//这里也是测试的内容
         fragments.add(new NoreviewFragment());
-        //将fragments数组传递过去作为参数形成adapter
-        MyFragmentPagerAdapter adapter=new MyFragmentPagerAdapter(getSupportFragmentManager(),fragments);
+        //这里是活动获取fragment作为参数传递
+        MyFragmentPagerAdapter adapter=new MyFragmentPagerAdapter(getActivity().getSupportFragmentManager(),fragments);
         myviewpager.setAdapter(adapter);
         resetButtonColor();
         btn_through.setTextColor(Color.RED);//第一个设置为默认颜色状态
@@ -76,23 +88,6 @@ public class ReviewActivity extends AppCompatActivity implements View.OnClickLis
         btn_nothrough.setTextColor(Color.BLACK);
         btn_noreview.setTextColor(Color.BLACK);
     }
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btn_through:
-                myviewpager.setCurrentItem(0);
-                cursorAnim(0);
-                break;
-            case R.id.btn_nothrough:
-                myviewpager.setCurrentItem(1);
-                cursorAnim(1);
-                break;
-            case R.id.btn_noreview:
-                myviewpager.setCurrentItem(2);
-                cursorAnim(2);
-                break;
-        }
-    }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -101,7 +96,9 @@ public class ReviewActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onPageSelected(int position) {
-        //设置每个宽度数组的颜色
+        System.out.println("fragments.size()="+fragments.size());
+        System.out.println("onPageSelected---position="+position);
+    //设置每个宽度数组的颜色
         if (widthAegs==null){
             widthAegs=new int[] {btn_through.getWidth(),btn_nothrough.getWidth(),btn_noreview.getWidth()};
         }
@@ -116,7 +113,23 @@ public class ReviewActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_through:
+                myviewpager.setCurrentItem(0);
+                break;
+            case R.id.btn_nothrough:
+                myviewpager.setCurrentItem(1);
+                break;
+            case R.id.btn_noreview:
+                myviewpager.setCurrentItem(2);
+                break;
+        }
+    }
+
     public void cursorAnim(int curItem){
+        System.out.println("curItem----"+curItem);
         cursorX=0;
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)cursor.getLayoutParams();
         //减去边距*2，以对齐标题栏文字

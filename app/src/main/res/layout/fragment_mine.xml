@@ -18,7 +18,7 @@
                 android:id="@+id/iv_bg"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:background="@mipmap/mine_head_bg" />
+                android:background="@drawable/night1" />
             <!--头部用户信息-->
             <LinearLayout
                 android:id="@+id/ll_top"
@@ -196,7 +196,7 @@
                     <TextView
                         style="@style/MineFunctionTvLeft"
                         android:id="@+id/txt_mypost"
-                        android:text="我的发布"
+                        android:text="我的求职"
                         android:textColor="@color/color_222222" />
                     <ImageView
                         style="@style/MineFunctionArrow"
@@ -230,8 +230,11 @@
                 <RelativeLayout style="@style/MineFunctionRl">
                     <TextView
                         style="@style/MineFunctionTvLeft"
-                        android:text="@string/JD"
-                        android:textColor="@color/color_222222" />
+                        android:text="求职业者个人中心"
+                        android:textColor="@color/color_222222"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
                     <ImageView
                         android:id="@+id/iv_jd_arrow"
                         style="@style/MineFunctionArrow"

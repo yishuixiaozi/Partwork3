@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.hhit.edu.fragments.DiscoverFragment;
 import com.hhit.edu.fragments.FindFragment;
+import com.hhit.edu.fragments.FindemployeFragment2;
 import com.hhit.edu.fragments.MessageFragment;
 import com.hhit.edu.fragments.MineFragment;
 import com.hhit.edu.fragments.MyhomeFragment;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private Class[] fragments = {
-            MyhomeFragment.class, FindFragment.class, MessageFragment.class, MineFragment.class
+            MyhomeFragment.class, FindFragment.class, FindemployeFragment2.class, MineFragment.class
     };
 
     //定义一个控件的
@@ -41,9 +42,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getSupportActionBar().hide();//隐藏标题栏的作用
         setContentView(R.layout.activity_main);
-        /*SharedUtils.saveFirstRun(this);用来保存第一次启动数据*/
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT){
             //透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

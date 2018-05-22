@@ -1,37 +1,42 @@
 package com.hhit.edu.fragments;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.transition.AutoTransition;
+import android.support.transition.TransitionManager;
+import android.support.transition.TransitionSet;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.hhit.edu.bean.HomePageBean;
 import com.hhit.edu.bean.JobBean;
+import com.hhit.edu.bean.JobneedBean;
 import com.hhit.edu.bean.ListResponse;
 import com.hhit.edu.my_interface.HomePageInterface;
-import com.hhit.edu.partwork3.ExpressActivity;
 import com.hhit.edu.partwork3.JobdetailsActivity;
 import com.hhit.edu.partwork3.R;
 import com.hhit.edu.utils.ApiManager;
 import com.hhit.edu.utils.RetrofitUtils;
 import com.hhit.edu.view.HomeSecondView;
 import com.hhit.edu.view.PullToRefreshHeadView;
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-
+import com.hhit.edu.view.ToorbarView;
 import java.util.ArrayList;
 import java.util.List;
-
 import adapter.AbstractBaseAdapter;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -39,43 +44,47 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
+import static android.content.Context.MODE_PRIVATE;
 /**
  * Created by 93681 on 2018/4/1.
  * 这里是我的首页内容进行初步调试测试
  */
-
-public class MyhomeFragment extends Fragment implements View.OnClickListener,AbsListView.OnScrollListener, AdapterView.OnItemClickListener{
-    TextView tv_cityName;//城市名
+public class MyhomeFragment extends Fragment implements View.OnClickListener,AbsListView.OnScrollListener, AdapterView.OnItemClickListener,View.OnTouchListener{
     ListView lv;//listview对象存放值的
     PtrFrameLayout refresh;//布局内容
-    String cityName;
-    String cityId;
     String buttonmore="0";
-    HomeSecondView SecondView;
-
+   /* List<JobneedBean> jobneeddata;
+    AbstractBaseAdapter<JobneedBean> needadapter;*/
     List<JobBean> jobdata;//实体数组内容
     AbstractBaseAdapter<JobBean> adapter;//<>这个是限制存储的数据的类型方式
     boolean isAddMore;//是否加载更多数据
+    boolean iskeyData=false;
     private int pagenum=0;
-
-
+    String myuserid;
+    boolean isExpand = false;
+    EditText tvSearch;
+    LinearLayout mSearchLayout;
+    Toolbar toolbar;
+    private TransitionSet mSet;
+    ToorbarView toorbarView;
+    String queryfield;
+    HomeSecondView homeSecondView;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       /* SharedPreferences preferences=getActivity().getSharedPreferences("mydata",MODE_PRIVATE);
+        myuserid=preferences.getString("userid","default");
+        System.out.println("报名userid---------测试"+myuserid);*/
         getData();
         initdata();
-        SecondView=new HomeSecondView(getActivity());
+        toorbarView=new ToorbarView(getActivity());
+        homeSecondView=new HomeSecondView(getActivity());
     }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.home_fragment,container,false);
+        return inflater.inflate(R.layout.home_fragment, container,false);
     }
 
     @Override
@@ -84,82 +93,8 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
         setupview(view);
     }
 
-       /**
-     * 初始化组件内容并且设置监听
-     */
-    public void setupview(View view){
-        lv=(ListView) view.findViewById(R.id.home_lv);//列表组件需要先创建对象
-        TextView btn1 = (TextView) SecondView.findViewById(R.id.tv_express);
-        TextView btn2 = (TextView) SecondView.findViewById(R.id.tv_ershoufang);
-        setupRefreshView(view);
-        btn1.setOnClickListener(this);
-        btn2.setOnClickListener(this);
-        lv.addHeaderView(SecondView);//加入八大组件内容
-        lv.setAdapter(adapter);
-        lv.setOnScrollListener(this);//设置监听方式
-        lv.setOnItemClickListener(this);//设置Item点击监听
-        //restoreView();
-    }
-    public void setupRefreshView(View view){
-        refresh= (PtrFrameLayout) view.findViewById(R.id.refresh);//获得可刷新对象
-        PullToRefreshHeadView pullHead=new PullToRefreshHeadView(getContext());
-        //添加刷新tou
-        refresh.setHeaderView(pullHead);
-        //添加刷新头控制
-        refresh.addPtrUIHandler(pullHead);
-        //设置刷新事件功能
-        refresh.setPtrHandler(new PtrDefaultHandler() {
-            @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
-                System.out.println("-----------------onRefreshLayout");
-                pagenum=0;//只要是刷新开始，pagenum就重置为0，不然的话，后面的内容太大，在此刷新的时候查询不到值的内容页面为空
-                getData();
-            }
-            //解决Listview与下拉刷新的冲突
-            @Override
-            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-                return super.checkCanDoRefresh(frame, lv, header);
-            }
-        });
-    }
-
     /**
-     * 销毁首页
-     */
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
-    /**
-     * 初始化数据内容
-     */
-    public void initdata(){
-        System.out.println("------------------initdata()方法内容测试");
-        jobdata=new ArrayList<>();
-        adapter=new AbstractBaseAdapter<JobBean>(getActivity(),jobdata, R.layout.home_listview_mycontent) {
-            @Override
-            public void bindData(int position, ViewHolder holder) {
-                JobBean jobBean=jobdata.get(position);//一个一个的赋值的我认为
-                //查询的数据赋值开始
-                ImageView iv= (ImageView) holder.findViewById(R.id.home_listview_img);
-                Glide.with(MyhomeFragment.this).load(jobBean.getJobimageuri()).into(iv); //图形赋值成功
-                TextView tv_title= (TextView) holder.findViewById(R.id.home_listview_title);
-                tv_title.setText(jobBean.getTitle());
-                TextView tv_paymoney= (TextView) holder.findViewById(R.id.home_listview_paymoney);
-                tv_paymoney.setText(jobBean.getPaymoney());
-                TextView tv_payway= (TextView) holder.findViewById(R.id.home_listview_payway);
-                tv_payway.setText(jobBean.getPayway());
-                TextView tv_worktime= (TextView) holder.findViewById(R.id.home_listview_worktime);
-                tv_worktime.setText(jobBean.getWorktime());
-                //设置完毕
-            }
-        };
-    }
-
-    /**
-     * 获取兼职信息简约信息
-     * 测试rvjava和reftofit框架的组合使用，服务springMVC
-     * http://192.168.137.1:8080/AndroidService/JobServlet/getAllJob
+     * 获取数据要变化了
      */
     public void getData(){
         System.out.println("获取数据内容测试==============");
@@ -191,35 +126,150 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
                         //Toast.makeText(getActivity(),"数据加载成功",Toast.LENGTH_SHORT).show();
                     }
                 });
-
     }
+
+    public void keygetData(String queryfield){
+        final HomePageInterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(HomePageInterface.class);
+    }
+
+    public void initdata(){
+        System.out.println("------------------initdata()方法内容测试");
+        jobdata=new ArrayList<>();
+        adapter=new AbstractBaseAdapter<JobBean>(getActivity(),jobdata, R.layout.home_listview_mycontent) {
+            @Override
+            public void bindData(int position, ViewHolder holder) {
+                JobBean jobBean=jobdata.get(position);//一个一个的赋值的我认为
+                //查询的数据赋值开始
+                ImageView iv= (ImageView) holder.findViewById(R.id.home_listview_img);
+                Glide.with(MyhomeFragment.this).load(jobBean.getJobimageuri()).into(iv); //图形赋值成功
+                TextView tv_title= (TextView) holder.findViewById(R.id.home_listview_title);
+                tv_title.setText(jobBean.getTitle());
+                TextView tv_paymoney= (TextView) holder.findViewById(R.id.home_listview_paymoney);
+                tv_paymoney.setText(jobBean.getPaymoney());
+                TextView tv_payway= (TextView) holder.findViewById(R.id.home_listview_payway);
+                tv_payway.setText(jobBean.getPayway());
+                TextView tv_worktime= (TextView) holder.findViewById(R.id.home_listview_worktime);
+                tv_worktime.setText(jobBean.getWorktime());
+                //设置完毕
+            }
+        };
+    }
+
+    public void setupview(View view){
+        tvSearch= (EditText) view.findViewById(R.id.tv_search);
+        mSearchLayout= (LinearLayout) view.findViewById(R.id.ll_search);
+        toolbar= (Toolbar) view.findViewById(R.id.toolbar);
+        toolbar.getBackground().mutate().setAlpha(0);
+        tvSearch.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == event.KEYCODE_ENTER&&event.getAction()==event.ACTION_UP) {
+                    System.out.println("你点击了搜索执行，输入值是"+tvSearch.getText().toString());
+                    queryfield=tvSearch.getText().toString();
+                    //pagenum=0;
+                    //keygetData(queryfield);这个地方改为自己的模糊查询方法
+                }
+                return false;
+            }
+        });
+        lv=(ListView) view.findViewById(R.id.home_lv);
+        setupRefreshView(view);
+        lv.addHeaderView(toorbarView);
+        lv.setAdapter(adapter);
+        lv.setOnScrollListener(this);//设置监听方式
+        tvSearch.setOnClickListener(this);
+        mSearchLayout.setOnClickListener(this);
+        tvSearch.setOnTouchListener(this);
+        refresh.setOnTouchListener(this);
+        lv.setOnTouchListener(this);
+        lv.setOnItemClickListener(this);//设置Item点击监听
+    }
+    public void setupRefreshView(View view){
+        refresh= (PtrFrameLayout) view.findViewById(R.id.refresh);//获得可刷新对象
+        PullToRefreshHeadView pullHead=new PullToRefreshHeadView(getContext());
+        //添加刷新tou
+        refresh.setHeaderView(pullHead);
+        //添加刷新头控制
+        refresh.addPtrUIHandler(pullHead);
+        //设置刷新事件功能
+        refresh.setPtrHandler(new PtrDefaultHandler() {
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                System.out.println("-----------------onRefreshLayout---"+buttonmore);
+                pagenum=0;
+                iskeyData=false;//在设置为false，刷新后下滑获取原始数据
+                getData();//只要刷新就让他执行原始数据获取
+            }
+            //解决Listview与下拉刷新的冲突
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return super.checkCanDoRefresh(frame, lv, header);
+            }
+        });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.tv_express:{
-                System.out.println("快递查询");
-                startActivity(new Intent(getActivity(), ExpressActivity.class));
-            }
-            break;
         }
     }
+
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-        System.out.println("一开始加载的时候显示内容");
+        System.out.println("--");
         if (scrollState==0&&isAddMore){//一开始加载的时候显示内容，
-            pagenum+=8;
-            getData();
-            buttonmore="1";
-            System.out.println("-----------------pagenum="+pagenum);
+            if (iskeyData){
+                System.out.println("是关键字查询");
+                pagenum+=8;
+                keygetData(queryfield);
+                buttonmore="1";
+            }
+            else {
+                pagenum+=8;
+                getData();
+                buttonmore="1";
+            }
         }
     }
+
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        int toplong=Math.abs(toorbarView.getTop());
+        changeToolbarAlpha(toplong);
+        changeViewhead(toplong);
         if (firstVisibleItem + visibleItemCount == totalItemCount) {//就是说下拉看到最后一条了，设置isAddMore的属性为true，改变新的参数查询内容
             isAddMore = true;
         } else {
-           isAddMore=false;
+            isAddMore=false;
         }
+    }
+
+    private void changeViewhead(int ScrollY){
+        if (ScrollY >=toorbarView.getHeight() - toolbar.getHeight()  && !isExpand) {
+            expand();
+            isExpand = true;
+        }
+        //滚动距离<=0时 即滚动到顶部时  且当前伸展状态 进行收缩操作
+        else if (ScrollY<=10&& isExpand) {
+            reduce();
+            isExpand = false;
+        }
+    }
+    private void changeToolbarAlpha(int scrollY) {
+        //快速下拉会引起瞬间scrollY<0
+        if(scrollY<0){
+            toolbar.getBackground().mutate().setAlpha(0);
+            return;
+        }
+        //计算当前透明度比率
+        float radio= Math.min(1,scrollY/(toorbarView.getHeight()-toolbar.getHeight()*1f));
+        //设置透明度
+        toolbar.getBackground().mutate().setAlpha( (int)(radio * 0xFF));
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -231,5 +281,55 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
             intent.putExtra("userid",jobBean.getUserid());
             startActivity(intent);
         }
+    }
+
+
+    private void expand() {
+        RelativeLayout.LayoutParams LayoutParams = (RelativeLayout.LayoutParams) mSearchLayout.getLayoutParams();
+        LayoutParams.width = LayoutParams.MATCH_PARENT;
+        LayoutParams.setMargins(dip2px(10), dip2px(10), dip2px(10), dip2px(10));
+        mSearchLayout.setLayoutParams(LayoutParams);
+        //开始动画
+        beginDelayedTransition(mSearchLayout);
+    }
+
+    private void reduce() {
+        //设置收缩状态时的布局
+        tvSearch.setHint("搜索");
+        RelativeLayout.LayoutParams LayoutParams = (RelativeLayout.LayoutParams) mSearchLayout.getLayoutParams();
+        LayoutParams.width = dip2px(80);
+        LayoutParams.setMargins(dip2px(10), dip2px(10), dip2px(10), dip2px(10));
+        mSearchLayout.setLayoutParams(LayoutParams);
+        //开始动画
+        beginDelayedTransition(mSearchLayout);
+    }
+
+    void beginDelayedTransition(ViewGroup view) {
+        mSet = new AutoTransition();
+        mSet.setDuration(300);
+        TransitionManager.beginDelayedTransition(view, mSet);
+    }
+
+    private int dip2px(float dpVale) {
+        final float scale = getResources().getDisplayMetrics().density;
+        return (int) (dpVale * scale + 0.5f);
+    }
+
+    /**
+     * 控制搜索框变化的内容
+     * @param v
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (v.getId()){
+            case R.id.tv_search:
+                if (event.getAction()==event.ACTION_DOWN){
+                    expand();
+                }
+                break;
+        }
+        return false;
     }
 }

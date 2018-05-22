@@ -19,6 +19,9 @@ import com.hhit.edu.view.ClipImageView;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+/**
+ * 该活动是图片预览
+ */
 public class PreviewActivity extends Activity {
 	private ClipImageView imageView;
 	private Button btnY, btnN;

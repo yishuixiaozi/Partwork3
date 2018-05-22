@@ -175,27 +175,17 @@ public class HomeFragment1 extends Fragment
     }
     private void setupView(View view){//6
         System.out.println("-------------------------------setupView");
-        tv_cityName = (TextView) view.findViewById(R.id.tv_cityname);
         lv = (ListView) view.findViewById(R.id.home_lv);
-        btn_scan = (ImageButton) view.findViewById(R.id.btn_scan);
         TextView btn1 = (TextView) buttonView.findViewById(R.id.tv_express);
         TextView btn2 = (TextView) buttonView.findViewById(R.id.tv_ershoufang);
         TextView btn3 = (TextView) buttonView.findViewById(R.id.tv_zufang);
         TextView btn4 = (TextView) buttonView.findViewById(R.id.tv_zixun);
-        TextView btn5 = (TextView) buttonView.findViewById(R.id.tv_dazhe);
-        TextView btn6 = (TextView) buttonView.findViewById(R.id.tv_kaipan);
-        TextView btn7 = (TextView) buttonView.findViewById(R.id.tv_fangdai);
-        TextView btn8 = (TextView) buttonView.findViewById(R.id.tv_gengduo);
         setupRefreshView(view);//初始化Refresh控件
         //我的上一个是因为没有设置监听对象所以点击无效
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
         btn3.setOnClickListener(this);
         btn4.setOnClickListener(this);
-        btn5.setOnClickListener(this);
-        btn6.setOnClickListener(this);
-        btn7.setOnClickListener(this);
-        btn8.setOnClickListener(this);
         btn_scan.setOnClickListener(this);//二维码的监听事件
         lv.addHeaderView(buttonView);//listView里边添加了八图标
         tv_cityName.setText(cityName);
@@ -253,11 +243,6 @@ public class HomeFragment1 extends Fragment
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_cityname: {
-                //Intent intent = new Intent(getActivity(), CityChoiceActivity.class);
-                System.out.println("点击的是城市的名字，准备进入城市选择界面");
-            }
-            break;
             case R.id.tv_express: {//快递查询功能
                 startActivity(new Intent(getActivity(), ExpressActivity.class));
             }
@@ -269,21 +254,6 @@ public class HomeFragment1 extends Fragment
             }
             break;
             case R.id.tv_zixun: {
-            }
-            break;
-            case R.id.tv_dazhe: {
-            }
-            break;
-            case R.id.tv_kaipan: {
-            }
-            break;
-            case R.id.tv_fangdai: {
-            }
-            break;
-            case R.id.tv_gengduo: {
-            }
-            break;
-            case R.id.btn_scan: {
             }
             break;
         }

@@ -108,7 +108,7 @@ public class ThroughFragment extends Fragment implements View.OnClickListener,Ab
     }
 
     public void initdata(){
-        System.out.println("------------------initdata()方法内容测试");
+        System.out.println("-------though-----------initdata()方法内容测试");
         jobdata=new ArrayList<>();
         adapter=new AbstractBaseAdapter<JobBean>(getActivity(),jobdata, R.layout.home_listview_mycontent) {
             @Override
@@ -160,10 +160,10 @@ public class ThroughFragment extends Fragment implements View.OnClickListener,Ab
         });
     }
 
-    @Override
+   /* @Override
     public void onDestroyView() {
         super.onDestroyView();
-    }
+    }*/
 
     @Override
     public void onClick(View v) {

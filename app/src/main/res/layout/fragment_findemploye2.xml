@@ -22,7 +22,7 @@
     </in.srain.cube.views.ptr.PtrFrameLayout>
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="110dp"
         android:paddingTop="60dp"
         android:id="@+id/toolbar"
         android:background="@drawable/renmai_bk_icon1"
@@ -46,7 +46,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/search"
-                    android:gravity="center_vertical"
                     android:imeOptions="actionSearch"
                     android:singleLine="true"
                     android:hint="搜索"

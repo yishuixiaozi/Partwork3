@@ -1,7 +1,5 @@
 package com.hhit.edu.fragments;
-
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.transition.AutoTransition;
@@ -14,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -22,9 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.hhit.edu.bean.JobneedBean;
 import com.hhit.edu.bean.ListResponse;
@@ -35,7 +30,6 @@ import com.hhit.edu.utils.RetrofitUtils;
 import com.hhit.edu.view.HomeSecondView;
 import com.hhit.edu.view.PullToRefreshHeadView;
 import com.hhit.edu.view.ToorbarView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,9 +41,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-
 import static android.content.Context.MODE_PRIVATE;
-
 /**
  * Created by 93681 on 2018/5/19.
  */
@@ -71,6 +63,7 @@ public class FindemployeFragment2 extends Fragment implements View.OnClickListen
     private TransitionSet mSet;
     ToorbarView toorbarView;
     String queryfield;
+    HomeSecondView homeSecondView;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +73,7 @@ public class FindemployeFragment2 extends Fragment implements View.OnClickListen
         getData();
         initdata();
         toorbarView=new ToorbarView(getActivity());
+        homeSecondView=new HomeSecondView(getActivity());
     }
     @Nullable
     @Override
@@ -207,7 +201,6 @@ public class FindemployeFragment2 extends Fragment implements View.OnClickListen
         });
         lv=(ListView) view.findViewById(R.id.home_lv);
         setupRefreshView(view);
-        //lv.addHeaderView(R.drawable.night1);
         lv.addHeaderView(toorbarView);
         lv.setAdapter(needadapter);
         lv.setOnScrollListener(this);//设置监听方式
@@ -218,7 +211,6 @@ public class FindemployeFragment2 extends Fragment implements View.OnClickListen
         lv.setOnTouchListener(this);
         lv.setOnItemClickListener(this);//设置Item点击监听
     }
-
     public void setupRefreshView(View view){
         refresh= (PtrFrameLayout) view.findViewById(R.id.refresh);//获得可刷新对象
         PullToRefreshHeadView pullHead=new PullToRefreshHeadView(getContext());
@@ -357,11 +349,6 @@ public class FindemployeFragment2 extends Fragment implements View.OnClickListen
                     expand();
                 }
                 break;
-           /* case R.id.home_lv:
-                if (event.getAction()==event.ACTION_DOWN){
-                    reduce();
-                }
-                break;*/
         }
         return false;
     }

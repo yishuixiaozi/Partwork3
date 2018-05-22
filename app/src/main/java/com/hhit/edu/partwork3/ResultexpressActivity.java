@@ -27,6 +27,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 这个现实快递查询结果的页面
+ */
 public class ResultexpressActivity extends BaseActivity implements View.OnClickListener {
 
     private static String TAG="ResultActivity";

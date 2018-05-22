@@ -241,7 +241,7 @@
                     <TextView
                         style="@style/MineFunctionTvRight"
                         android:layout_toLeftOf="@+id/iv_jd_arrow"
-                        android:text="@string/JD_bonus" />
+                        android:text="发布者个人中心" />
                 </RelativeLayout>
                 <View style="@style/MineFunctionDivider" />
                 <View

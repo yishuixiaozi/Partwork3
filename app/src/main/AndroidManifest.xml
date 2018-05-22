@@ -35,16 +35,14 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="d8DrlRK9shrfR8Mvk41YX2zhTs1tgCL1" />
-
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
-
         <activity
             android:name=".MainActivity"
-            android:theme="@style/TranslucentTheme">
-
+            android:theme="@style/TranslucentTheme"
+            android:windowSoftInputMode="adjustPan">
             <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -119,7 +117,8 @@
         <activity android:name=".SignupActivity" />
         <activity android:name=".FMainActivity" />
         <activity android:name=".PostActivity" />
-        <activity android:name=".Main2Activity" />
+        <activity android:name=".Main2Activity"
+                  android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".MypostActivity" />
         <activity android:name=".ReviewActivity" />
         <activity android:name=".TestSearchActivity" />
