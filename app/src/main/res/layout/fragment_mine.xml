@@ -192,11 +192,12 @@
                     android:background="@color/color_F3F5F4" />
                 <View style="@style/MineFunctionDivider" />
                 <!--我的发布-->
-                <RelativeLayout style="@style/MineFunctionRl">
+                <RelativeLayout style="@style/MineFunctionRl"
+                    android:id="@+id/mycollection">
                     <TextView
                         style="@style/MineFunctionTvLeft"
                         android:id="@+id/txt_mypost"
-                        android:text="我的求职"
+                        android:text="我的收藏"
                         android:textColor="@color/color_222222" />
                     <ImageView
                         style="@style/MineFunctionArrow"
@@ -209,19 +210,16 @@
                     android:background="@color/color_F3F5F4" />
                 <View style="@style/MineFunctionDivider" />
                 <!--头条商城-->
-                <RelativeLayout style="@style/MineFunctionRl">
+                <RelativeLayout style="@style/MineFunctionRl"
+                    android:id="@+id/mysignup">
                     <TextView
                         style="@style/MineFunctionTvLeft"
-                        android:text="@string/mall"
+                        android:text="我的报名"
                         android:textColor="@color/color_222222" />
                     <ImageView
                         android:id="@+id/iv_mall_arrow"
                         style="@style/MineFunctionArrow"
                         android:background="@mipmap/setting_arrow" />
-                    <TextView
-                        style="@style/MineFunctionTvRight"
-                        android:layout_toLeftOf="@+id/iv_mall_arrow"
-                        android:text="@string/mall_bonus" />
                 </RelativeLayout>
                 <View
                     style="@style/MineFunctionDivider"
@@ -230,7 +228,7 @@
                 <RelativeLayout style="@style/MineFunctionRl">
                     <TextView
                         style="@style/MineFunctionTvLeft"
-                        android:text="求职业者个人中心"
+                        android:text="我的求职发布"
                         android:textColor="@color/color_222222"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentLeft="true"
@@ -252,12 +250,14 @@
                 <View style="@style/MineFunctionDivider" />
                 <!--我要爆料-->
                 <RelativeLayout
-                    android:id="@+id/exitlogin"
                     style="@style/MineFunctionRl">
                     <TextView
                         style="@style/MineFunctionTvLeft"
-                        android:text="退出当前账号"
-                        android:textColor="@color/color_222222" />
+                        android:text="其他内容"
+                        android:textColor="@color/color_222222"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
                     <ImageView
                         style="@style/MineFunctionArrow"
                         android:background="@mipmap/setting_arrow" />
@@ -267,11 +267,11 @@
                     android:layout_marginLeft="15dp" />
                 <!--用户反馈-->
                 <RelativeLayout
-                    android:id="@+id/mycollection"
+                    android:id="@+id/mycollection2"
                     style="@style/MineFunctionRl">
                     <TextView
                         style="@style/MineFunctionTvLeft"
-                        android:text="我的收藏"
+                        android:text="其他内容"
                         android:textColor="@color/color_222222" />
                     <ImageView
                         style="@style/MineFunctionArrow"
@@ -284,11 +284,11 @@
 
                 <!--系统设置-->
                 <RelativeLayout
-                    android:id="@+id/mysignup"
+                    android:id="@+id/exitlogin"
                     style="@style/MineFunctionRl">
                     <TextView
                         style="@style/MineFunctionTvLeft"
-                        android:text="我的报名"
+                        android:text="退出当前登录"
                         android:textColor="@color/color_222222" />
 
                     <ImageView

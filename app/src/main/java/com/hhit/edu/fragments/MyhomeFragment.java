@@ -175,6 +175,7 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
         lv=(ListView) view.findViewById(R.id.home_lv);
         setupRefreshView(view);
         lv.addHeaderView(toorbarView);
+        lv.addHeaderView(homeSecondView);
         lv.setAdapter(adapter);
         lv.setOnScrollListener(this);//设置监听方式
         tvSearch.setOnClickListener(this);
@@ -186,7 +187,7 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
     }
     public void setupRefreshView(View view){
         refresh= (PtrFrameLayout) view.findViewById(R.id.refresh);//获得可刷新对象
-        PullToRefreshHeadView pullHead=new PullToRefreshHeadView(getContext());
+        PullToRefreshHeadView pullHead=new PullToRefreshHeadView(getContext());//这句话可以改变刷新头控件
         //添加刷新tou
         refresh.setHeaderView(pullHead);
         //添加刷新头控制

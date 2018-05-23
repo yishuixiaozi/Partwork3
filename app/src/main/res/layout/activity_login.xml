@@ -16,11 +16,11 @@
 
     <ImageView
         android:id="@+id/loginUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
         android:layout_marginTop="18dp"
         android:contentDescription="@string/login"
-        android:src="@drawable/login1"
+        android:src="@drawable/night2"
         android:layout_below="@+id/loginTop"
         android:layout_centerHorizontal="true" />
 

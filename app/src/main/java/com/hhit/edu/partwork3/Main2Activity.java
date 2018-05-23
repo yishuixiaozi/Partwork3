@@ -13,16 +13,10 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hhit.edu.fragments.FindFragment;
-import com.hhit.edu.fragments.FindemployeFragment;
 import com.hhit.edu.fragments.FindemployeFragment2;
-import com.hhit.edu.fragments.MessageFragment;
 import com.hhit.edu.fragments.Mine2Fragment;
-import com.hhit.edu.fragments.MineFragment;
 import com.hhit.edu.fragments.Myhome2Fragment;
 import com.hhit.edu.fragments.MyhomeFragment;
-import com.hhit.edu.fragments.NewhomeFragment;
-import com.hhit.edu.fragments.ThroughresultFragment;
 
 public class Main2Activity extends AppCompatActivity {
 

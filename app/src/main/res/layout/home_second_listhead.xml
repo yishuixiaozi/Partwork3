@@ -29,7 +29,7 @@
             android:id="@+id/tv_zufang"
             style="@style/home_secondhead_textview_style"
             android:drawableTop="@drawable/ic_zufang"
-            android:text="等待完善" />
+            android:text="热门推荐" />
 
         <TextView
             android:id="@+id/tv_zixun"

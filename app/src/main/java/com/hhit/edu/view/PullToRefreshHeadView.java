@@ -9,15 +9,10 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-
 import com.hhit.edu.partwork3.R;
-
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrUIHandler;
 import in.srain.cube.views.ptr.indicator.PtrIndicator;
-/*import momo.com.week7.R;
-import momo.com.week7.utils.LogPrint;*/
-
 /**
  * 自定义刷新头
  */
@@ -25,7 +20,6 @@ public class PullToRefreshHeadView extends FrameLayout implements PtrUIHandler{
 
     //用来显示刷新动画及图片的ImageView
     ImageView img;
-
     /**
      * 下拉图片开始id
      */
@@ -48,8 +42,6 @@ public class PullToRefreshHeadView extends FrameLayout implements PtrUIHandler{
         super(context, attrs);
         init();
     }
-
-
     private void init(){
         //初始化ImageView
         img = new ImageView(getContext());
