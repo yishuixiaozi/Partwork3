@@ -1,9 +1,12 @@
 package com.hhit.edu.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 /*import android.support.v7.app.;*/
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +19,6 @@ import android.widget.Toast;
 import com.hhit.edu.bean.EntityResponse;
 import com.hhit.edu.bean.UserBean;
 import com.hhit.edu.my_interface.HomePageInterface;
-import com.hhit.edu.partwork3.FMainActivity;
 import com.hhit.edu.partwork3.LoginActivity;
 import com.hhit.edu.partwork3.LoginnewActivity;
 import com.hhit.edu.partwork3.Main2Activity;
@@ -28,12 +30,8 @@ import com.hhit.edu.partwork3.registerActivity;
 import com.hhit.edu.utils.ApiManager;
 import com.hhit.edu.utils.MyBaseUIlistener;
 import com.hhit.edu.utils.RetrofitUtils;
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.tencent.connect.UserInfo;
-import com.tencent.connect.auth.QQToken;
-import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
-import com.tencent.tauth.UiError;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,10 +40,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -67,15 +62,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     private ImageView im_loginweixin;
     //免登录使用
     private Button nologin;
-
     private String openidString;
     private UserInfo info;
     private Tencent mTencent;
     private UserBean userBean=new UserBean();
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
    /* private BaseUiListener baseUiListene=new BaseUiListener();*/
-
     private MyBaseUIlistener myBaseUIlistener;
     private static final String ARG_SECTION_NUMBER = "section_number";
+    HomePageInterface request;
+
     public static LoginFragment newInstance(int sectionNumber) {
         LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
@@ -83,10 +80,20 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         fragment.setArguments(args);
         return fragment;
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        request=RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(HomePageInterface.class);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        preferences=getActivity().getSharedPreferences("mydata",MODE_PRIVATE);
+        editor=preferences.edit();
         return inflater.inflate(R.layout.activity_login, container, false);
+
     }
 
     @Override
@@ -164,7 +171,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-
     /**
      * 数据库用户输入登录
      */
@@ -172,7 +178,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         System.out.println("登录操作--------");
         final String username=loginId.getText().toString();
         String password=loginPassword.getText().toString();
-        final HomePageInterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(HomePageInterface.class);
         request.UserLogin(username,password,usertype)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -183,10 +188,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                     }
                     @Override
                     public void onNext(@NonNull EntityResponse<UserBean> userBeanEntityResponse) {
-                        System.out.println("返回信息值处理"+userBeanEntityResponse.getMsg());
+                        System.out.println("自己数据库登录操作获取返回信息MSg"+userBeanEntityResponse.getMsg());
                         if ("success".equals(userBeanEntityResponse.getMsg())){
-                            SharedPreferences preferences=getActivity().getSharedPreferences("mydata",MODE_PRIVATE);
-                            SharedPreferences.Editor editor=preferences.edit();
                             editor.putString("nickname",username);
                             editor.putString("usertype",usertype);
                             editor.putString("userid",userBeanEntityResponse.getCode());
@@ -217,8 +220,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
      * @param userBean
      */
     public void saveInfo(final UserBean userBean){
-        System.out.println("------------saveInfo- usertype--"+userBean.getNickname()+userBean.getUsertype());
-        final HomePageInterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(HomePageInterface.class);
+        startActivity(new Intent(getActivity(),MainActivity.class));
+        getActivity().finish();
+       /* System.out.println("------------saveInfo- usertype--"+userBean.getNickname()+userBean.getUsertype());
         request.UUserByUserid(userBean)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -228,20 +232,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                         System.out.println("----onSubscribe");
                     }
                     @Override
-                    public void onNext(@NonNull String s) {//执行成功后就跳转到主页面
+                    public void onNext(@NonNull String s) {//执行成功后就跳转到主页面// ;
                         System.out.println("success--------------------------");
-                        SharedPreferences preferences=getActivity().getSharedPreferences("mydata",MODE_PRIVATE);
-                        SharedPreferences.Editor editor=preferences.edit();
-                        editor.putString("nickname",userBean.getNickname());
-                        editor.putString("usertype",userBean.getUsertype());
-                        editor.putString("userid",userBean.getUserid());
-                        editor.commit();
-                        if (userBean.getUsertype().equals("Employee")){//判断是什么类型的用户进入什么界面
-                            startActivity(new Intent(getActivity(),MainActivity.class));
-                        }else {
-                            startActivity(new Intent(getActivity(), Main2Activity.class));
-                        }
-                        getActivity().finish();
+                        startActivity(new Intent(getActivity(),MainActivity.class));
                     }
                     @Override
                     public void onError(@NonNull Throwable e) {
@@ -251,7 +244,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                     public void onComplete() {
 
                     }
-                });
+                });*/
     }
     /**
      * 获取接口传递过来的

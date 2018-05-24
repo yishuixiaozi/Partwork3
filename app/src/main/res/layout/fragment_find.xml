@@ -26,7 +26,7 @@
             android:background="@drawable/home_search_textview"
             android:drawableLeft="@drawable/btn_search_img_normal"
             android:gravity="center_vertical"
-            android:text="关键字查询"
+            android:hint="关键字查询"
             android:textColor="#FDFEFF" />
     </LinearLayout>
     <FrameLayout

@@ -35,4 +35,10 @@
         <!--tab未选中状态图标-->
         <attr name="menuUnselectedIcon" format="reference" />
     </declare-styleable>
+    <!--自我尝试炫酷刷新头-->
+    <declare-styleable name="RefreshView">
+        <attr name="type" format="enum">
+            <enum name="sun" value="0" />
+        </attr>
+    </declare-styleable>
 </resources>

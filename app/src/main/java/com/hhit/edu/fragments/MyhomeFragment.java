@@ -28,6 +28,7 @@ import com.hhit.edu.bean.JobBean;
 import com.hhit.edu.bean.JobneedBean;
 import com.hhit.edu.bean.ListResponse;
 import com.hhit.edu.my_interface.HomePageInterface;
+import com.hhit.edu.partwork3.ExpressActivity;
 import com.hhit.edu.partwork3.JobdetailsActivity;
 import com.hhit.edu.partwork3.R;
 import com.hhit.edu.utils.ApiManager;
@@ -35,11 +36,14 @@ import com.hhit.edu.utils.RetrofitUtils;
 import com.hhit.edu.view.HomeSecondView;
 import com.hhit.edu.view.PullToRefreshHeadView;
 import com.hhit.edu.view.ToorbarView;
+import com.yalantis.phoenix.PullToRefreshView;
+
 import java.util.ArrayList;
 import java.util.List;
 import adapter.AbstractBaseAdapter;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrUIHandler;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -54,8 +58,6 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
     ListView lv;//listview对象存放值的
     PtrFrameLayout refresh;//布局内容
     String buttonmore="0";
-   /* List<JobneedBean> jobneeddata;
-    AbstractBaseAdapter<JobneedBean> needadapter;*/
     List<JobBean> jobdata;//实体数组内容
     AbstractBaseAdapter<JobBean> adapter;//<>这个是限制存储的数据的类型方式
     boolean isAddMore;//是否加载更多数据
@@ -128,8 +130,43 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
                 });
     }
 
+    /**
+     * 这是首页的
+     * @param queryfield
+     */
     public void keygetData(String queryfield){
         final HomePageInterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(HomePageInterface.class);
+        request.getJobhomelike(queryfield,pagenum)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ListResponse<JobBean>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull ListResponse<JobBean> jobBeanListResponse) {
+                        if(buttonmore.equals("0")){
+                            jobdata.clear();
+                        }
+                        jobdata.addAll(jobBeanListResponse.getItems());
+                        adapter.notifyDataSetChanged();
+                        refresh.refreshComplete();
+                        iskeyData=true;
+                        buttonmore="0";
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        System.out.println("--检查服务器和网络IP的问题");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     public void initdata(){
@@ -156,6 +193,9 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
     }
 
     public void setupview(View view){
+        TextView tv_express= (TextView) homeSecondView.findViewById(R.id.tv_express);
+        tv_express.setOnClickListener(this);
+        setupRefreshView(view);
         tvSearch= (EditText) view.findViewById(R.id.tv_search);
         mSearchLayout= (LinearLayout) view.findViewById(R.id.ll_search);
         toolbar= (Toolbar) view.findViewById(R.id.toolbar);
@@ -166,14 +206,13 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
                 if (keyCode == event.KEYCODE_ENTER&&event.getAction()==event.ACTION_UP) {
                     System.out.println("你点击了搜索执行，输入值是"+tvSearch.getText().toString());
                     queryfield=tvSearch.getText().toString();
-                    //pagenum=0;
-                    //keygetData(queryfield);这个地方改为自己的模糊查询方法
+                    pagenum=0;
+                    keygetData(queryfield);
                 }
                 return false;
             }
         });
         lv=(ListView) view.findViewById(R.id.home_lv);
-        setupRefreshView(view);
         lv.addHeaderView(toorbarView);
         lv.addHeaderView(homeSecondView);
         lv.setAdapter(adapter);
@@ -181,19 +220,20 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
         tvSearch.setOnClickListener(this);
         mSearchLayout.setOnClickListener(this);
         tvSearch.setOnTouchListener(this);
-        refresh.setOnTouchListener(this);
+        //refresh.setOnTouchListener(this);
         lv.setOnTouchListener(this);
         lv.setOnItemClickListener(this);//设置Item点击监听
     }
     public void setupRefreshView(View view){
         refresh= (PtrFrameLayout) view.findViewById(R.id.refresh);//获得可刷新对象
         PullToRefreshHeadView pullHead=new PullToRefreshHeadView(getContext());//这句话可以改变刷新头控件
+        //PullToRefreshView pullToRefreshView=new PullToRefreshView(getContext());
         //添加刷新tou
         refresh.setHeaderView(pullHead);
-        //添加刷新头控制
         refresh.addPtrUIHandler(pullHead);
-        //设置刷新事件功能
-        refresh.setPtrHandler(new PtrDefaultHandler() {
+      /* refresh.setHeaderView(pullToRefreshView);
+        refresh.addPtrUIHandler(pullToRefreshView);*/
+         refresh.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 System.out.println("-----------------onRefreshLayout---"+buttonmore);
@@ -217,6 +257,10 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.tv_express:
+                System.out.println("快递测试");
+                startActivity(new Intent(getActivity(), ExpressActivity.class));
+                break;
         }
     }
 

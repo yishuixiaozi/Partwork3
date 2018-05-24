@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.hhit.edu.partwork3.CollectionActivity;
 import com.hhit.edu.partwork3.EditPhotoActivity;
 import com.hhit.edu.partwork3.LoginActivity;
+import com.hhit.edu.partwork3.LoginforestActivity;
 import com.hhit.edu.partwork3.LoginnewActivity;
 import com.hhit.edu.partwork3.R;
 import com.hhit.edu.partwork3.SignupActivity;
@@ -99,7 +100,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 editor.remove("nickname");//这里是去除昵称：判断用户身份
                 editor.remove("usertype");//这里是去除用户类型：判断进入的主界面
                 editor.commit();
-                startActivity(new Intent(getActivity(),LoginnewActivity.class));
+                startActivity(new Intent(getActivity(),LoginforestActivity.class));
                 break;
             case R.id.mycollection://收藏
                 startActivity(new Intent(getActivity(), CollectionActivity.class));

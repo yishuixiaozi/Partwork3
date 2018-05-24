@@ -175,13 +175,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                        /* map.put("nickname",((JSONObject) o).getString("nickname"));
                         map.put("year",((JSONObject) o).getString("year"));*/
                         saveInfo(userBean);
-                        SharedPreferences preferences=getSharedPreferences("mydata",MODE_PRIVATE);
+                        /*SharedPreferences preferences=getSharedPreferences("mydata",MODE_PRIVATE);
                         SharedPreferences.Editor editor=preferences.edit();
                         editor.putString("nickname",((JSONObject) o).getString("nickname"));
                         editor.commit();
                         Intent intent=new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
-                        finish();
+                        finish();*/
                     }catch (JSONException e){
                         e.printStackTrace();
                     }
@@ -219,7 +219,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      */
     private void saveInfo(UserBean userBean){
         System.out.println("------------saveInfo---"+userBean.getNickname());
-        Retrofit retrofit=new Retrofit.Builder()
+       /* Retrofit retrofit=new Retrofit.Builder()
                 .baseUrl(ApiManager.COMPUTER_BASE_URL)//http://192.168.0.101  192.168.137.1
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -233,7 +233,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void accept(String s) throws Exception {
                         System.out.println("success----------------------");
                     }
-                });
+                });*/
     }
     /**
      * 自己登录的方法

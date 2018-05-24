@@ -80,7 +80,7 @@ public class GuideActivity extends Activity {
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(GuideActivity.this, LoginnewActivity.class));//
+                        startActivity(new Intent(GuideActivity.this, LoginforestActivity.class));//
                         finish();//无法通过返回键回到上面的内容
                     }
                 });

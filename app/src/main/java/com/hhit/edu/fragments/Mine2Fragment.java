@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.hhit.edu.partwork3.LoginforestActivity;
 import com.hhit.edu.partwork3.LoginnewActivity;
 import com.hhit.edu.partwork3.MypostActivity;
 import com.hhit.edu.partwork3.R;
@@ -75,7 +76,7 @@ public class Mine2Fragment extends Fragment implements View.OnClickListener{
                 editor.remove("nickname");//这里是去除昵称：判断用户身份
                 editor.remove("usertype");//这里是去除用户类型：判断进入的主界面
                 editor.commit();
-                startActivity(new Intent(getActivity(),LoginnewActivity.class));
+                startActivity(new Intent(getActivity(),LoginforestActivity.class));
                 break;
             default:
                 break;
