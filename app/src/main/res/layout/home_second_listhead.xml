@@ -20,13 +20,13 @@
             android:text="快递查询" />
 
         <TextView
-            android:id="@+id/tv_ershoufang"
+            android:id="@+id/tv_qiuzhi"
             style="@style/home_secondhead_textview_style"
             android:drawableTop="@drawable/home_ershoufang_secondhead"
             android:text="我要求职" />
 
         <TextView
-            android:id="@+id/tv_zufang"
+            android:id="@+id/tv_tuijian"
             style="@style/home_secondhead_textview_style"
             android:drawableTop="@drawable/ic_zufang"
             android:text="热门推荐" />

@@ -1,5 +1,6 @@
 package com.hhit.edu.fragments;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.transition.AutoTransition;
@@ -27,6 +28,7 @@ import com.hhit.edu.bean.ListResponse;
 import com.hhit.edu.my_interface.HomePageInterface;
 import com.hhit.edu.partwork3.ExpressActivity;
 import com.hhit.edu.partwork3.JobdetailsActivity;
+import com.hhit.edu.partwork3.PostqiuzhiActivity;
 import com.hhit.edu.partwork3.R;
 import com.hhit.edu.partwork3.TestconfirmActivity;
 import com.hhit.edu.utils.ApiManager;
@@ -44,6 +46,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by 93681 on 2018/4/1.
  * 这里是我的首页内容进行初步调试测试
@@ -69,9 +74,9 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       /* SharedPreferences preferences=getActivity().getSharedPreferences("mydata",MODE_PRIVATE);
+        SharedPreferences preferences=getActivity().getSharedPreferences("mydata",MODE_PRIVATE);
         myuserid=preferences.getString("userid","default");
-        System.out.println("报名userid---------测试"+myuserid);*/
+        System.out.println("报名userid---------测试"+myuserid);
         getData();
         initdata();
         toorbarView=new ToorbarView(getActivity());
@@ -187,10 +192,14 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
     }
 
     public void setupview(View view){
-        TextView tv_express= (TextView) homeSecondView.findViewById(R.id.tv_express);
-        TextView tv_zixun= (TextView) homeSecondView.findViewById(R.id.tv_zixun);
+        TextView tv_express= (TextView) homeSecondView.findViewById(R.id.tv_express);//查快递
+        TextView tv_zixun= (TextView) homeSecondView.findViewById(R.id.tv_zixun);//最后一项
+        TextView tv_qiuzhi= (TextView) homeSecondView.findViewById(R.id.tv_qiuzhi);
+        TextView tv_tuijian= (TextView) homeSecondView.findViewById(R.id.tv_tuijian);
         tv_zixun.setOnClickListener(this);
         tv_express.setOnClickListener(this);
+        tv_qiuzhi.setOnClickListener(this);
+        tv_tuijian.setOnClickListener(this);
         setupRefreshView(view);
         tvSearch= (EditText) view.findViewById(R.id.tv_search);
         mSearchLayout= (LinearLayout) view.findViewById(R.id.ll_search);
@@ -253,12 +262,18 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.tv_express:
-                System.out.println("快递测试");
+            case R.id.tv_express://快递查询
                 startActivity(new Intent(getActivity(), ExpressActivity.class));
                 break;
-            case R.id.tv_zixun:
+            case R.id.tv_zixun://待定内容
                 startActivity(new Intent(getActivity(), TestconfirmActivity.class));
+                break;
+            case R.id.tv_qiuzhi://发布我的求职
+                Intent intent=new Intent(getActivity(),PostqiuzhiActivity.class);
+               /* intent.putExtra("myuserid",myuserid);*/
+                startActivity(intent);
+                break;
+            case R.id.tv_tuijian://热门推荐
                 break;
         }
     }

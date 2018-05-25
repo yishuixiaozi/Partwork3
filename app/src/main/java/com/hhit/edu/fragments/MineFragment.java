@@ -1,7 +1,4 @@
 package com.hhit.edu.fragments;
-
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
@@ -13,17 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.hhit.edu.partwork3.CollectionActivity;
 import com.hhit.edu.partwork3.EditPhotoActivity;
 import com.hhit.edu.partwork3.LoginActivity;
 import com.hhit.edu.partwork3.LoginforestActivity;
-import com.hhit.edu.partwork3.LoginnewActivity;
 import com.hhit.edu.partwork3.R;
 import com.hhit.edu.partwork3.SignupActivity;
 import com.hhit.edu.view.CircleImageView;
-
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -37,6 +30,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private RelativeLayout extilogin;
     private RelativeLayout mycollection;
     private RelativeLayout mysignup;
+    private RelativeLayout rl_myneedpost;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,6 +60,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mycollection.setOnClickListener(this);
         mysignup= (RelativeLayout) view.findViewById(R.id.mysignup);
         mysignup.setOnClickListener(this);
+        rl_myneedpost= (RelativeLayout) view.findViewById(R.id.rl_myneedpost);
+        rl_myneedpost.setOnClickListener(this);
         SharedPreferences preferences= getActivity().getSharedPreferences("mydata",MODE_PRIVATE);
         String username=preferences.getString("nickname","未登录用户");//获取这个里边的值的内容
         tv_name.setText(username);
@@ -82,7 +78,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()){
             //点击Fragment_mine中的头像进入登录页面
             case R.id.circle_img:
-                Intent login_intent = new Intent(getActivity(), LoginActivity.class);
+                Intent login_intent = new Intent(getActivity(), EditPhotoActivity.class);
                 startActivity(login_intent);
                 break;
             //点击Fragment_mine页面中的向右的箭头，进入图片上传修改该界面
@@ -107,6 +103,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.mysignup://报名
                 startActivity(new Intent(getActivity(), SignupActivity.class));
+                break;
+            case R.id.rl_myneedpost:
+                //这里进入我的求职发布内容里边
                 break;
             default:
                 break;

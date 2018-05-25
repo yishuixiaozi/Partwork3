@@ -69,7 +69,6 @@ public class LoginforestActivity extends AppCompatActivity implements View.OnCli
     private UserInfo info;
     private UserBean userBean=new UserBean();
     private BaseUiListener baseUiListener=new BaseUiListener();
-    //private LoginActivity.BaseUiListener baseUiListene=new LoginActivity.BaseUiListener();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,7 +122,24 @@ public class LoginforestActivity extends AppCompatActivity implements View.OnCli
                 System.out.println("微信三方登录");
                 break;
             case R.id.txt_register://用户注册（适用于自我的注册信息）
-                System.out.println("这里是注册跳转");
+                /*startActivity(new Intent(this,registerActivity.class));*/
+                switch (loginradiogroup.getCheckedRadioButtonId()){
+                    case R.id.radio1:
+                        usertype="Employee";
+                        Intent intent=new Intent(this,registerActivity.class);
+                        intent.putExtra("usertype",usertype);
+                        startActivity(intent);
+                        break;
+                    case R.id.radio2:
+                        usertype="Employer";
+                        Intent intent1=new Intent(this,registerActivity.class);
+                        intent1.putExtra("usertype",usertype);
+                        startActivity(intent1);
+                        break;
+                    default:
+                        Toast.makeText(LoginforestActivity.this,"请选择用户类型后注册",Toast.LENGTH_SHORT).show();
+                        break;
+                }
                 break;
             case R.id.main_btn_login://用户登录
                 switch (loginradiogroup.getCheckedRadioButtonId()){

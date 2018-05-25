@@ -26,9 +26,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:icon, android:theme"
-        >
-
+        tools:replace="android:icon, android:theme">
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="d8DrlRK9shrfR8Mvk41YX2zhTs1tgCL1" />
@@ -123,7 +121,8 @@
         <activity android:name=".TestSearchActivity" />
         <activity android:name=".MypostsignActivity" />
         <activity android:name=".LoginforestActivity" />
-        <activity android:name=".TestconfirmActivity"></activity>
+        <activity android:name=".TestconfirmActivity" />
+        <activity android:name=".PostqiuzhiActivity"></activity>
     </application>
 
 </manifest>

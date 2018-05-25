@@ -177,14 +177,10 @@ public class HomeFragment1 extends Fragment
         System.out.println("-------------------------------setupView");
         lv = (ListView) view.findViewById(R.id.home_lv);
         TextView btn1 = (TextView) buttonView.findViewById(R.id.tv_express);
-        TextView btn2 = (TextView) buttonView.findViewById(R.id.tv_ershoufang);
-        TextView btn3 = (TextView) buttonView.findViewById(R.id.tv_zufang);
         TextView btn4 = (TextView) buttonView.findViewById(R.id.tv_zixun);
         setupRefreshView(view);//初始化Refresh控件
         //我的上一个是因为没有设置监听对象所以点击无效
         btn1.setOnClickListener(this);
-        btn2.setOnClickListener(this);
-        btn3.setOnClickListener(this);
         btn4.setOnClickListener(this);
         btn_scan.setOnClickListener(this);//二维码的监听事件
         lv.addHeaderView(buttonView);//listView里边添加了八图标
@@ -245,12 +241,6 @@ public class HomeFragment1 extends Fragment
         switch (v.getId()) {
             case R.id.tv_express: {//快递查询功能
                 startActivity(new Intent(getActivity(), ExpressActivity.class));
-            }
-            break;
-            case R.id.tv_ershoufang: {
-            }
-            break;
-            case R.id.tv_zufang: {
             }
             break;
             case R.id.tv_zixun: {
