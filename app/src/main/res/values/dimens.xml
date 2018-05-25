@@ -27,4 +27,8 @@
     <dimen name="text_size_common">16sp</dimen>
     <dimen name="divider_height">0.5dp</dimen>
     <dimen name="company_logo_length">40dp</dimen>
+    <!--提示框-->
+    <dimen name="alert_width">290dp</dimen>
+    <dimen name="common_circle_width">3dp</dimen>
+    <dimen name="progress_circle_radius">34dp</dimen>
 </resources>

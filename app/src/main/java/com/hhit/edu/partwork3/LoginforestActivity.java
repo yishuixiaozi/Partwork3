@@ -102,7 +102,7 @@ public class LoginforestActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.im_qqlogin:
+            case R.id.im_qqlogin://QQ三方登录
                 switch (loginradiogroup.getCheckedRadioButtonId()){
                     case R.id.radio1:
                         usertype="Employee";
@@ -119,13 +119,13 @@ public class LoginforestActivity extends AppCompatActivity implements View.OnCli
                         break;
                 }
                 break;
-            case R.id.im_wxlogin:
+            case R.id.im_wxlogin://微信三方登录
                 System.out.println("微信三方登录");
                 break;
-            case R.id.txt_register:
+            case R.id.txt_register://用户注册（适用于自我的注册信息）
                 System.out.println("这里是注册跳转");
                 break;
-            case R.id.main_btn_login:
+            case R.id.main_btn_login://用户登录
                 switch (loginradiogroup.getCheckedRadioButtonId()){
                     case R.id.radio1:
                         System.out.println(edt_loginid.getText().toString());
@@ -178,7 +178,10 @@ public class LoginforestActivity extends AppCompatActivity implements View.OnCli
         }
     };
 
-    //自我数据库登陆
+    /**
+     * 自我数据库登录
+     * @param usertype
+     */
     public void login(final String usertype){
         //登录信息，然后跳转MainActivity
         final String username=edt_loginid.getText().toString();
@@ -222,6 +225,10 @@ public class LoginforestActivity extends AppCompatActivity implements View.OnCli
                 });
     }
 
+    /**
+     * QQ用户获取的信息存入数据库内容
+     * @param userBean
+     */
     public void saveInfo(final UserBean userBean){
        /* System.out.println("userBean.getUserid()"+userBean.getUserid());*/
         System.out.println("userBean.getNickname()"+userBean.getNickname());
@@ -236,13 +243,13 @@ public class LoginforestActivity extends AppCompatActivity implements View.OnCli
                     @Override
                     public void onNext(@NonNull String s) {
                         System.out.println("----------三方QQ登录信息保存成功");
-                        SharedPreferences preferences=getSharedPreferences("mydata",MODE_PRIVATE);
-                        SharedPreferences.Editor editor=preferences.edit();
+                       /* SharedPreferences preferences=getSharedPreferences("mydata",MODE_PRIVATE);
+                        SharedPreferences.Editor editor=preferences.edit();*/
                         editor.putString("nickname",userBean.getNickname());
+                        editor.putString("userid",userBean.getUserid());
+                        editor.putString("usertype",usertype);
                         editor.commit();
-
                         if (usertype.equals("Employee")){
-
                             Intent intent=new Intent(LoginforestActivity.this, MainActivity.class);//这里需要加一个东西进行判断的
                             startActivity(intent);
                         }

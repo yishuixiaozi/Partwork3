@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import adapter.AbstractBaseAdapter;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import io.reactivex.Observer;
@@ -53,6 +54,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         System.out.println("报名userid---------测试"+myuserid);
         if (myuserid.equals("default")){
             Toast.makeText(this,"您的userid为空，请登陆",Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,LoginforestActivity.class));
         }else {
             setContentView(R.layout.activity_signup);
             getData();
@@ -72,16 +74,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         lv.setAdapter(adapter);
         lv.setOnScrollListener(this);//设置监听方式
         lv.setOnItemClickListener(this);//设置短按点击监听
-        /*lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {//长按监听
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("==显示控件选项");
-                //view.showContextMenu();
-                return true;
-            }
-        });*/
     }
-
     /**
      * 初始化组件内容
      */
@@ -106,7 +99,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
     }
-
+    //获取个人的报名数据-userid
     public void getData(){
         final SignupPageinterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(SignupPageinterface.class);
         request.getAllSignup(myuserid)
@@ -209,11 +202,43 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info= (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        int id=(int)info.id;
+        final int id=(int)info.id;
         switch (item.getItemId()) {
             case R.id.delete:
-                System.out.println("您点击的是---删除---位置是"+id);
-                deletesignup(id);
+                //System.out.println("您点击的是---删除---位置是"+id);
+                new SweetAlertDialog(SignupActivity.this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("确定取消该兼职报名?")
+                        .setContentText("该条兼职信息将随风而去")
+                        .setCancelText("不，保留")
+                        .setConfirmText("是，删除")
+                        .showCancelButton(true)
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                // reuse previous dialog instance, keep widget user state, reset them if you need
+                                sDialog.setTitleText("取消")
+                                        .setContentText("它依然在你身边")
+                                        .setConfirmText("OK")
+                                        .showCancelButton(false)
+                                        .setCancelClickListener(null)
+                                        .setConfirmClickListener(null)
+                                        .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                            }
+                        })
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                deletesignup(id);
+                                sDialog.setTitleText("已删除")
+                                        .setContentText("兼职信息离你而去")
+                                        .setConfirmText("OK")
+                                        .showCancelButton(false)
+                                        .setCancelClickListener(null)
+                                        .setConfirmClickListener(null)
+                                        .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                            }
+                        })
+                        .show();
                 break;
             case R.id.none:
                 System.out.println("您点击的是---取消---位置是"+id);

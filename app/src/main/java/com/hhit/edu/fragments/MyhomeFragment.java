@@ -1,6 +1,5 @@
 package com.hhit.edu.fragments;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.transition.AutoTransition;
@@ -22,34 +21,29 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.hhit.edu.bean.JobBean;
-import com.hhit.edu.bean.JobneedBean;
 import com.hhit.edu.bean.ListResponse;
 import com.hhit.edu.my_interface.HomePageInterface;
 import com.hhit.edu.partwork3.ExpressActivity;
 import com.hhit.edu.partwork3.JobdetailsActivity;
 import com.hhit.edu.partwork3.R;
+import com.hhit.edu.partwork3.TestconfirmActivity;
 import com.hhit.edu.utils.ApiManager;
 import com.hhit.edu.utils.RetrofitUtils;
 import com.hhit.edu.view.HomeSecondView;
 import com.hhit.edu.view.PullToRefreshHeadView;
 import com.hhit.edu.view.ToorbarView;
-import com.yalantis.phoenix.PullToRefreshView;
-
 import java.util.ArrayList;
 import java.util.List;
 import adapter.AbstractBaseAdapter;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
-import in.srain.cube.views.ptr.PtrUIHandler;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import static android.content.Context.MODE_PRIVATE;
 /**
  * Created by 93681 on 2018/4/1.
  * 这里是我的首页内容进行初步调试测试
@@ -194,6 +188,8 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
 
     public void setupview(View view){
         TextView tv_express= (TextView) homeSecondView.findViewById(R.id.tv_express);
+        TextView tv_zixun= (TextView) homeSecondView.findViewById(R.id.tv_zixun);
+        tv_zixun.setOnClickListener(this);
         tv_express.setOnClickListener(this);
         setupRefreshView(view);
         tvSearch= (EditText) view.findViewById(R.id.tv_search);
@@ -261,6 +257,9 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
                 System.out.println("快递测试");
                 startActivity(new Intent(getActivity(), ExpressActivity.class));
                 break;
+            case R.id.tv_zixun:
+                startActivity(new Intent(getActivity(), TestconfirmActivity.class));
+                break;
         }
     }
 
@@ -320,7 +319,7 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         System.out.println("positon="+position);
         if (position>0){//将点击信息的ID传递过去显示详细内容
-            JobBean jobBean=jobdata.get(position-1);
+            JobBean jobBean=jobdata.get(position-2);//这里边减去2选中刚好
             Intent intent=new Intent(getActivity(), JobdetailsActivity.class);
             intent.putExtra("id",jobBean.getId());
             intent.putExtra("userid",jobBean.getUserid());
@@ -328,7 +327,7 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
         }
     }
 
-
+    //搜索框内容扩大
     private void expand() {
         RelativeLayout.LayoutParams LayoutParams = (RelativeLayout.LayoutParams) mSearchLayout.getLayoutParams();
         LayoutParams.width = LayoutParams.MATCH_PARENT;
@@ -338,6 +337,7 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
         beginDelayedTransition(mSearchLayout);
     }
 
+    //搜索框内容减小
     private void reduce() {
         //设置收缩状态时的布局
         tvSearch.setHint("搜索");

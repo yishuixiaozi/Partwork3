@@ -35,10 +35,16 @@
         <!--tab未选中状态图标-->
         <attr name="menuUnselectedIcon" format="reference" />
     </declare-styleable>
-    <!--自我尝试炫酷刷新头-->
-    <declare-styleable name="RefreshView">
-        <attr name="type" format="enum">
-            <enum name="sun" value="0" />
+    <!--尝试确认提示单-->
+    <declare-styleable name="Rotate3dAnimation">
+        <attr name="rollType" format="enum">
+            <enum name="x" value="0"/>
+            <enum name="y" value="1"/>
+            <enum name="z" value="2"/>
         </attr>
+        <attr name="fromDeg" format="float" />
+        <attr name="toDeg" format="float" />
+        <attr name="pivotX" format="fraction"/>
+        <attr name="pivotY" format="fraction" />
     </declare-styleable>
 </resources>

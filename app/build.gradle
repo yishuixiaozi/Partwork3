@@ -53,5 +53,6 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.zhy:base-rvadapter:3.0.3'
+    compile 'com.pnikosis:materialish-progress:1.0'
     testCompile 'junit:junit:4.12'
 }

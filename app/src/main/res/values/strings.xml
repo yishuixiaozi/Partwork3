@@ -114,4 +114,9 @@
         <item>企业实习</item>
         <item>其他兼职</item>
     </string-array>
+    <!--提示框-->
+    <string name="dialog_default_title">Here\'s a message!</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="LOADING">Loading...</string>
 </resources>

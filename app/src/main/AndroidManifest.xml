@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.hhit.edu.partwork3">
 
     <!-- 这里是kangfang里边所使用的权限的内容 -->
@@ -11,17 +12,10 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- 快递业务内容 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- 这个是地图的相关功能权限内容 -->
-    <!-- 访问精确位置的权限 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- 这个权限用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
@@ -31,7 +25,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon, android:theme"
+        >
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="d8DrlRK9shrfR8Mvk41YX2zhTs1tgCL1" />
@@ -76,7 +73,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TestActivity" />
         <activity android:name=".GuideActivity" />
 
         <!-- 下边这两个活动是tencentjar包中自己带的 -->
@@ -126,7 +122,8 @@
         <activity android:name=".ReviewActivity" />
         <activity android:name=".TestSearchActivity" />
         <activity android:name=".MypostsignActivity" />
-        <activity android:name=".LoginforestActivity"></activity>
+        <activity android:name=".LoginforestActivity" />
+        <activity android:name=".TestconfirmActivity"></activity>
     </application>
 
 </manifest>

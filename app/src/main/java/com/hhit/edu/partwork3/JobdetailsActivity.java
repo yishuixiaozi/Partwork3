@@ -28,6 +28,7 @@ import java.util.Date;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -276,17 +277,22 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
                         @Override
                         public void onNext(@NonNull String s) {
                             tv_singup.setText("已报名");
-                            Toast.makeText(JobdetailsActivity.this,"报名成功",Toast.LENGTH_SHORT).show();
-                        }
 
+                        }
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            System.out.println("添加报名失败");
+                            new SweetAlertDialog(JobdetailsActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Oops...")
+                                    .setContentText("某些地方出了问题！")
+                                    .show();
                         }
-
                         @Override
                         public void onComplete() {
-
+                            new SweetAlertDialog(JobdetailsActivity.this, SweetAlertDialog.CUSTOM_IMAGE_TYPE)
+                                    .setTitleText("Sweet!")
+                                    .setContentText("大侠!揭榜成功！")
+                                    .setCustomImage(R.drawable.custom_img)
+                                    .show();
                         }
                     });
 
@@ -326,17 +332,22 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
                     @Override
                     public void onNext(@NonNull EntityResponse<CollectionBean> collectionBeanEntityResponse) {
                         if(collectionBeanEntityResponse.getMsg().equals("success")){
-                            Toast.makeText(JobdetailsActivity.this,"取消收藏成功",Toast.LENGTH_SHORT).show();
                             im_collection.setImageResource(R.drawable.collect_icon);
                         }
                     }
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        System.out.println("取消收藏失败了");
+                        new SweetAlertDialog(JobdetailsActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Oops...")
+                                .setContentText("取消收藏信息出错！")
+                                .show();
                     }
                     @Override
                     public void onComplete() {
-
+                        new SweetAlertDialog(JobdetailsActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                .setTitleText("Success")
+                                .setContentText("取消收藏成功")
+                                .show();
                     }
                 });
 
@@ -360,7 +371,6 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
         collection.setPayway(job.getPayway());
         collection.setWorktime(job.getWorktime());
         collection.setJobimageuri(job.getJobimageuri());
-
         //开始执行收藏插入操作
         final HomePageInterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(HomePageInterface.class);
         request.addCollection(collection)
@@ -374,7 +384,6 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
 
                     @Override
                     public void onNext(@NonNull String s) {
-                        System.out.println("success,nothing to do");
                         im_collection.setImageResource(R.drawable.collected_icon);
                     }
 
@@ -385,7 +394,11 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(JobdetailsActivity.this,"收藏成功",Toast.LENGTH_SHORT).show();
+                        new SweetAlertDialog(JobdetailsActivity.this, SweetAlertDialog.CUSTOM_IMAGE_TYPE)
+                                .setTitleText("Sweet!")
+                                .setContentText("收藏信息成功")
+                                .setCustomImage(R.drawable.custom_img)
+                                .show();
                     }
                 });
 
