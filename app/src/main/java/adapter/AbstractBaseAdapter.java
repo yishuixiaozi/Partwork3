@@ -14,11 +14,8 @@ import java.util.List;
 
 public abstract class AbstractBaseAdapter<T> extends BaseAdapter {
     List<T> data;
-
     LayoutInflater inflater;
-
     int[] layoutId;
-
     //构造方法
     public AbstractBaseAdapter(Context context, List<T> data , int ...layoutId) {
         this.layoutId = layoutId;

@@ -265,8 +265,9 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
             case R.id.tv_express://快递查询
                 startActivity(new Intent(getActivity(), ExpressActivity.class));
                 break;
-            case R.id.tv_zixun://待定内容
+            case R.id.tv_zixun://暂时用于测试各内容
                 startActivity(new Intent(getActivity(), TestconfirmActivity.class));
+                //startActivity(new Intent(getActivity(), TestconfirmActivity.class));
                 break;
             case R.id.tv_qiuzhi://发布我的求职
                 Intent intent=new Intent(getActivity(),PostqiuzhiActivity.class);

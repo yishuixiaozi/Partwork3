@@ -1,6 +1,8 @@
 package com.hhit.edu.my_interface;
 
 import com.hhit.edu.bean.JobneedBean;
+import com.hhit.edu.bean.ListResponse;
+import com.hhit.edu.bean.UserBean;
 
 import java.util.List;
 
@@ -27,4 +29,6 @@ public interface JobneedPageinterface {
     @POST("JobneedServlet/deletemypost")
     Observable<String> deletemypost(@Query("jobneedid") int jobneedid);
 
+    @POST("UserServlet/getAlluser")
+    Observable<ListResponse<UserBean>> getAlluser();
 }

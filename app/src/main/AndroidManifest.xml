@@ -122,7 +122,7 @@
         <activity android:name=".MypostsignActivity" />
         <activity android:name=".LoginforestActivity" />
         <activity android:name=".TestconfirmActivity" />
-        <activity android:name=".PostqiuzhiActivity"></activity>
+        <activity android:name=".PostqiuzhiActivity" />
     </application>
 
 </manifest>
