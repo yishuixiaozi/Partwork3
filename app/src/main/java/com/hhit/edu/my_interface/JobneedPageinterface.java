@@ -1,5 +1,6 @@
 package com.hhit.edu.my_interface;
 
+import com.hhit.edu.bean.EntityResponse;
 import com.hhit.edu.bean.JobneedBean;
 import com.hhit.edu.bean.ListResponse;
 import com.hhit.edu.bean.UserBean;
@@ -21,9 +22,11 @@ public interface JobneedPageinterface {
     @POST("JobneedServlet/postJobneed")
     Observable<String> postJobneed(@Body JobneedBean jobneedBean);
 
+    @POST("JobneedServlet/updateJobneed")
+    Observable<String> updateJobneedpost(@Body JobneedBean jobneedBean);
     //求职者用户查询自己所有的求职发布
     @POST("JobneedServlet/querymypost")
-    Observable<List<JobneedBean>> querymypost(@Query("userid") int userid);
+    Observable<ListResponse<JobneedBean>> querymypost(@Query("userid") String userid);
 
     //求职用户删除自己的求职信息
     @POST("JobneedServlet/deletemypost")
@@ -31,4 +34,8 @@ public interface JobneedPageinterface {
 
     @POST("UserServlet/getAlluser")
     Observable<ListResponse<UserBean>> getAlluser();
+
+    //求职者用户查询自己某一条兼职信息的详细内容
+    @POST("JobneedServlet/getJobneeddetail")
+    Observable<EntityResponse<JobneedBean>> getJobneeddetail(@Query("jobneedid") int jobneedid);
 }

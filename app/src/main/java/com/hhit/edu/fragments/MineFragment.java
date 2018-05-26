@@ -14,6 +14,7 @@ import com.hhit.edu.partwork3.CollectionActivity;
 import com.hhit.edu.partwork3.EditPhotoActivity;
 import com.hhit.edu.partwork3.LoginActivity;
 import com.hhit.edu.partwork3.LoginforestActivity;
+import com.hhit.edu.partwork3.MyneedpostActivity;
 import com.hhit.edu.partwork3.R;
 import com.hhit.edu.partwork3.SignupActivity;
 import com.hhit.edu.view.CircleImageView;
@@ -105,6 +106,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), SignupActivity.class));
                 break;
             case R.id.rl_myneedpost:
+                startActivity(new Intent(getActivity(), MyneedpostActivity.class));
                 //这里进入我的求职发布内容里边
                 break;
             default:

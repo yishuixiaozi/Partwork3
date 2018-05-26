@@ -13,11 +13,12 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
+import com.hhit.edu.bean.JobneedBean;
 import com.hhit.edu.bean.ListResponse;
-import com.hhit.edu.bean.SignupBean;
-import com.hhit.edu.my_interface.SignupPageinterface;
+import com.hhit.edu.fragments.FindemployeFragment2;
+import com.hhit.edu.my_interface.JobneedPageinterface;
 import com.hhit.edu.utils.ApiManager;
 import com.hhit.edu.utils.RetrofitUtils;
 import com.hhit.edu.view.PullToRefreshHeadView;
@@ -35,33 +36,77 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class SignupActivity extends AppCompatActivity implements View.OnClickListener,AbsListView.OnScrollListener,AdapterView.OnItemClickListener{
+public class MyneedpostActivity extends AppCompatActivity implements View.OnClickListener,AbsListView.OnScrollListener,AdapterView.OnItemClickListener{
     ListView lv;//listview对象存放值的
     PtrFrameLayout refresh;//布局内容
     String buttonmore="0";
-
-    List<SignupBean> signupdata;
-    AbstractBaseAdapter<SignupBean> adapter;
+    List<JobneedBean> jobneedBeandata;
+    AbstractBaseAdapter<JobneedBean> adapter;
     ImageView im_back;
     String myuserid;
     boolean isAddMore;//是否加载更多数据
     private int pagenum=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_myneedpost);
         SharedPreferences preferences=getSharedPreferences("mydata",MODE_PRIVATE);
         myuserid=preferences.getString("userid","default");
         System.out.println("报名userid---------测试"+myuserid);
-        if (myuserid.equals("default")){
-            Toast.makeText(this,"您的userid为空，请登陆",Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this,LoginforestActivity.class));
-        }else {
-            setContentView(R.layout.activity_signup);
-            getData();
-            initdata();
-            setupView();
-        }
+        getData();
+        initdata();
+        setupView();
+    }
 
+    public void getData(){
+        final JobneedPageinterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(JobneedPageinterface.class);
+        request.querymypost(myuserid)
+              .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ListResponse<JobneedBean>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull ListResponse<JobneedBean> jobneedBeanListResponse) {
+                        jobneedBeandata.clear();
+                        jobneedBeandata.addAll(jobneedBeanListResponse.getItems());
+                        adapter.notifyDataSetChanged();
+                        refresh.refreshComplete();
+                        buttonmore="0";
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        System.out.println("wrong");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public void initdata(){
+        jobneedBeandata=new ArrayList<>();
+        adapter=new AbstractBaseAdapter<JobneedBean>(this,jobneedBeandata,R.layout.home_listview_myjobneedquery) {
+            @Override
+            public void bindData(int position, ViewHolder holder) {
+                JobneedBean jobneedBean=jobneedBeandata.get(position);
+                ImageView iv= (ImageView) holder.findViewById(R.id.home_listview_img);
+                Glide.with(MyneedpostActivity.this).load(jobneedBean.getJobimageuri()).into(iv);
+                TextView tv_title= (TextView) holder.findViewById(R.id.jobneed_title);
+                tv_title.setText(jobneedBean.getJobneedtitle());
+                TextView tv_worktime= (TextView) holder.findViewById(R.id.jobneed_worktime);
+                tv_worktime.setText(jobneedBean.getWorktime());
+                TextView tv_bftime= (TextView) holder.findViewById(R.id.jobneed_bftime);
+                tv_bftime.setText(jobneedBean.getBftime());
+            }
+        };
     }
 
     public void setupView(){
@@ -74,9 +119,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         lv.setOnScrollListener(this);//设置监听方式
         lv.setOnItemClickListener(this);//设置短按点击监听
     }
-    /**
-     * 初始化组件内容
-     */
+
     public void setupRefreshView(){
         refresh= (PtrFrameLayout) findViewById(R.id.refresh);
         PullToRefreshHeadView pullHead=new PullToRefreshHeadView(this);
@@ -98,59 +141,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
     }
-    //获取个人的报名数据-userid
-    public void getData(){
-        final SignupPageinterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(SignupPageinterface.class);
-        request.getAllSignup(myuserid)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ListResponse<SignupBean>>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        Toast.makeText(SignupActivity.this,"正在获取数据...",Toast.LENGTH_SHORT).show();
-                    }
 
-                    @Override
-                    public void onNext(@NonNull ListResponse<SignupBean> signupBeanListResponse) {
-                        signupdata.clear();//清空数据
-                        signupdata.addAll(signupBeanListResponse.getItems());//为什么是添加？
-                        adapter.notifyDataSetChanged();
-                        refresh.refreshComplete();
-                        buttonmore = "0";//这里就是让刷新的时候，能够让buttonmore为“0”
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        Toast.makeText(SignupActivity.this,"获取数据错误",Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
-    public void initdata(){
-        signupdata=new ArrayList<>();
-        adapter=new AbstractBaseAdapter<SignupBean>(this,signupdata,R.layout.home_listview_mycontent){
-            @Override
-            public void bindData(int position, ViewHolder holder) {
-                SignupBean signupBean=signupdata.get(position);
-                ImageView iv= (ImageView) holder.findViewById(R.id.home_listview_img);
-                Glide.with(getApplication()).load(signupBean.getJobimageuri()).into(iv); //图形赋值成功
-                TextView tv_title= (TextView) holder.findViewById(R.id.home_listview_title);
-                tv_title.setText(signupBean.getTitle());
-                TextView tv_paymoney= (TextView) holder.findViewById(R.id.home_listview_paymoney);
-                tv_paymoney.setText(signupBean.getPaymoney());
-                TextView tv_payway= (TextView) holder.findViewById(R.id.home_listview_payway);
-                tv_payway.setText(signupBean.getPayway());
-                TextView tv_worktime= (TextView) holder.findViewById(R.id.home_listview_worktime);
-                tv_worktime.setText(signupBean.getWorktime());
-                //设置完毕
-            }
-        };
-    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -180,14 +171,20 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    /**
+     * 传送到我的求职发布详情界面
+     * 传递参数是jobneedid就是求职发布的信息的Id
+     * @param parent
+     * @param view
+     * @param position 列表中元素位置
+     * @param id
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         System.out.println("positon="+position);
-        //将点击信息的ID传递过去显示详细内容
-        SignupBean signupBean=signupdata.get(position);
-        Intent intent=new Intent(this, JobdetailsActivity.class);
-        intent.putExtra("id",signupBean.getJobid());
-        intent.putExtra("userid",signupBean.getUserid());
+        JobneedBean jobneedBean=jobneedBeandata.get(position);
+        Intent intent=new Intent(this,JobneeddetailActivity.class);
+        intent.putExtra("jobneedid",jobneedBean.getJobneedid());
         startActivity(intent);
     }
 
@@ -205,7 +202,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         switch (item.getItemId()) {
             case R.id.delete:
                 //System.out.println("您点击的是---删除---位置是"+id);
-                new SweetAlertDialog(SignupActivity.this, SweetAlertDialog.WARNING_TYPE)
+                new SweetAlertDialog(MyneedpostActivity.this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("确定取消该兼职报名?")
                         .setContentText("该条兼职信息将随风而去")
                         .setCancelText("不，保留")
@@ -227,9 +224,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
-                                deletesignup(id);
+                                deletemyjobneed(id);
                                 sDialog.setTitleText("已删除")
-                                        .setContentText("兼职信息离你而去")
+                                        .setContentText("该条求职发布已删除")
                                         .setConfirmText("OK")
                                         .showCancelButton(false)
                                         .setCancelClickListener(null)
@@ -242,22 +239,21 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.none:
                 System.out.println("您点击的是---取消---位置是"+id);
                 break;
-           default:
-               break;
+            default:
+                break;
         }
         return super.onContextItemSelected(item);
     }
 
     /**
-     * 取消报名
-     * @param id
+     * 用于删除我的求职发布
+     * @param id 这个是列表选中的第几个表示
      */
-    public void deletesignup(int id){
-        SignupBean signupBean=signupdata.get(id);
-        int signupid=signupBean.getSignupid();
-        //数据库连接进行删除，删除成功后getdata()进行数据刷新
-        final SignupPageinterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(SignupPageinterface.class);
-        request.deleteSignup(signupid)
+    public void deletemyjobneed(int id){
+        JobneedBean jobneedBean=jobneedBeandata.get(id);
+        System.out.println("------------测试jobneedid的值="+jobneedBean.getJobneedid());
+        final JobneedPageinterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(JobneedPageinterface.class);
+        request.deletemypost(jobneedBean.getJobneedid())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<String>() {
@@ -265,18 +261,14 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     public void onSubscribe(@NonNull Disposable d) {
 
                     }
-
                     @Override
                     public void onNext(@NonNull String s) {
-                        //这里重新获取数据
-                        getData();
+                        getData();//重新刷新列表内容
                     }
-
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        System.out.println("取消报名失败");
+                        System.out.println("--------我的求职发布删除成功");
                     }
-
                     @Override
                     public void onComplete() {
 
@@ -284,3 +276,4 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 });
     }
 }
+

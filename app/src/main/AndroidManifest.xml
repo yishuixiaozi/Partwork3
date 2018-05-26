@@ -123,6 +123,11 @@
         <activity android:name=".LoginforestActivity" />
         <activity android:name=".TestconfirmActivity" />
         <activity android:name=".PostqiuzhiActivity" />
+        <activity android:name=".MyneedpostActivity" />
+        <activity
+            android:windowSoftInputMode="adjustPan"
+            android:name=".JobneeddetailActivity">
+        </activity>
     </application>
 
 </manifest>
