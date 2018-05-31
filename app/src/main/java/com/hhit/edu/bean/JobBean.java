@@ -31,7 +31,7 @@ public class JobBean {
     private String phonenum;
 
     private String jobstate;
-    private String jobremark;
+    private String jobremark;//审核说明
 
     public String getJobstate() {
         return jobstate;

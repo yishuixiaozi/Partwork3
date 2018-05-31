@@ -114,7 +114,8 @@ public class CollectionActivity extends AppCompatActivity implements View.OnClic
                 .subscribe(new Observer<ListResponse<CollectionBean>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Toast.makeText(CollectionActivity.this,"正在获取数据...",Toast.LENGTH_SHORT).show();
+                       /* Toast.makeText(CollectionActivity.this,"正在获取数据...",Toast.LENGTH_SHORT).show();*/
+                        System.out.println("数据获取中");
                     }
 
                     @Override

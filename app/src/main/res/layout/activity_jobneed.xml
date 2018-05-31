@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/button_text_color"
     tools:context="com.hhit.edu.partwork3.JobdetailsActivity">
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,13 +27,7 @@
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:textColor="@color/white"
-            android:text="岗位详情"/>
-        <ImageView
-            android:id="@+id/im_collection"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/collect_icon"/>
+            android:text="求职信息"/>
     </LinearLayout>
     <FrameLayout
         android:layout_width="match_parent"
@@ -54,49 +49,14 @@
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:orientation="vertical">
-                    <TextView
+                    <EditText
                         android:id="@+id/jobtitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="招聘内容的标题"
+                        android:textColor="@color/material_blue_grey_95"
+                        android:background="@null"
                         android:textSize="30sp"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingRight="20dp">
-                        <TextView
-                            android:id="@+id/paymoney"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="16sp"
-                            android:text="薪资水平"/>
-                        <TextView
-                            android:id="@+id/payway"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textSize="16sp"
-                            android:text="结算时间"/>
-                        <TextView
-                            android:id="@+id/begintime"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:textSize="16sp"
-                            android:text="开始时间"/>
-                        <TextView
-                            android:id="@+id/viewtimes"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:textSize="16sp"
-                            android:text="浏览次数"/>
-                    </LinearLayout>
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
@@ -123,14 +83,17 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="16sp"
-                            android:text="招募人数"/>
-                        <TextView
-                            android:id="@+id/peoplenum"
+                            android:text="兼职类型"/>
+                        <EditText
+                            android:id="@+id/txt_jobtype"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:textSize="16sp"
-                            android:text="这里显示找平人数的内容"/>
+                            android:enabled="false"
+                            android:textColor="@color/material_blue_grey_95"
+                            android:background="@null"
+                            android:text="这里显示兼职类型"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -142,14 +105,16 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="16sp"
-                            android:text="兼职日期"/>
-                        <TextView
-                            android:id="@+id/bftime"
+                            android:text="工作时间"/>
+                        <EditText
+                            android:id="@+id/txt_bftime"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:textSize="16sp"
-                            android:text="这里显示找平人数的内容"/>
+                            android:textColor="@color/material_blue_grey_95"
+                            android:background="@null"
+                            android:text="这里显示兼职类型"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -161,51 +126,26 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="16sp"
-                            android:text="兼职时段"/>
-                        <TextView
-                            android:id="@+id/worktime"
+                            android:text="我的空闲"/>
+                        <EditText
+                            android:id="@+id/txt_worktime"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:textSize="16sp"
-                            android:paddingBottom="10dp"
-                            android:text="这里显示找平人数的内容"/>
+                            android:textColor="@color/material_blue_grey_95"
+                            android:background="@null"
+                            android:text="这里显示兼职类型"/>
                     </LinearLayout>
                 </LinearLayout>
-                <!--这里是兼职地点-->
-                <LinearLayout
-                    android:id="@+id/ll_map"
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:background="@drawable/map"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingLeft="15dp"
-                        android:text="兼职地点"
-                        android:textSize="16sp"
-                        />
-                    <TextView
-                        android:id="@+id/workplace"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:paddingLeft="10dp"
-                        android:text="地点文字描述"
-                        android:singleLine="true"
-                        android:textSize="16sp"
-                        />
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="路线规划>"
-                        android:textSize="16sp"
-                        />
-                </LinearLayout>
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="#696969">
+                </View>
                 <!--兼职描述-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -220,12 +160,37 @@
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
                         android:textSize="16sp"/>
-                    <TextView
-                        android:id="@+id/tv_content"
+                    <EditText
+                        android:id="@+id/txt_jobneedcontent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
+                        android:textColor="@color/material_blue_grey_95"
+                        android:background="@null"
                         android:text="这里是兼职描述内容" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="我的优势"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:textSize="16sp"/>
+                    <EditText
+                        android:id="@+id/txt_myadvantage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@color/material_blue_grey_95"
+                        android:background="@null"
+                        android:text="这里描述我的优势" />
                 </LinearLayout>
                 <!--提示内容-->
                 <LinearLayout
@@ -235,19 +200,13 @@
                     android:paddingBottom="25dp"
                     android:paddingLeft="15dp"
                     android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="4"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text="提示：收取费用的兼职，请谨慎！"
-                        android:textColor="@color/color_D33D3C"/>
                 </LinearLayout>
                 <!--兼职信息发布者的相关信息-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:paddingLeft="15dp"
+                    android:background="@color/button_text_color"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
                     <com.hhit.edu.view.CircleImageView
@@ -262,26 +221,24 @@
                         android:layout_height="70dp"
                         android:paddingLeft="25dp"
                         android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/tv_username"
+                        <EditText
+                            android:id="@+id/txt_username"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:paddingTop="15dp"
                             android:textSize="20sp"
+                            android:textColor="@color/material_blue_grey_95"
+                            android:background="@null"
                             android:text="周总"/>
-                        <TextView
-                            android:id="@+id/tv_company"
+                        <EditText
+                            android:id="@+id/txt_phonum"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="15sp"
                             android:paddingTop="2dp"
+                            android:textColor="@color/material_blue_grey_95"
+                            android:background="@null"
                             android:text="淮海信息产业公司"/>
-                        <TextView
-                            android:id="@+id/tv_comnature"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="15sp"
-                            android:paddingTop="2dp"
-                            android:text="IT/互联网/网络"/>
                     </LinearLayout>
                 </LinearLayout>
                 <!--空白填充无意义-->
@@ -301,23 +258,13 @@
             android:orientation="horizontal"
             >
             <TextView
-                android:id="@+id/tv_goutong"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:text="咨询"
-                android:background="@color/white"
-                android:gravity="center"
-                android:textSize="30sp"
-                android:textColor="@color/blue"/>
-            <TextView
-                android:id="@+id/tv_signup"
+                android:id="@+id/tv_change"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="2"
                 android:background="@color/blue"
                 android:textColor="@color/white"
-                android:text="报名"
+                android:text="沟通"
                 android:gravity="center"
                 android:textSize="30sp"/>
         </LinearLayout>

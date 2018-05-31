@@ -18,7 +18,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.hhit.edu.bean.JobBean;
 import com.hhit.edu.bean.ListResponse;
-import com.hhit.edu.bean.SignupBean;
+import com.hhit.edu.fragments.NothroughFragment;
+import com.hhit.edu.my_interface.HomePageInterface;
 import com.hhit.edu.my_interface.SignupPageinterface;
 import com.hhit.edu.utils.ApiManager;
 import com.hhit.edu.utils.RetrofitUtils;
@@ -37,60 +38,106 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MypostActivity extends AppCompatActivity implements View.OnClickListener,AbsListView.OnScrollListener,AdapterView.OnItemClickListener{
+public class ReviewsorryActivity extends AppCompatActivity implements View.OnClickListener,AbsListView.OnScrollListener, AdapterView.OnItemClickListener{
     ListView lv;//listview对象存放值的
     PtrFrameLayout refresh;//布局内容
     String buttonmore="0";
-    List<JobBean> signupdata;
-    AbstractBaseAdapter<JobBean> adapter;
-    ImageView im_back;
-    String myuserid;
+    List<JobBean> jobdata;//实体数组内容
+    AbstractBaseAdapter<JobBean> adapter;//<>这个是限制存储的数据的类型方式
     boolean isAddMore;//是否加载更多数据
     private int pagenum=0;
+    String myuserid;
+    ImageView im_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_reviewsorry);
         SharedPreferences preferences=getSharedPreferences("mydata",MODE_PRIVATE);
         myuserid=preferences.getString("userid","default");
         System.out.println("报名userid---------测试"+myuserid);
-        if (myuserid.equals("default")){
-            Toast.makeText(this,"您的userid为空，请登陆",Toast.LENGTH_SHORT).show();
-        }else {
-            setContentView(R.layout.activity_signup);
-            getData();
-            initdata();
-            setupView();
-        }
+        /*getData();*/
+        initdata();
+        setupview();
+    }
+    public void getData(){
+        final HomePageInterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(HomePageInterface.class);
+        request.getJobnothrough(myuserid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ListResponse<JobBean>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull ListResponse<JobBean> jobBeanListResponse) {
+                        jobdata.clear();
+                        jobdata.addAll(jobBeanListResponse.getItems());//为什么是添加？
+                        adapter.notifyDataSetChanged();
+                        refresh.refreshComplete();
+                        buttonmore = "0";//这里就是让刷新的时候，能够让buttonmore为“0”
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Toast.makeText(ReviewsorryActivity.this,"出现数据获取错误",Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
 
     }
 
-    public void setupView(){
-        im_back= (ImageView) findViewById(R.id.im_back);
-        im_back.setOnClickListener(this);
-        lv= (ListView) findViewById(R.id.signup_lv);
-        registerForContextMenu(lv);
+    public void initdata(){
+        System.out.println("-------nothrough-----------initdata()方法内容测试");
+        jobdata=new ArrayList<>();
+        adapter=new AbstractBaseAdapter<JobBean>(this,jobdata, R.layout.home_listview_mycontent2) {
+            @Override
+            public void bindData(int position, ViewHolder holder) {
+                JobBean jobBean=jobdata.get(position);//一个一个的赋值的我认为
+                //查询的数据赋值开始
+                ImageView iv= (ImageView) holder.findViewById(R.id.home_listview_img);
+                Glide.with(getApplication()).load(jobBean.getJobimageuri()).into(iv); //图形赋值成功
+                TextView tv_title= (TextView) holder.findViewById(R.id.home_listview_title);
+                tv_title.setText(jobBean.getTitle());
+                TextView tv_paymoney= (TextView) holder.findViewById(R.id.home_listview_paymoney);
+                tv_paymoney.setText(jobBean.getPaymoney());
+                TextView tv_payway= (TextView) holder.findViewById(R.id.home_listview_payway);
+                tv_payway.setText(jobBean.getPayway());
+                TextView tv_worktime= (TextView) holder.findViewById(R.id.home_listview_worktime);
+                tv_worktime.setText("提示："+jobBean.getJobremark());
+                //设置完毕
+            }
+        };
+    }
 
+    public void setupview(){
+        lv=(ListView) findViewById(R.id.home_lv);
+        im_back= (ImageView) findViewById(R.id.im_back);
+        registerForContextMenu(lv);
         setupRefreshView();
         lv.setAdapter(adapter);
         lv.setOnScrollListener(this);//设置监听方式
-        lv.setOnItemClickListener(this);//设置短按点击监听
+        im_back.setOnClickListener(this);
+        lv.setOnItemClickListener(this);//设置Item点击监听
     }
 
-    /**
-     * 初始化组件内容
-     */
     public void setupRefreshView(){
-        refresh= (PtrFrameLayout) findViewById(R.id.refresh);
+        refresh= (PtrFrameLayout) findViewById(R.id.refresh);//获得可刷新对象
         PullToRefreshHeadView pullHead=new PullToRefreshHeadView(this);
         //添加刷新tou
         refresh.setHeaderView(pullHead);
         //添加刷新头控制
         refresh.addPtrUIHandler(pullHead);
+        //设置刷新事件功能
         refresh.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 System.out.println("-----------------onRefreshLayout");
-                // pagenum=0;
                 getData();
             }
             //解决Listview与下拉刷新的冲突
@@ -100,66 +147,11 @@ public class MypostActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
     }
-
-    public void getData(){
-        final SignupPageinterface request= RetrofitUtils.newInstence(ApiManager.COMPUTER_BASE_URL).create(SignupPageinterface.class);
-        request.queryMypost(myuserid)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ListResponse<JobBean>>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        /*Toast.makeText(MypostActivity.this,"正在获取数据...",Toast.LENGTH_SHORT).show();*/
-                    }
-
-                    @Override
-                    public void onNext(@NonNull ListResponse<JobBean> jobBeanListResponse) {
-                        signupdata.clear();//清空数据
-                        signupdata.addAll(jobBeanListResponse.getItems());//为什么是添加？
-                        adapter.notifyDataSetChanged();
-                        refresh.refreshComplete();
-                        buttonmore = "0";//这里就是让刷新的时候，能够让buttonmore为“0”
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        Toast.makeText(MypostActivity.this,"获取数据错误",Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
-    public void initdata(){
-        signupdata=new ArrayList<>();
-        adapter=new AbstractBaseAdapter<JobBean>(this,signupdata,R.layout.home_listview_mycontent){
-            @Override
-            public void bindData(int position, ViewHolder holder) {
-                JobBean signupBean=signupdata.get(position);
-                ImageView iv= (ImageView) holder.findViewById(R.id.home_listview_img);
-                Glide.with(getApplication()).load(signupBean.getJobimageuri()).into(iv); //图形赋值成功
-                TextView tv_title= (TextView) holder.findViewById(R.id.home_listview_title);
-                tv_title.setText(signupBean.getTitle());
-                TextView tv_paymoney= (TextView) holder.findViewById(R.id.home_listview_paymoney);
-                tv_paymoney.setText(signupBean.getPaymoney());
-                TextView tv_payway= (TextView) holder.findViewById(R.id.home_listview_payway);
-                tv_payway.setText(signupBean.getPayway());
-                TextView tv_worktime= (TextView) holder.findViewById(R.id.home_listview_worktime);
-                tv_worktime.setText(signupBean.getWorktime());
-                //设置完毕
-            }
-        };
-    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.im_back:
-                finish();//返回键的意思结束当前页面
-                break;
-            default:
+                finish();
                 break;
         }
     }
@@ -182,21 +174,15 @@ public class MypostActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    /**
-     * 这个地方可能需要去掉
-     * @param parent
-     * @param view
-     * @param position
-     * @param id
-     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         System.out.println("positon="+position);
-        JobBean jobBean=signupdata.get(position);
-        Intent intent=new Intent(this,MypostsignActivity.class);
+        JobBean jobBean=jobdata.get(position);
+        System.out.println("--------jobBean.getId()"+jobBean.getId());
+        Intent intent=new Intent(this,MypostdetailActivity.class);
         intent.putExtra("jobid",jobBean.getId());
+        intent.putExtra("edityes","no");
         startActivity(intent);
-        //将点击信息的ID传递过去显示详细内容
     }
 
     /**
@@ -223,8 +209,7 @@ public class MypostActivity extends AppCompatActivity implements View.OnClickLis
         switch (item.getItemId()) {
             case R.id.delete:
                 System.out.println("您点击的是---删除---位置是"+id);
-
-                new SweetAlertDialog(MypostActivity.this, SweetAlertDialog.WARNING_TYPE)
+                new SweetAlertDialog(ReviewsorryActivity.this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("确定取消该兼职报名?")
                         .setContentText("该条兼职信息将随风而去")
                         .setCancelText("不，保留")
@@ -272,7 +257,7 @@ public class MypostActivity extends AppCompatActivity implements View.OnClickLis
      * @param id
      */
     public void deletemypost(int id){
-        JobBean signupBean=signupdata.get(id);
+        JobBean signupBean=jobdata.get(id);
         /*int signupid=signupBean.getSignupid();*/
         int jobid=signupBean.getId();
         //数据库连接进行删除，删除成功后getdata()进行数据刷新
@@ -302,5 +287,12 @@ public class MypostActivity extends AppCompatActivity implements View.OnClickLis
                     }
                 });
 
+    }
+
+    @Override
+    protected void onStart() {
+        System.out.println("---------------返回页面刷新---");
+        super.onStart();
+        getData();
     }
 }

@@ -1,7 +1,11 @@
 package com.hhit.edu.partwork3;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -79,16 +83,21 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
     ImageView im_collection;
     @InjectView(R.id.tv_signup)
     TextView tv_singup;
+    @InjectView(R.id.tv_goutong)
+    TextView tv_goutong;
     int id;
     String myuserid;//这里代表登录用户的id
     String userid;//这个地方需要注意，我的表已经改为String类型了
     String tag="no";
+
+    private final static int DIALOG=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jobdetails);
         ButterKnife.inject(this);//使用注解
         tv_singup.setOnClickListener(this);
+        tv_goutong.setOnClickListener(this);
         ll_map.setOnClickListener(this);
         im_back.setOnClickListener(this);
         im_collection.setOnClickListener(this);
@@ -242,10 +251,57 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
             case R.id.tv_signup:
                 //这里弹出diaog进行一个选择后然后处理相关的内容
                 jobsignup();
+                break;
+            case R.id.tv_goutong:
+                //
+                showDialog(DIALOG);
+                break;
             default:
                 break;
         }
     }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        Dialog dialog=null;
+        switch (id) {
+            case DIALOG:
+                AlertDialog.Builder builder=new android.app.AlertDialog.Builder(this);
+                //设置对话框的图标
+                builder.setIcon(R.drawable.collect_icon);
+                //设置对话框的标题
+                builder.setTitle("列表对话框");
+                //添加按钮，android.content.DialogInterface.OnClickListener.OnClickListener
+                builder.setItems(R.array.goutong, new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int which) {
+                        String hoddy=getResources().getStringArray(R.array.goutong)[which];
+                        System.out.println("------hoddy"+hoddy);
+                        goutong(hoddy);
+                    }
+                });
+                //创建一个列表对话框
+                dialog=builder.create();
+                break;
+        }
+        return dialog;
+    }
+
+    //选择沟通联系
+    public void goutong(String hoddy){
+        if (hoddy.equals("电话联系")){
+            Intent intent=new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+job.getPhonenum()));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }else if (hoddy.equals("短信联系")){
+            Intent intent=new Intent(this,SendmessageActivity.class);
+            intent.putExtra("phonenumber",job.getPhonenum());
+            startActivity(intent);
+        }else {
+            System.out.println("没有这个内容");
+        }
+    }
+
+
 
     public void jobsignup(){
         if (tv_singup.getText().toString().equals("已报名")){

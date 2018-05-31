@@ -1,4 +1,5 @@
 package com.hhit.edu.fragments;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.hhit.edu.bean.JobneedBean;
 import com.hhit.edu.bean.ListResponse;
 import com.hhit.edu.my_interface.HomePageInterface;
+import com.hhit.edu.partwork3.JobneedActivity;
 import com.hhit.edu.partwork3.R;
 import com.hhit.edu.utils.ApiManager;
 import com.hhit.edu.utils.RetrofitUtils;
@@ -300,7 +302,12 @@ public class FindemployeFragment2 extends Fragment implements View.OnClickListen
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        System.out.println("----position"+position);
+        JobneedBean jobneedBean=jobneeddata.get(position-1);
+        System.out.println("-----jobneedBean.getId"+jobneedBean.getJobneedid());
+        Intent intent=new Intent(getActivity(), JobneedActivity.class);
+        intent.putExtra("jobneedid",jobneedBean.getJobneedid());
+        startActivity(intent);
     }
 
 

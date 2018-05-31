@@ -119,6 +119,7 @@
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="7"
+                        android:inputType="number"
                         android:textColor="@color/color_999999"
                         android:hint="联系电话"
                         android:theme="@style/MyEditText"

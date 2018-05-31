@@ -17,6 +17,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:name="com.hhit.me.application.ExpressApplication"
@@ -125,8 +127,19 @@
         <activity android:name=".PostqiuzhiActivity" />
         <activity android:name=".MyneedpostActivity" />
         <activity
-            android:windowSoftInputMode="adjustPan"
-            android:name=".JobneeddetailActivity">
+            android:name=".JobneeddetailActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".SendmessageActivity" />
+        <activity android:name=".ReviewokActivity" />
+        <activity android:name=".ReviewwaitActivity" />
+        <activity android:name=".ReviewsorryActivity" />
+        <activity
+            android:name=".MypostdetailActivity"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <activity
+            android:name=".JobneedActivity"
+            android:windowSoftInputMode="adjustPan">
         </activity>
     </application>
 

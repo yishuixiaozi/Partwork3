@@ -47,4 +47,10 @@
         <attr name="pivotX" format="fraction"/>
         <attr name="pivotY" format="fraction" />
     </declare-styleable>
+
+    <string-array name="goutong">
+        <item>电话联系</item>
+        <item>短信联系</item>
+        <item>在线沟通</item>
+    </string-array>
 </resources>

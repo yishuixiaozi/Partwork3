@@ -59,6 +59,7 @@ public class NothroughFragment extends Fragment implements View.OnClickListener,
         System.out.println("报名userid---------测试"+myuserid);
         getData();
         initdata();
+
     }
 
 

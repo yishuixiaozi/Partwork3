@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,7 +53,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     int mYear;
     int mMonth;
     int mDay;
-
+    ImageView im_back;
     String userid;
     JobBean jobBean=new JobBean();
     @Override
@@ -94,6 +95,8 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         txt_closetime= (TextView) findViewById(R.id.txt_closetime);
         txt_closetime.setOnClickListener(this);
 
+        im_back= (ImageView) findViewById(R.id.im_back);
+        im_back.setOnClickListener(this);
     }
 
     public void initarry(){
@@ -117,6 +120,9 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.txt_closetime:
                 new DatePickerDialog(this, onDateSetListener2, mYear, mMonth, mDay).show();
+                break;
+            case R.id.im_back://关闭当前内容回到上一个界面
+                finish();
                 break;
             default:
                 break;

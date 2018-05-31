@@ -35,7 +35,7 @@
             android:id="@+id/tv_zixun"
             style="@style/home_secondhead_textview_style"
             android:drawableTop="@drawable/home_zixun_secondhead"
-            android:text="等待完善" />
+            android:text="更多" />
 
     </LinearLayout>
     <View
