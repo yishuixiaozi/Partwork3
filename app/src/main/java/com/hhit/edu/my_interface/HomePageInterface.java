@@ -147,4 +147,7 @@ public interface HomePageInterface {
     @POST("JobServlet/getJobhomelike")
     Observable<ListResponse<JobBean>> getJobhomelike(@Query("queryfield") String queryfield,
                                                      @Query("pagenum") int pagenum);
+
+    @POST("JobServlet/getJobremen")
+    Observable<ListResponse<JobBean>> getJobremen();
 }

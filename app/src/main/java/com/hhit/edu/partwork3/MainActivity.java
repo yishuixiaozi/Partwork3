@@ -22,17 +22,16 @@ import com.hhit.edu.fragments.MyhomeFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String[] tabTexts={"首页","发现","消息","我的"};
+    private String[] tabTexts={"首页","发现","我的"};
 
     private int[] imgId={
             R.drawable.tab_home_selector,
             R.drawable.tab_discover_selector,
-            R.drawable.tab_message_selector,
             R.drawable.tab_mine_selector,
     };
 
     private Class[] fragments = {
-            MyhomeFragment.class, FindFragment.class, FindemployeFragment2.class, MineFragment.class
+            MyhomeFragment.class, FindFragment.class,  MineFragment.class
     };
 
     //定义一个控件的

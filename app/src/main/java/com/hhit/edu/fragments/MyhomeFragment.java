@@ -27,6 +27,7 @@ import com.hhit.edu.bean.JobBean;
 import com.hhit.edu.bean.ListResponse;
 import com.hhit.edu.my_interface.HomePageInterface;
 import com.hhit.edu.partwork3.ExpressActivity;
+import com.hhit.edu.partwork3.HostActivity;
 import com.hhit.edu.partwork3.JobdetailsActivity;
 import com.hhit.edu.partwork3.PostqiuzhiActivity;
 import com.hhit.edu.partwork3.R;
@@ -195,7 +196,7 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
         TextView tv_express= (TextView) homeSecondView.findViewById(R.id.tv_express);//查快递
         TextView tv_zixun= (TextView) homeSecondView.findViewById(R.id.tv_zixun);//最后一项
         TextView tv_qiuzhi= (TextView) homeSecondView.findViewById(R.id.tv_qiuzhi);
-        TextView tv_tuijian= (TextView) homeSecondView.findViewById(R.id.tv_tuijian);
+        TextView tv_tuijian= (TextView) homeSecondView.findViewById(R.id.tv_tuijian);//热门职位
         tv_zixun.setOnClickListener(this);
         tv_express.setOnClickListener(this);
         tv_qiuzhi.setOnClickListener(this);
@@ -275,6 +276,8 @@ public class MyhomeFragment extends Fragment implements View.OnClickListener,Abs
                 startActivity(intent);
                 break;
             case R.id.tv_tuijian://热门推荐
+                Intent intent1=new Intent(getActivity(), HostActivity.class);
+                startActivity(intent1);
                 break;
         }
     }

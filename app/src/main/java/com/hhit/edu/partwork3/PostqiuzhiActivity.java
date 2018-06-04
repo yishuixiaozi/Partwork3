@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.hhit.edu.bean.JobneedBean;
@@ -41,6 +42,9 @@ public class PostqiuzhiActivity extends AppCompatActivity implements View.OnClic
     EditText edt_myadvantage;
     @InjectView(R.id.btn_post)
     Button btn_post;
+    @InjectView(R.id.im_back)
+    ImageView im_back;
+
     String[] jobtype;
     JobneedBean jobneedBean=new JobneedBean();
     int index1;
@@ -61,6 +65,7 @@ public class PostqiuzhiActivity extends AppCompatActivity implements View.OnClic
      */
     public void initView(){
         btn_post.setOnClickListener(this);
+        im_back.setOnClickListener(this);
     }
 
     /**
@@ -75,6 +80,9 @@ public class PostqiuzhiActivity extends AppCompatActivity implements View.OnClic
         switch (v.getId()){
             case R.id.btn_post:
                 postmyjobneed();
+                break;
+            case R.id.im_back:
+                finish();
                 break;
             default:
                 break;
