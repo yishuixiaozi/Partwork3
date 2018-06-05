@@ -213,7 +213,7 @@
                 <RelativeLayout style="@style/MineFunctionRl">
                     <TextView
                         style="@style/MineFunctionTvLeft"
-                        android:text="我的兼职报名单"
+                        android:text="个人信息"
                         android:textColor="@color/color_222222" />
                     <ImageView
                         android:id="@+id/iv_mall_arrow"

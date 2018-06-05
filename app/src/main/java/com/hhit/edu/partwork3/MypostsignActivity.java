@@ -1,4 +1,5 @@
 package com.hhit.edu.partwork3;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -167,6 +168,10 @@ public class MypostsignActivity extends AppCompatActivity implements View.OnClic
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         System.out.println("positon="+position);
         //这个里边可能要用于点击显示用户详细信息，可以沟通，同意该用户报名。
+        SignupBean signupBean=signupdata.get(position);
+        Intent intent=new Intent(this,StudentinfoActivity.class);
+        intent.putExtra("userid",signupBean.getUserid());
+        startActivity(intent);//传递当前的求职用户userid到界面上
        /* JobBean jobBean=signupdata.get(position);
         Intent intent=new Intent(this,MypostsignActivity.class);
         intent.putExtra("jobid",jobBean.getId());

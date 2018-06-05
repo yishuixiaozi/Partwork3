@@ -150,4 +150,7 @@ public interface HomePageInterface {
 
     @POST("JobServlet/getJobremen")
     Observable<ListResponse<JobBean>> getJobremen();
+
+    @POST("UserServlet/getUserByUserid")
+    Observable<EntityResponse<UserBean>> getQuserinfo(@Query("userid") String userid);
 }

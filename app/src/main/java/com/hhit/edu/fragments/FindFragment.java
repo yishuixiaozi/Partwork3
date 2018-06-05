@@ -67,7 +67,7 @@ public class FindFragment extends Fragment implements View.OnClickListener,AbsLi
 
     private EditText editText;
     private String citys[] = {"不限", "家教老师", "餐饮服务", "外卖服务", "快递服务", "校园代理", "发布传单", "校园兼职", "企业实习", "其他兼职"};
-    private String ages[] = {"不限", "日结", "每周结算", "每月结算", "按次数结算", "完工结算"};
+    private String ages[] = {"不限", "周末结算", "当天结算", "月末结算", "完工结算"};
     private String sexs[] = {"不限", "男", "女"};
     private String tabtext1="兼职类型";
     private String tabtext2="结算时间";

@@ -105,7 +105,7 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
         userid=getIntent().getStringExtra("userid");//依据userId查询用户的相关信息
         SharedPreferences preferences=getSharedPreferences("mydata",MODE_PRIVATE);
         myuserid=preferences.getString("userid","default");
-        System.out.println("报名userid---------测试"+myuserid);
+        System.out.println("报名myuserid---------测试"+myuserid+"userid="+userid);
         //System.out.println("获取的兼职id的值是-----"+id);
         //System.out.println("获取的userid的值是----"+userid);
         getData();
@@ -138,7 +138,8 @@ public class JobdetailsActivity extends AppCompatActivity implements View.OnClic
                         inituserData(user);
                     }
                 });
-        request.getCollectionTag(userid,id)
+
+        request.getCollectionTag(myuserid,id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<EntityResponse<CollectionBean>>() {
