@@ -95,7 +95,7 @@ public class NewActivity extends Activity implements OnGetRoutePlanResultListene
     public void initLocation(){
         locationMode = MyLocationConfiguration.LocationMode.NORMAL;//常规图层显示
         //定位服务的客户端。宿主程序在客户端声明此类，并调用，目前只支持在主线程中启动
-        mylocationClient = new LocationClient(this);
+        mylocationClient = new LocationClient(getApplicationContext());//-------这个地方由this修改为getAplicatinoContext
         mylistener = new MylocationListener();
         //注册监听器
         mylocationClient.registerLocationListener(mylistener);
