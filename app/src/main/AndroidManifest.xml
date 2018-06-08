@@ -140,7 +140,18 @@
             android:name=".JobneedActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".HostActivity" />
-        <activity android:name=".StudentinfoActivity"></activity>
+        <activity android:name=".StudentinfoActivity" />
+        <activity
+            android:name=".QmyinfoActivity"
+            android:windowSoftInputMode="adjustPan">
+
+        </activity>
+        <activity
+            android:name=".FmyinfoActivity"
+            android:windowSoftInputMode="adjustPan"
+            >
+
+        </activity>
     </application>
 
 </manifest>

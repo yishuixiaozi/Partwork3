@@ -216,7 +216,7 @@ public class LoginforestActivity extends AppCompatActivity implements View.OnCli
                         if ("success".equals(userBeanEntityResponse.getMsg())){
                             editor.putString("nickname",username);
                             editor.putString("usertype",usertype);
-                            editor.putString("userid",userBeanEntityResponse.getCode());
+                            editor.putString("userid",userBeanEntityResponse.getCode());//这个地方我服务器赋值了
                             editor.commit();
                             //这里要进行一个判断，求职者到常规页面，招聘者到招聘界面
                             if (usertype.equals("Employee")){

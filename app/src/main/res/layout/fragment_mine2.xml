@@ -210,7 +210,10 @@
                     android:layout_height="10dp"
                     android:background="@color/color_F3F5F4" />
                 <View style="@style/MineFunctionDivider" />
-                <RelativeLayout style="@style/MineFunctionRl">
+
+                <RelativeLayout
+                    android:id="@+id/rl_myfuserinfo"
+                    style="@style/MineFunctionRl">
                     <TextView
                         style="@style/MineFunctionTvLeft"
                         android:text="个人信息"

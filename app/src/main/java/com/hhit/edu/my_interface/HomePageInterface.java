@@ -87,6 +87,9 @@ public interface HomePageInterface {
     @POST("UserServlet/getUserByUserid")
     Observable<EntityResponse<UserBean>> getUserByUserid(@Query("userid") String userid);
 
+    @POST("UserServlet/getUserById")
+    Observable<EntityResponse<UserBean>> getUserByUserid2(@Query("userid") String userid);
+
     @POST("CollectionServlet/getCollectionTag")
     Observable<EntityResponse<CollectionBean>> getCollectionTag(@Query("userid") String userid,
                                                                 @Query("jobid") int jobid);
@@ -153,4 +156,10 @@ public interface HomePageInterface {
 
     @POST("UserServlet/getUserByUserid")
     Observable<EntityResponse<UserBean>> getQuserinfo(@Query("userid") String userid);
+
+    @POST("UserServlet/updateQuserinfo")
+    Observable<String> updateQuserinfo(@Body UserBean userBean);
+
+    @POST("UserServlet/updateFuserinfo")
+    Observable<String> updateFuserinfo(@Body UserBean userBean);
 }

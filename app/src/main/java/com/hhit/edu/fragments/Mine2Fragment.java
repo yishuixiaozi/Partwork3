@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.hhit.edu.partwork3.FmyinfoActivity;
 import com.hhit.edu.partwork3.LoginforestActivity;
 import com.hhit.edu.partwork3.LoginnewActivity;
 import com.hhit.edu.partwork3.MypostActivity;
 import com.hhit.edu.partwork3.R;
+import com.j256.ormlite.field.types.IntegerObjectType;
 import com.j256.ormlite.stmt.query.In;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -29,6 +31,7 @@ public class Mine2Fragment extends Fragment implements View.OnClickListener{
     TextView txt_mypost;
     private TextView tv_name;
     private RelativeLayout extilogin;
+    private RelativeLayout rl_myfuserinfo;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,6 +55,8 @@ public class Mine2Fragment extends Fragment implements View.OnClickListener{
         rl_mypost.setOnClickListener(this);
         tv_name= (TextView) view.findViewById(R.id.tv_name);
         tv_name.setOnClickListener(this);
+        rl_myfuserinfo= (RelativeLayout) view.findViewById(R.id.rl_myfuserinfo);
+        rl_myfuserinfo.setOnClickListener(this);
         SharedPreferences preferences= getActivity().getSharedPreferences("mydata",MODE_PRIVATE);
         String username=preferences.getString("nickname","未登录用户");//获取这个里边的值的内容
         tv_name.setText(username);
@@ -77,6 +82,9 @@ public class Mine2Fragment extends Fragment implements View.OnClickListener{
                 editor.remove("usertype");//这里是去除用户类型：判断进入的主界面
                 editor.commit();
                 startActivity(new Intent(getActivity(),LoginforestActivity.class));
+                break;
+            case R.id.rl_myfuserinfo:
+                startActivity(new Intent(getActivity(), FmyinfoActivity.class));
                 break;
             default:
                 break;

@@ -15,6 +15,7 @@ import com.hhit.edu.partwork3.EditPhotoActivity;
 import com.hhit.edu.partwork3.LoginActivity;
 import com.hhit.edu.partwork3.LoginforestActivity;
 import com.hhit.edu.partwork3.MyneedpostActivity;
+import com.hhit.edu.partwork3.QmyinfoActivity;
 import com.hhit.edu.partwork3.R;
 import com.hhit.edu.partwork3.SignupActivity;
 import com.hhit.edu.view.CircleImageView;
@@ -32,6 +33,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private RelativeLayout mycollection;
     private RelativeLayout mysignup;
     private RelativeLayout rl_myneedpost;
+    private RelativeLayout rl_myquserinfo;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,7 +44,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         initView(view);//这个就是初始化的内容了
     }
     /**
@@ -63,6 +64,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mysignup.setOnClickListener(this);
         rl_myneedpost= (RelativeLayout) view.findViewById(R.id.rl_myneedpost);
         rl_myneedpost.setOnClickListener(this);
+        rl_myquserinfo= (RelativeLayout) view.findViewById(R.id.rl_myquserinfo);
+        rl_myquserinfo.setOnClickListener(this);
         SharedPreferences preferences= getActivity().getSharedPreferences("mydata",MODE_PRIVATE);
         String username=preferences.getString("nickname","未登录用户");//获取这个里边的值的内容
         tv_name.setText(username);
@@ -108,6 +111,10 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.rl_myneedpost:
                 startActivity(new Intent(getActivity(), MyneedpostActivity.class));
                 //这里进入我的求职发布内容里边
+                break;
+            case R.id.rl_myquserinfo://我的个人信息
+                Intent intent=new Intent(getActivity(), QmyinfoActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;

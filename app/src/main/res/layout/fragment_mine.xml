@@ -191,6 +191,18 @@
                     android:layout_height="10dp"
                     android:background="@color/color_F3F5F4" />
                 <View style="@style/MineFunctionDivider" />
+                <!--这里是我的个人信息界面-->
+                <RelativeLayout style="@style/MineFunctionRl"
+                    android:id="@+id/rl_myquserinfo">
+                    <TextView
+                        style="@style/MineFunctionTvLeft"
+                        android:id="@+id/txt_myquserinfo"
+                        android:text="个人信息"
+                        android:textColor="@color/color_222222" />
+                    <ImageView
+                        style="@style/MineFunctionArrow"
+                        android:background="@mipmap/setting_arrow" />
+                </RelativeLayout>
                 <!--我的发布-->
                 <RelativeLayout style="@style/MineFunctionRl"
                     android:id="@+id/mycollection">
