@@ -81,7 +81,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_post);
         ButterKnife.inject(this);
         SharedPreferences preferences=getSharedPreferences("mydata",MODE_PRIVATE);
-        userid=preferences.getString("userid","default");//获取用户当前用户id
+        userid=preferences.getString("userid","default");//获取用户当前用户id   test
         Calendar ca = Calendar.getInstance();
         mYear = ca.get(Calendar.YEAR);
         mMonth = ca.get(Calendar.MONTH);
