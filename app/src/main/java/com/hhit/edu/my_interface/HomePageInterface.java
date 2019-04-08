@@ -124,7 +124,7 @@ public interface HomePageInterface {
                                                    @Query("usertype") String usertype);
     @POST("CollectionServlet/addCollection")
     Observable<String> addCollection(@Body CollectionBean collection);
-
+    //招聘用户发布招聘信息（待完善点-需要依据发布的类型自动生成一个图片的信息存储到数据库）
     @POST("JobServlet/addJobBean")
     Observable<String> addJobBean(@Body JobBean jobBean);
 

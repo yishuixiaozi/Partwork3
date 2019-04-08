@@ -20,6 +20,7 @@ import com.hhit.edu.utils.RetrofitUtils;
 
 import java.util.Calendar;
 
+import butterknife.InjectView;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -28,19 +29,33 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class PostActivity extends AppCompatActivity implements View.OnClickListener{
+    @InjectView(R.id.edt_title)
     EditText edt_title;//兼职标题
     TextView txt_jobtype;//兼职类型
+    @InjectView(R.id.edt_worktime)
     EditText edt_worktime;//兼职时间段
+    @InjectView(R.id.workplace)
     EditText edt_workplace;
+    @InjectView(R.id.edt_peoplenum)
     EditText edt_peoplenum;//招聘人数
+    @InjectView(R.id.edt_money)
     EditText edt_money;//薪资
+    @InjectView(R.id.edt_username)
     EditText edt_username;//联系人
+    @InjectView(R.id.edt_phonenum)
     EditText edt_phonenum;//联系电话
+    @InjectView(R.id.edt_describe)
     EditText edt_describe;//兼职内容描述
+    @InjectView(R.id.btn_post)
     Button btn_post;//确认提交
+    @InjectView(R.id.txt_begintime)
     TextView txt_begintime;
+    @InjectView(R.id.txt_endtime)
     TextView txt_endtime;
+    @InjectView(R.id.txt_closetime)
     TextView txt_closetime;
+    @InjectView(R.id.im_back)
+    ImageView im_back;
 
     Spinner sp_paytype;
     Spinner sp_payway;
@@ -53,9 +68,9 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     int mYear;
     int mMonth;
     int mDay;
-    ImageView im_back;
     String userid;
     JobBean jobBean=new JobBean();
+    int beigintime,endtime,closetime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,39 +88,18 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
      * 初始化组件
      */
     public void initview(){
-        edt_title= (EditText) findViewById(R.id.edt_title);
-        edt_worktime= (EditText) findViewById(R.id.edt_worktime);
-        edt_workplace= (EditText) findViewById(R.id.edt_workplace);
-        edt_peoplenum= (EditText) findViewById(R.id.edt_peoplenum);
-        edt_money= (EditText) findViewById(R.id.edt_money);
-        edt_username= (EditText) findViewById(R.id.edt_username);
-        edt_phonenum= (EditText) findViewById(R.id.edt_phonenum);
-        edt_describe= (EditText) findViewById(R.id.edt_describe);
-        btn_post= (Button) findViewById(R.id.btn_post);
         btn_post.setOnClickListener(this);
-        sp_paytype= (Spinner) findViewById(R.id.sp_paytype);
-        sp_payway= (Spinner) findViewById(R.id.sp_payway);
-        sp_gender= (Spinner) findViewById(R.id.sp_gender);
-        sp_jobtype= (Spinner) findViewById(R.id.sp_jobtype);
-
-        txt_begintime= (TextView) findViewById(R.id.txt_begintime);
         txt_begintime.setOnClickListener(this);
-        txt_endtime= (TextView) findViewById(R.id.txt_endtime);
         txt_endtime.setOnClickListener(this);
-        txt_closetime= (TextView) findViewById(R.id.txt_closetime);
         txt_closetime.setOnClickListener(this);
-
-        im_back= (ImageView) findViewById(R.id.im_back);
         im_back.setOnClickListener(this);
     }
-
     public void initarry(){
         paytype=getResources().getStringArray(R.array.paytype);
         payway=getResources().getStringArray(R.array.payway);
         gender=getResources().getStringArray(R.array.gender);
         jobtype=getResources().getStringArray(R.array.jobtype);
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -176,30 +170,42 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
     }
+    //兼职开始时间
     private DatePickerDialog.OnDateSetListener onDateSetListener=new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
             mYear = year;
             mMonth = month;
             mDay = dayOfMonth;
             String days;
             days=new StringBuffer().append(mMonth+1).append("月").append(mDay).append("日").toString();
             txt_begintime.setText(days);
+            String beigintime1=new StringBuffer().append(mYear).append(mMonth+1).append(mDay).toString();
+            beigintime= Integer.parseInt(beigintime1);//数组类型时间
+
         }
     };
+    //兼职结束时间
     private DatePickerDialog.OnDateSetListener onDateSetListener1=new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
             mYear = year;
             mMonth = month;
             mDay = dayOfMonth;
             String days;
             days=new StringBuffer().append(mMonth+1).append("月").append(mDay).append("日").toString();
-            txt_endtime.setText(days);
+            String beigintime1=new StringBuffer().append(mYear).append(mMonth+1).append(mDay).toString();
+            endtime= Integer.parseInt(beigintime1);//数组类型时间
+            if (endtime<beigintime){
+                Toast.makeText(getApplication(),"请检查开始时间和结束时间",Toast.LENGTH_SHORT).show();
+            }
+            else {
+                txt_endtime.setText(days);
+            }
+
         }
     };
+    //招聘结束时间
     private DatePickerDialog.OnDateSetListener onDateSetListener2=new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -207,25 +213,17 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             mMonth = month;
             mDay = dayOfMonth;
             String days;
-            if (mMonth + 1 < 10) {
-                if (mDay < 10) {
-                    days = new StringBuffer().append(mYear).append("年").append("0").
-                            append(mMonth + 1).append("月").append("0").append(mDay).append("日").toString();
-                } else {
-                    days = new StringBuffer().append(mYear).append("年").append("0").
-                            append(mMonth + 1).append("月").append(mDay).append("日").toString();
-                }
-
-            } else {
-                if (mDay < 10) {
-                    days = new StringBuffer().append(mYear).append("年").
-                            append(mMonth + 1).append("月").append("0").append(mDay).append("日").toString();
-                } else {
-                    days = new StringBuffer().append(mYear).append("年").
-                            append(mMonth + 1).append("月").append(mDay).append("日").toString();
-                }
+            days = new StringBuffer().append(mYear).append("年").
+                    append(mMonth + 1).append("月").append(mDay).append("日").toString();
+            String beigintime1=new StringBuffer().append(mYear).append(mMonth+1).append(mDay).toString();
+            closetime= Integer.parseInt(beigintime1);//数组类型时间
+            if(closetime>endtime){
+                Toast.makeText(getApplication(),"招聘时间不正确，请检查",Toast.LENGTH_SHORT).show();
             }
-            txt_closetime.setText(days);
+            else {
+                txt_closetime.setText(days);
+            }
+
         }
     };
 
