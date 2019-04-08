@@ -20,6 +20,7 @@ import com.hhit.edu.utils.RetrofitUtils;
 
 import java.util.Calendar;
 
+import butterknife.ButterKnife;
 import butterknife.InjectView;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -34,7 +35,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     TextView txt_jobtype;//兼职类型
     @InjectView(R.id.edt_worktime)
     EditText edt_worktime;//兼职时间段
-    @InjectView(R.id.workplace)
+    @InjectView(R.id.edt_workplace)
     EditText edt_workplace;
     @InjectView(R.id.edt_peoplenum)
     EditText edt_peoplenum;//招聘人数
@@ -56,10 +57,13 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     TextView txt_closetime;
     @InjectView(R.id.im_back)
     ImageView im_back;
-
+    @InjectView(R.id.sp_paytype)
     Spinner sp_paytype;
+    @InjectView(R.id.sp_payway)
     Spinner sp_payway;
+    @InjectView(R.id.sp_gender)
     Spinner sp_gender;
+    @InjectView(R.id.sp_jobtype)
     Spinner sp_jobtype;
     String[] paytype;
     String[] payway;
@@ -75,6 +79,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        ButterKnife.inject(this);
         SharedPreferences preferences=getSharedPreferences("mydata",MODE_PRIVATE);
         userid=preferences.getString("userid","default");//获取用户当前用户id
         Calendar ca = Calendar.getInstance();
@@ -88,10 +93,15 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
      * 初始化组件
      */
     public void initview(){
+        //btn_post= (Button) findViewById(R.id.btn_post);
         btn_post.setOnClickListener(this);
+        //txt_begintime = (TextView) findViewById(R.id.txt_begintime);
         txt_begintime.setOnClickListener(this);
+        //txt_endtime = (TextView) findViewById(R.id.txt_endtime);
         txt_endtime.setOnClickListener(this);
+       // txt_closetime = (TextView) findViewById(R.id.txt_closetime);
         txt_closetime.setOnClickListener(this);
+        //im_back = (ImageView) findViewById(R.id.im_back);
         im_back.setOnClickListener(this);
     }
     public void initarry(){
@@ -105,6 +115,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.btn_post:
                 postwork();
+                // startActivity(new Intent(PostActivity.this,Main2Activity.class));//招聘职位发布成功后，跳转到主页面去
                 break;
             case R.id.txt_begintime:
                 new DatePickerDialog(this, onDateSetListener, mYear, mMonth, mDay).show();
@@ -159,6 +170,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onNext(@NonNull String s) {
                         Toast.makeText(PostActivity.this,"职位发布成功",Toast.LENGTH_SHORT).show();
+                        // startActivity(new Intent(LoginActivity.this,MainActivity.class));
                     }
                     @Override
                     public void onError(@NonNull Throwable e) {

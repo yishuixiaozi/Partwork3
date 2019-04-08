@@ -7,8 +7,8 @@ import android.net.Uri;
  *
  */
 public class ApiManager {
-    //宿舍电脑电脑IP
-    public static final String COMPUTER_BASE_URL="http://192.168.0.101:8080/AndroidServ/";
+    //服务器端所在网络IP
+    public static final String COMPUTER_BASE_URL="http://192.168.43.31:8080/AndroidServ/";
     //手机WIFE域名    "http://192.168.43.31:8080/AndroidSer/"
     //宿舍电脑域名    "http://192.168.137.1:8080/AndroidSer/"
     //图书馆IP         http://100.100.108.107:8080/AndroidServ
